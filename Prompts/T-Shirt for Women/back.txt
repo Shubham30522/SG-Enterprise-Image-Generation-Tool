@@ -1,0 +1,37 @@
+Generate a BACK VIEW image of the SAME female model wearing the YELLOW T-SHIRT.
+
+Input References:
+- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS from the back angle.
+
+CRITICAL: This must look like the SAME model and SAME environment as the front view, just captured from behind.
+
+MODEL & POSE (REPLICATE EXACTLY):
+- Same female model from front view, now viewed from BEHIND
+- **HAIR**: Shoulder-length, slightly wavy, natural brown. Visible from back.
+- Natural standing pose, weight evenly distributed
+- Head turned slightly or looking straight ahead
+
+OUTFIT STYLING:
+- TOP: Back of the Yellow T-Shirt
+  * **COLOR**: Light Butter Yellow.
+  * **DESIGN**: PLAIN BACK. No graphic, no text, no print on the back.
+  * **FIT**: Oversized / Boxy fit visible from behind.
+  * **SLEEVES**: Elbow-length sleeves visible.
+- BOTTOM: Matching pants from front view (rear view) inside neutral studio.
+
+BACKGROUND & ENVIRONMENT:
+- STRICTLY MATCH the front view background
+- Same NEUTRAL WHITE corner studio walls
+- Same light grey matte floor visible at bottom
+
+LIGHTING:
+- STRICTLY MATCH the front view lighting
+- Same NATURAL BALANCED soft, diffused, even lighting
+
+FRAMING:
+- FULL BODY SHOT - Head to toe
+- The ENTIRE back of the outfit must be visible
+- Maintain a 1:1 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text or graphics on the back (MUST BE PLAIN). Do NOT change the yellow color.

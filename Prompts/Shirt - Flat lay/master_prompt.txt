@@ -1,0 +1,32 @@
+Generate a photorealistic flat-lay product image of a shirt.
+
+Input References:
+- Image 1 (Raw Product): The ONLY source for the shirt structure, fabric details, and cut.
+- Image 2 (Style Reference): The ONLY source for Layout, Background, Props, and Lighting.
+
+Instructions:
+1. Product Accuracy (From Image 1):
+   - The shirt must be IDENTICAL to Image 1 with 100% accuracy.
+   - Key Attributes to Preserve:
+Horizontal back yoke seam
+Long sleeves with barrel cuffs
+Curved shirttail hem
+Buttoned sleeve gauntlets
+Standard fold-over collar
+Black buttons
+   - Do NOT redesign or stylize the fabric. Keep it authentic to Image 1.
+   - Make sure to generate the image of shirt with wrinkles free even if raw image contains wrinkles.
+
+2. Layout & Style (From Image 2):
+   - Place the shirt exactly like Image 2: Flat lay outfit arrangement
+   - STRICTLY MATCH Image 2's Background Surface: Textured cream and beige waffle-knit fabric
+   - STRICTLY MATCH Image 2's Surrounding Props: Black eyeglasses, vintage book, blue denim jeans, white sneakers
+   - Lighting must be soft, diffused, natural, matching Image 2's mood.
+
+3. Configuration:
+   - shirt detailed configuration (buttons, collar, sleeves) must match Image 1.
+   - Do NOT add inner layers or undershirts.
+
+Negative prompt:
+no pattern alteration, no color change, [no back pleats, no prints or patterns, no short sleeves, no elastic waistband, no hood], no stylization, no AI artifacts, no incorrect wrinkles, no logo, no embroidery, no added textures, no layered clothing
+

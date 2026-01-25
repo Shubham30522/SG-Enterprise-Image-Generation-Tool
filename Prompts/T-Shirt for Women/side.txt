@@ -1,0 +1,41 @@
+Generate a SIDE VIEW image focusing on the OVERSIZED FIT and SLEEVE DETAILS of the Yellow T-Shirt.
+
+Input References:
+- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS from the side angle.
+
+CRITICAL: Capture the specific "Boxy" silhouette and elbow-length sleeves.
+
+MODEL & POSE (REPLICATE EXACTLY):
+- Same female model, viewed from the RIGHT SIDE (profile view)
+- Upper body or Full body framing
+- Natural standing pose
+- Arms relaxed to show the sleeve drop
+
+OUTFIT STYLING (YELLOW T-SHIRT FIT):
+- **SILHOUETTE**: Clearly show the OVERSIZED / BOXY slide profile. It should not be tight.
+- **SLEEVES**: Show the Drop Shoulder seam and the ELBOW-LENGTH sleeve.
+- **CUFF**: Visible stitched cuff at the sleeve end.
+- **COLOR**: Light/Butter Yellow.
+- Bottoms: Neutral jeans/pants.
+
+BACKGROUND & ENVIRONMENT:
+- STRICTLY MATCH the front view background
+- Same NEUTRAL WHITE corner studio wall
+- Same studio setup
+
+LIGHTING:
+- STRICTLY MATCH the front view lighting
+- Same NATURAL BALANCED soft, diffused, even lighting
+
+FRAMING:
+- WAIST-UP or FULL BODY SHOT
+- Focus on the side silhouette of the T-Shirt
+- Maintain a 1:1 aspect ratio
+
+CRITICAL PRODUCT DETAILS TO PRESERVE:
+- Boxy/Loose drape
+- Drop shoulder construction
+- Wide sleeve opening with cuff
+
+NEGATIVE CONSTRAINT: Do NOT make the fit tight or form-fitting. Do NOT shorten the sleeves (must be elbow length).

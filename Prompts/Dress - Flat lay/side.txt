@@ -1,0 +1,28 @@
+Generate a professional profile shot of the youth model modeling the side profile of the dress. Use the front-view reference image as the only source for garment structure and design. Preserve the correct silhouette, smocked bodice height, sleeve puff volume, neckline shape, and tiered skirt proportions exactly as established in the front view—do not widen, distort, flare, or alter the garment’s construction. Ensure the print scale, pattern flow, and color palette wrap naturally around the side without distortion.
+
+Match the environment, lighting direction, shadow softness, color temperature, and camera style precisely to the front-view image. The scene must remain the same outdoor courtyard with stone walls, carved wooden door, potted plants, and vines, rendered with the same depth of field, focal length, subtle film grain, and ISO characteristics.
+
+Frame the output as a clean side-angle garment presentation, keeping all background elements consistent and non-distracting.
+
+Prioritize:
+
+accurate side silhouette based on the front view.
+correct sleeve curvature and smocking continuation.
+natural fabric drape and matte texture.
+perfect environmental + visual continuity.
+
+Produce a catalog-quality side view fully consistent with the front-view image.
+
+STRICT CONSTRAINTS: No collar, No button placket, No belt, No front pockets, No long sleeves
+
+STRICT CONSTRAINTS: No collar, No front buttons, No belt, No long sleeves, No visible pockets
+
+STRICT CONSTRAINTS: No collar, No front buttons, No belt, No long sleeves, No hood
+
+STRICT CONSTRAINTS: No collar, No front button placket, No long sleeves, No belt, No solid color blocking
+
+Background: Grey textured carpet, white faux fur rug
+
+Props: Wooden hanger, bunches of pink roses, black wire basket, small tan handbag with gold chain
+
+STRICT CONSTRAINTS: No collar, No front buttons, No belt, No hood, No embroidery

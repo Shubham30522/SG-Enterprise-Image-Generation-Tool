@@ -1,0 +1,24 @@
+Generate a high-resolution image of the BACK of the product shown in Image 1.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS and ANGLE.
+
+Instructions:
+1. Background & Lighting: 
+   - STRICTLY MATCH Image 1.
+
+2. Product Appearance:
+   - **STRICT REQUIREMENT**: The generated product must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
+   - Show the back pockets (if any) and the fit over the hips.
+
+3. Outfit Styling (MUST MATCH MASTER PROMPT):
+   - **TOP**: The same clean WHITE TANK TOP (seen from the back).
+   - **SHOES**: The same White minimalist leather sneakers.
+   - **ACCESSORIES**: (If hands visible) Simple SILVER WATCH on left wrist.
+
+4. Layout:
+   - Back view of the model standing straight.
+
+Negative prompt:
+STRICT CONSTRAINTS: No front view, no mismatched outfit, no mismatched color.

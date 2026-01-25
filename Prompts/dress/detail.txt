@@ -1,0 +1,14 @@
+Generate a macro fabric detail shot of the dress pattern and texture as worn by the model. Use the front-view reference image as the authoritative guide for material and print accuracy. Focus on a selected area of the garment (such as smocking, sleeve gathering, tier seam, stitching detail, or print texture) while preserving the exact material characteristics shown in the front view: matte finish, soft lightweight drape, accurate print scale, and correct color tones.
+
+Do not invent new stitching, embellishments, or structural features—every detail must stay consistent with the dress design visible in the front image. Reproduce smocking tension, elastic gathers, seam transitions, and fabric micro-texture realistically.
+
+Match the environment, lighting, shadows, and photographic style to the front-view reference. Keep the background softly blurred but visually consistent with the same outdoor courtyard setting, maintaining the same tone, depth of field, and color balance.
+
+Prioritize:
+
+accurate texture + print reproduction.
+realistic fabric behavior at macro level.
+strict consistency with garment design.
+seamless match to lighting and environment of the front view.
+
+Produce a catalog-quality detail shot that aligns perfectly with the front-view image.

@@ -1,0 +1,44 @@
+Generate a BACK VIEW image of the SAME male model wearing the MATCHING CORD SET.
+
+Input References:
+- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS from the back angle if available.
+
+CRITICAL: This must look like the SAME model and SAME environment as the front view, just captured from behind.
+
+MODEL & POSE (REPLICATE EXACTLY):
+- Same male model from front view, now viewed from BEHIND
+- Natural standing pose, weight evenly distributed
+- Both hands relaxed by sides (not in pockets)
+- Head turned slightly to the RIGHT, showing quarter profile
+- Looking slightly to the right (profile visible)
+- Same arm tattoos visible from back (key/arrow designs on right arm)
+- Same body type and build
+
+OUTFIT STYLING (MATCHING CORD SET):
+- TOP: Same cord set shirt - show the back of shirt accurately
+- Oversized fit visible from behind
+- BOTTOM: Same matching pants - straight-leg relaxed fit
+- IMPORTANT: NO BACK POCKETS - the pants have a clean, smooth back with NO pockets
+- Same WHITE chunky platform sneakers as front view (MUST match front view shoes exactly)
+
+BACKGROUND & ENVIRONMENT:
+- STRICTLY MATCH the front view background
+- Same NEUTRAL WHITE corner studio walls - natural white, not blue-tinted
+- Same light grey matte floor visible at bottom
+- Same corner angle and depth
+
+LIGHTING:
+- STRICTLY MATCH the front view lighting
+- Same NATURAL BALANCED soft, diffused, even lighting
+- Same realistic shadow pattern on the floor
+
+FRAMING:
+- FULL BODY SHOT - Head to toe with slight space above head
+- The ENTIRE back of the outfit must be visible
+- Do NOT crop the head or feet
+- Include the full sneakers
+- Some floor visible at bottom
+- Maintain a 1:1 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, typography overlays, or BACK POCKETS on the pants in the image.

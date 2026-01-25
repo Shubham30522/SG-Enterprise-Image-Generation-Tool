@@ -1,0 +1,48 @@
+Generate a BACK VIEW image of the SAME male model wearing the cargo capri pants.
+
+Input References:
+- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS from the back angle if available.
+
+CRITICAL: This must look like the SAME model and SAME environment as the front view, just captured from behind.
+
+MODEL & POSE:
+- Male model, relaxed standing pose viewed from BEHIND
+- Hands relaxed by sides
+- Silver sports watch visible on wrist
+- Weight evenly distributed, natural stance
+- Body facing directly away from the camera (BACK VIEW)
+
+OUTFIT STYLING:
+- Same black oversized t-shirt as front view
+- FABRIC APPEARANCE: The capri must appear SMOOTH, CLEAN, and WRINKLE-FREE - do not replicate any creases or wrinkles from the reference image
+- The cargo capri - ensure the back fit and details are accurately shown:
+  * ONE back welt pocket clearly visible (single back pocket as seen in reference)
+  * Same cotton/twill fabric texture
+  * Elastic waistband visible at the back with ribbed band
+  * Below-knee length (3/4 capri style)
+  * Side cargo pockets visible from behind
+- Same white sneakers as front view
+
+BACKGROUND & ENVIRONMENT:
+- STRICTLY MATCH the front view background
+- Same outdoor urban/coastal setting with bokeh blur
+- Same bright natural daylight feel
+
+LIGHTING:
+- STRICTLY MATCH the front view lighting
+- Soft, diffused natural daylight (NOT direct harsh sunlight)
+- NO sunlight reflections, glare, or color casts on the fabric
+- The capri color must remain TRUE and CONSISTENT - same as front view and reference image
+- Same subtle shadow pattern
+
+FRAMING:
+- TIGHT CROPPED SHOT - Frame from lower chest to MID-THIGH ONLY (MATCH FRONT VIEW FRAMING)
+- Do NOT show the full legs - crop at mid-thigh level (above knees)
+- Do NOT show feet or sneakers - they should be outside the frame
+- Focus on the WAISTBAND, HIP AREA, and BACK POCKET
+- The capri should fill most of the frame - zoomed in, close crop
+- Back welt pocket must be clearly visible
+- Maintain a 3:4 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image.

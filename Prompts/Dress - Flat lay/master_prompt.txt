@@ -1,0 +1,27 @@
+Use the first image as the ONLY source for the dress - flat lay. Use the second image ONLY for layout and placement.
+Create a photorealistic flat-lay product image.
+
+The dress - flat lay must be IDENTICAL to the dress - flat lay in Image 1 with 100% accuracy in:
+Square neckline
+Elastic smocked bodice
+Short puff sleeves
+Elasticated ruffled sleeve cuffs
+Ruffled tiered hem
+seam lines and proportions as seen in Image 1
+Do NOT redesign, smooth, simplify, or stylize the fabric.
+Do NOT change button color, fabric texture, or dress - flat lay structure.
+Place the dress - flat lay exactly like Image 2:
+
+Flat-lay style with garment displayed on a wooden hanger
+dress - flat lay configuration must match Image 1 exactly.
+Do NOT add inner layers or undershirts.
+sleeves extended fully outward to the sides
+same background surface (Textured grey carpet or felt surface) and lighting mood as Image 2
+same surrounding Props: Light wooden hanger, artificial pink and peach roses with greenery, white faux fur throw (layered at top), small tan handbag with gold chain strap, black wire basket edge
+Lighting must be soft, diffused, natural, with no harsh shadows.
+
+Maintain true-to-life white balance so the dress - flat lay color matches Image 1 exactly.
+Ultra-realistic product photography, high resolution, sharp fabric detail, e-commerce catalog quality.
+Negative prompt:
+
+no fabric smoothing, no pattern alteration, no color change, no collar, no buttons, no zipper, no belt, no long sleeves, no stylization, no AI artifacts, no incorrect wrinkles, no logo, no embroidery, no added textures, no layered clothing

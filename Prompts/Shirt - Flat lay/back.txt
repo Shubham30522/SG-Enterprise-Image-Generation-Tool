@@ -1,0 +1,22 @@
+Generate a high-resolution flat-lay image of the BACK of the product shown in Image 1.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS and ANGLE.
+
+Instructions:
+1. Background & Lighting: 
+   - STRICTLY MATCH Image 1. 
+   - Keep the exact same background surface, lighting mood, and shadows as Image 1.
+   - Do NOT use the background from Image 2.
+
+2. Product Appearance:
+   - Use Image 2 to understand how the product actually looks in real life from the back (e.g. cut, seams, yoke).
+   - Use Image 1 to determine the fabric texture and color to ensure consistency with the front view.
+   - The product must look like the SAME physical item as Image 1, but viewed from the back as shown in Image 2.
+
+3. Layout:
+   - Position the product centrally.
+
+Negative prompt:
+[no back pleats, no prints or patterns, no short sleeves, no elastic waistband, no hood]

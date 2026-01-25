@@ -1,0 +1,47 @@
+Generate a FLAT LAY product image of the cargo capri pants.
+
+Input References:
+- Image 1 (Generated Front): Source for COLOR and STYLE consistency.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS and proportions.
+
+CRITICAL: This is a FLAT LAY product shot - NO MODEL. The capri should be laid flat on a clean surface, photographed from directly above.
+
+PRODUCT PLACEMENT:
+- The cargo capri laid FLAT on a clean surface
+- Photographed from DIRECTLY ABOVE (bird's eye view / top-down shot)
+- Product centered in the frame
+- Full capri visible from elastic waistband to hem - NO CROPPING
+- Natural, neat arrangement showing the product at its best
+
+PRODUCT DETAILS TO SHOW:
+- Elastic waistband with ribbed gathering clearly visible at top
+- SIDE CARGO POCKETS on both thighs with button-secured flaps
+- Black circular buttons on cargo pocket flaps
+- SEN brand label on left thigh (CRITICAL LABEL DETAIL):
+  * Black rectangular horizontal patch positioned ABOVE the cargo pocket flap
+  * LEFT SIDE: "STREET WEAR" (underlined) at top, "WSEEWELL.in" below, "#1947" at bottom
+  * RIGHT SIDE: Large bold white "SEN" text
+- Cotton/twill fabric texture
+- Below-knee length (3/4 capri style)
+- FABRIC APPEARANCE: The capri must appear SMOOTH, CLEAN, and WRINKLE-FREE - do not replicate any creases or wrinkles from the reference image
+
+BACKGROUND & ENVIRONMENT:
+- Clean, plain white or off-white background
+- Minimalist studio product photography style
+- Subtle soft shadow beneath the product for depth
+- No distracting elements - pure focus on the product
+
+LIGHTING:
+- Soft, even, diffused studio lighting
+- No harsh shadows or highlights
+- Accurate color representation of the fabric
+- Professional eCommerce product photography lighting
+
+FRAMING:
+- FULL PRODUCT SHOT - entire capri visible from waistband to hem
+- Product should fill approximately 80% of the frame
+- Adequate margin/padding around the product
+- Maintain a 1:1 aspect ratio (square format)
+- Centered composition
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT include any model or person - this is a product-only flat lay shot.

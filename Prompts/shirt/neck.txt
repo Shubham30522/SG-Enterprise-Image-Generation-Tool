@@ -1,0 +1,1 @@
+Generate a close, cropped neck-area image of the same model from the front-view photo. Preserve identical lighting, background blur, and skin tone. Reproduce collar shape, button placket alignment, stitching, and pleated fabric exactly. Use the raw shirt image only for fine collar detailing, not for lighting.

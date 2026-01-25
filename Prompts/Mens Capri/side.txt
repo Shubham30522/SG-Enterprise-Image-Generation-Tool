@@ -1,0 +1,61 @@
+Generate a SIDE VIEW image of the SAME male model wearing the cargo capri pants.
+
+Input References:
+- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS from the side angle.
+
+CRITICAL: This must look like the SAME model and SAME environment as the front view, just captured from a side angle.
+
+MODEL & POSE:
+- Male model, relaxed standing pose viewed from the SIDE (profile view)
+- TIGHT CROPPED SHOT - Same framing as front view (lower chest to mid-thigh)
+- Hands relaxed by sides or thumbs hooked in pockets
+- Natural, confident streetwear stance
+- Body facing perpendicular to the camera (SIDE VIEW - showing the profile)
+- Silver sports watch visible on wrist
+
+OUTFIT STYLING:
+- Same black oversized t-shirt as front view
+- FABRIC APPEARANCE: The capri must appear SMOOTH, CLEAN, and WRINKLE-FREE - do not replicate any creases or wrinkles from the reference image
+- The cargo capri - ensure the side profile shows:
+  * SIDE CARGO POCKET with button-secured flap (CRITICAL - must be clearly visible)
+  * Black circular button on the cargo pocket flap
+  * Same cotton/twill fabric texture
+  * SEN brand label on left thigh (CRITICAL LABEL DETAIL):
+    - Black rectangular horizontal patch positioned ABOVE the cargo pocket flap
+    - LEFT SIDE: "STREET WEAR" (underlined) at top, "WSEEWELL.in" below, "#1947" at bottom
+    - RIGHT SIDE: Large bold white "SEN" text
+  * Relaxed fit silhouette
+  * Below-knee length (3/4 capri style)
+- Same white sneakers as front view
+
+BACKGROUND & ENVIRONMENT:
+- STRICTLY MATCH the front view background
+- Same outdoor urban/coastal setting with bokeh blur
+- Same bright natural daylight feel
+
+LIGHTING:
+- STRICTLY MATCH the front view lighting
+- Soft, diffused natural daylight (NOT direct harsh sunlight)
+- NO sunlight reflections, glare, or color casts on the fabric
+- The capri color must remain TRUE and CONSISTENT - same as front view and reference image
+- Same subtle shadow pattern
+
+FRAMING:
+- TIGHT CROPPED SHOT - Frame from lower chest to MID-THIGH ONLY (MATCH FRONT VIEW FRAMING)
+- Do NOT show the full legs - crop at mid-thigh level (above knees)
+- Do NOT show feet or sneakers - they should be outside the frame
+- Focus on the WAISTBAND, HIP AREA, and CARGO POCKETS
+- The capri should fill most of the frame - zoomed in, close crop
+- Ensure the CARGO POCKET with button flap and SEN label are clearly visible
+- Maintain a 3:4 aspect ratio
+
+CRITICAL PRODUCT DETAILS TO PRESERVE:
+- SIDE CARGO POCKET with button-secured flap
+- Black circular button on pocket flap
+- Cotton/twill fabric texture
+- SEN brand label (black rectangular patch with "STREET WEAR WSEEWELL.in #1947" on left, "SEN" on right)
+- Elastic waistband with ribbed band
+- Below-knee capri length
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image.

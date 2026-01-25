@@ -1,0 +1,45 @@
+Generate a BACK VIEW image of the SAME male model wearing the shorts.
+
+Input References:
+- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS from the back angle if available.
+
+CRITICAL: This must look like the SAME model and SAME environment as the front view, just captured from behind.
+
+MODEL & POSE:
+- Male model, relaxed standing pose viewed from BEHIND
+- Hands relaxed by sides, not in pockets
+- One wrist should have a subtle silver bracelet/watch for realism
+- Weight evenly distributed, natural stance
+- Body facing directly away from the camera (BACK VIEW)
+
+OUTFIT STYLING:
+- Same white oversized t-shirt as front view (minimal visibility - only hem visible)
+- The shorts - ensure the back fit and details are accurately shown:
+  * TWO back patch pockets clearly visible (if present in reference)
+  * Same ribbed/corduroy texture
+  * Elastic waistband visible at the back
+- Same white low-top canvas sneakers
+
+BACKGROUND & ENVIRONMENT:
+- STRICTLY MATCH the front view background
+- Same off-white/cream painted wall
+- Same light grey concrete floor
+- Same minimalist indoor studio set
+
+LIGHTING:
+- STRICTLY MATCH the front view lighting
+- Same soft, diffused, even lighting
+- Same subtle shadow pattern on the floor
+
+FRAMING:
+- TIGHT LOWER BODY SHOT - Frame from just below the waist to just below the feet
+- Focus on the SHORTS - minimize t-shirt visibility (only hem visible)
+- The ENTIRE back of the shorts must be visible from waistband to hem - NO CROPPING
+- Full legs must be visible (shorts + exposed legs below shorts)
+- Both back pockets must be clearly visible (if present)
+- Include the full sneakers, do not crop the feet
+- Ensure 100% of the shorts are visible without any cuts
+- Maintain a 1:1 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image.

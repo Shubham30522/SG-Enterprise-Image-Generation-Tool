@@ -1,0 +1,12 @@
+Generate a professional catalog image showing the rear view of the dress worn by the youth model. The model is posing with her back turned to showcase the garment's design. Accurately reproduce the dress’s rear silhouette, construction, seam placement, tier transitions, stitching, and natural fabric behavior. Maintain exact continuity of material, color, print, and texture as shown wrapping from the front to the back.
+
+Match all environmental conditions, lighting direction, tone, color balance, and camera style to the previously generated front-view image. Keep the same outdoor courtyard setting, stone textures, carved wooden door, potted plants, and overall visual atmosphere. Maintain the same depth of field, focal length, aperture characteristics, film-grain level, and DSLR aesthetic for complete visual consistency between front and back views.
+
+Frame the output as a clean back-view garment presentation, ensuring the outfit remains the primary focus. Keep background elements subtle and consistent with the front view. Avoid props or additions that do not appear in the front-generated image.
+
+Prioritize:
+
+accurate translation of the raw back photo.
+seamless style and environmental continuity with the front view.
+realistic fabric drape, construction clarity, and true-to-life textile rendering.
+Produce a polished, catalog-quality back view that aligns perfectly with the established visual language of the front image.

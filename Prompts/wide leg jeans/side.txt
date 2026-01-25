@@ -1,0 +1,25 @@
+Generate a high-resolution image of the product from the SIDE view (Profile).
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS.
+
+Instructions:
+1. Background & Lighting:
+   - STRICTLY MATCH Image 1.
+
+2. Product Appearance:
+   - **STRICT REQUIREMENT**: The generated product must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
+   - Show the side seam, the fit across the hips/thighs, and the wide leg drape from the side.
+
+3. Outfit Styling (MUST MATCH MASTER PROMPT):
+   - **TOP**: The same clean WHITE TANK TOP (side view), tucked in.
+   - **SHOES**: The same White minimalist leather sneakers.
+   - **ACCESSORIES**: (If arm visible) Simple SILVER WATCH on wrist.
+
+4. Layout:
+   - Side profile of the model.
+   - Slight walking stride to demonstrate the flow/width of the leg.
+
+Negative prompt:
+STRICT CONSTRAINTS: No front view, no mismatched outfit, no mismatched color.

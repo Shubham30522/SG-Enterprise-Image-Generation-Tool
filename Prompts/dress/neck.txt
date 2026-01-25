@@ -1,0 +1,16 @@
+Generate a professional apparel detail shot focusing on the neckline and bodice of the dress as worn by the model. Crop to focus on the garment design, using the front-view reference image as the guide for garment structure. Preserve the exact neckline shape, the true width and curvature of the smocked panel, and the natural way the sleeves connect to the bodice. Ensure the neckline remains centered, symmetrical, and consistent with the construction shown in the front image—avoid exaggerated widening, flaring sleeves, or invented fabric extensions.
+
+Match the exact fabric characteristics, print scale, pattern alignment, and material finish visible in the front-view reference. Reproduce the smocking with accurate density, elasticity, stitch tension, and realistic micro-gathering, maintaining even distribution across the neckline.
+
+Match the environmental style, lighting direction, tone, and depth of field exactly to the front-view image. The background should remain softly blurred but recognizable as the same outdoor courtyard with stone walls, carved wooden door, and surrounding plants. Use identical camera characteristics: medium-close focal length, realistic depth of field, subtle natural grain, and ISO 100–200 noise profile.
+
+Frame the shot tightly around the neckline, upper smocking, and sleeve attachment points to highlight garment craftsmanship without introducing new scene elements.
+
+Prioritize:
+
+correct neckline geometry.
+accurate sleeve attachment and volume.
+true print + smocking fidelity.
+seamless environmental and visual continuity.
+
+Produce a catalog-quality neckline detail that stays structurally consistent with the front-view garment.

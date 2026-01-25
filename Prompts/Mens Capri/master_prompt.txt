@@ -1,0 +1,55 @@
+Generate an image of a MALE model wearing the cargo capri pants shown in the provided reference image.
+
+CRITICAL INSTRUCTION: The provided image is purely for TEXTURE and DESIGN reference. You must EXTRACT the clothing design from it and apply it to the model. Do NOT paste, float, or include the reference image itself in the scene. It is data, not an object.
+
+STRICT COLOR & PATTERN FIDELITY: The color, print, and texture of the generated capri MUST MATCH the reference image EXACTLY. Do not alter, brighten, filter, or shift the colors. High fidelity to the source material is paramount.
+
+INDEPENDENT GENERATION: Treat this request as a completely new and isolated task. Ignore any previous context. You MUST generate a fresh, unique background and lighting setup distinct from any prior outputs. Do not reuse previous settings.
+
+MODEL & POSE:
+- Male model, relaxed standing pose
+- One hand casually placed in the side pocket of the capri
+- Weight slightly shifted on one leg, natural streetwear stance
+- Confident, casual summer vibe
+- Body facing directly toward the camera (FRONT VIEW)
+- Silver sports watch/digital watch on wrist
+
+OUTFIT STYLING:
+- Black oversized t-shirt (slightly tucked or hem visible at waist)
+- The cargo capri from the reference image - relaxed fit cotton/twill fabric
+- FABRIC APPEARANCE: The capri must appear SMOOTH, CLEAN, and WRINKLE-FREE - do not replicate any creases or wrinkles from the reference image
+- Elastic waistband with visible ribbed elastic band at top
+- SIDE CARGO POCKETS on both thighs with button-secured flaps (CRITICAL DETAIL - must be visible)
+- Black circular buttons on cargo pocket flaps
+- SEN brand label on left thigh (CRITICAL LABEL DETAIL):
+  * Black rectangular horizontal patch positioned ABOVE the cargo pocket flap
+  * LEFT SIDE of label: "STREET WEAR" text (underlined) at top, "WSEEWELL.in" below it, "#1947" at bottom
+  * RIGHT SIDE of label: Large bold white "SEN" text
+  * The label must show this exact layout with clear readable text
+- Below-knee length (3/4 length capri style)
+- White low-top canvas sneakers or clean white trainers
+
+BACKGROUND & ENVIRONMENT:
+- Outdoor urban/coastal setting with soft bokeh blur
+- Bright natural daylight, summer feel
+- Clean, aspirational streetwear eCommerce aesthetic
+- Blurred background to keep focus on the product
+
+LIGHTING:
+- Soft, diffused natural daylight (NOT direct harsh sunlight)
+- Soft shadows, summer outdoor feel
+- NO sunlight reflections, glare, or color casts on the fabric
+- The capri color must remain TRUE and CONSISTENT throughout - no washed out or overexposed areas
+- Preserve the EXACT fabric color as shown in the reference image without any lighting-induced color shifts
+
+FRAMING:
+- TIGHT CROPPED SHOT - Frame from lower chest to MID-THIGH ONLY
+- Do NOT show the full legs - crop at mid-thigh level (above knees)
+- Do NOT show feet or sneakers - they should be outside the frame
+- Focus on the WAISTBAND, HIP AREA, and CARGO POCKETS
+- The capri should fill most of the frame - zoomed in, close crop
+- Ensure the CARGO POCKETS with button flaps are clearly visible
+- Hand in pocket should be prominently visible
+- Maintain a 3:4 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image.

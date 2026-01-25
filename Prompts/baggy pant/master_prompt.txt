@@ -1,0 +1,42 @@
+Generate an image of a MALE model wearing the pants shown in the provided reference image.
+
+CRITICAL INSTRUCTION: The provided image is purely for TEXTURE and DESIGN reference. You must EXTRACT the clothing design from it and apply it to the model. Do NOT paste, float, or include the reference image itself in the scene. It is data, not an object.
+
+STRICT COLOR & PATTERN FIDELITY: The color, print, and texture of the generated pants MUST MATCH the reference image EXACTLY. Do not alter, brighten, filter, or shift the colors. High fidelity to the source material is paramount.
+
+INDEPENDENT GENERATION: Treat this request as a completely new and isolated task. Ignore any previous context. You MUST generate a fresh, unique background and lighting setup distinct from any prior outputs. Do not reuse previous settings.
+
+MODEL & POSE:
+- Male model, relaxed standing pose
+- Hands casually placed in the pockets of the pants
+- Weight evenly distributed on both feet
+- Confident, natural streetwear stance
+- Body facing directly toward the camera (FRONT VIEW)
+
+OUTFIT STYLING:
+- White oversized t-shirt (minimal visibility - only the hem should be slightly visible)
+- The pants from the reference image - straight-leg relaxed fit with ribbed/corduroy texture
+- Elastic waistband with black drawstring visible
+- Brown leather logo patch on left thigh (preserve this detail from reference)
+- White low-top canvas sneakers (classic style, clean)
+
+BACKGROUND & ENVIRONMENT:
+- Minimalist indoor studio set
+- Off-white/cream painted wall (slightly textured, not pure white)
+- Light grey concrete floor
+- Clean, distraction-free backdrop similar to premium streetwear eCommerce photography
+
+LIGHTING:
+- Soft, diffused, even lighting
+- Subtle shadows on the floor beneath the model
+- No harsh highlights - preserve accurate fabric colors and texture
+
+FRAMING:
+- TIGHT LOWER BODY SHOT - Frame from just below the waist to just below the feet
+- Focus on the PANTS - minimize t-shirt visibility (only hem visible)
+- The ENTIRE pants must be visible from waistband to ankle cuffs - NO CROPPING
+- Include the full sneakers, do not crop the feet
+- Ensure 100% of the pants are visible without any cuts
+- Maintain a 3:4 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image.

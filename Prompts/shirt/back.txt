@@ -1,0 +1,1 @@
+Generate a back-facing image of the model of first image. Use the second uploaded image as the reference for the outfit’s backside design and reconstruct every backside detail with full accuracy. Replicate the outfit’s back structure, fit, proportions, and pattern placement exactly in the new image. Maintain 1:1 Ratio.

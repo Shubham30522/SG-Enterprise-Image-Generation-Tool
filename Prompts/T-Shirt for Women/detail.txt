@@ -1,0 +1,43 @@
+Generate a DETAIL/CLOSE-UP image focusing on the upper chest and graphic print of the Yellow T-Shirt.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE consistency.
+- Image 2 (Raw Product Image): Source for REAL LIFE FABRIC TEXTURE and PRINT DETAILS.
+
+CRITICAL: This is a close-up product detail shot. Focus on the "Mind Positive" graphic print and the fabric quality.
+
+MODEL & POSE (REPLICATE EXACTLY):
+- Same female model
+- **SKIN**: Realistic micro-texture with fine pores and natural matte-sheen variation.
+- Close-up framing of the upper torso
+- Posture relaxed, emphasizing the fabric drape
+
+FOCUS AREA:
+- Close-up of the CENTER CHEST GRAPHIC and NECKLINE
+- Specific details:
+  * **GRAPHIC**: "Mind Positive" (or similar) black cursive text overlaid on abstract watercolor splashes (purple, blue, pink).
+  * **NECKLINE**: Ribbed Crew Neck (Yellow).
+  * **COLOR**: Light Butter Yellow.
+  * **FABRIC**: Cotton jersey texture.
+
+DETAIL ELEMENTS TO CAPTURE:
+- Clarity of the script text "Mind Positive"
+- Watercolor effect of the background splash
+- Stitching details at the neckline
+- Softness of the yellow cotton fabric
+
+BACKGROUND & ENVIRONMENT:
+- Same context as the front view
+- NEUTRAL WHITE wall visible in the background
+- PHOTOREALISTIC studio environment
+
+LIGHTING:
+- NATURAL BALANCED soft, even lighting
+- Realistic shadows highlighting the fabric weave and print integration
+
+FRAMING:
+- CLOSE-UP SHOT - Crop from chin to mid-chest/torso
+- Focus on the main graphic
+- Maintain a 1:1 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any other text. Do NOT change the yellow color. Do NOT make the text blocky (keeps script font).

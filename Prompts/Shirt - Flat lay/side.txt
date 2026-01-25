@@ -1,0 +1,22 @@
+Generate a high-resolution flat-lay image of the product from Image 1, neatly FOLDED.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS and FOLDING STYLE.
+
+Instructions:
+1. Background & Lighting:
+   - STRICTLY MATCH Image 1.
+   - Keep the exact same background surface, lighting mood, and props as Image 1.
+
+2. Product Appearance:
+   - Use Image 2 to understand the folding style and visible details from this angle.
+   - The fabric texture and color must EXACTLY match Image 1.
+   - This determines how the product looks in real life from this specific angle/fold.
+
+3. Layout:
+   - Follow the folding arrangement shown in Image 2.
+   - Ensure the fold is crisp and professional.
+
+Negative prompt:
+STRICT CONSTRAINTS: No unfolded view, no mismatched color, no bad folding, no mismatched background, [no back pleats, no prints or patterns, no short sleeves, no elastic waistband, no hood]

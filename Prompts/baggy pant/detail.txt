@@ -1,0 +1,38 @@
+Generate a DETAIL/CLOSE-UP image focusing on the waistband and upper thigh area of the baggy pants.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE consistency.
+- Image 2 (Raw Product Image): Source for REAL LIFE FABRIC TEXTURE and CONSTRUCTION DETAILS.
+
+CRITICAL: This is a close-up product detail shot. Focus on showcasing the fabric quality and construction.
+
+FOCUS AREA:
+- Close-up of the WAISTBAND and UPPER THIGH area of the baggy pants
+- Show the elastic waistband with drawstring detail (if present)
+- Capture the fabric texture - heathered cotton/fleece material
+- Include a portion of the white t-shirt hem for context
+
+DETAIL ELEMENTS TO CAPTURE:
+- Fabric texture and weave pattern
+- Waistband construction and elastic
+- Drawstring or tie details
+- Seam quality and stitching
+- Natural fabric drape and folds
+
+BACKGROUND & ENVIRONMENT:
+- Same context as the front view
+- The off-white wall should be slightly visible in the background
+- Maintain the same lighting mood
+
+LIGHTING:
+- Soft, even lighting that reveals fabric texture
+- No harsh shadows that obscure details
+- Accurate color representation of the fabric
+
+FRAMING:
+- CLOSE-UP SHOT - Crop to show waistband area to mid-thigh
+- The model's midsection (waist to upper thigh) should fill most of the frame
+- Include just enough of the white t-shirt to show the waistline transition
+- Maintain a 1:1 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image.

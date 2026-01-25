@@ -1,0 +1,51 @@
+Generate a DETAIL/CLOSE-UP image focusing on the waistband and upper thigh area of the cord set pants.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE consistency.
+- Image 2 (Raw Product Image): Source for REAL LIFE FABRIC TEXTURE and CONSTRUCTION DETAILS.
+
+CRITICAL: This is a close-up product detail shot. Focus on showcasing the fabric quality and construction of the pants waistband.
+
+MODEL & POSE (REPLICATE EXACTLY):
+- Same male model
+- RIGHT hand deeply inserted into the front pocket of the pants (fingers visible pushing into pocket)
+- LEFT arm relaxed by side, hanging naturally
+- Star tattoos visible on left forearm
+- Close-up framing of midsection only
+
+FOCUS AREA:
+- Close-up of the WAISTBAND and UPPER THIGH area of the pants
+- BLACK drawstring bow tied at center front of waistband (clearly visible - MUST be BLACK color)
+- Elastic waistband with gathered texture
+- Hand in pocket showing pocket depth and construction
+- Angled front pocket opening visible
+- Include portion of shirt hem for context
+
+DETAIL ELEMENTS TO CAPTURE:
+- BLACK drawstring with bow knot at center (IMPORTANT: drawstring is BLACK, not white)
+- Elastic gathered waistband construction
+- Front pocket opening and hand insertion
+- Fabric texture (smooth cotton blend)
+- Natural fabric drape and folds
+- Star tattoos on left forearm for realism
+
+BACKGROUND & ENVIRONMENT:
+- Same context as the front view
+- NEUTRAL WHITE wall visible in the background - natural white, not blue-tinted
+- PHOTOREALISTIC studio environment
+
+LIGHTING:
+- NATURAL BALANCED soft, even lighting that reveals fabric texture
+- Realistic shadows and highlights - NOT flat or artificial
+- Accurate color representation of the fabric
+
+FRAMING:
+- CLOSE-UP SHOT - Crop from mid-chest to upper thigh
+- Focus on waistband area and pocket detail
+- The model's midsection should fill most of the frame
+- Include just enough of the shirt hem to show the waistline transition
+- Hand in pocket is essential for this shot
+- Both arms partially visible (one in pocket, one by side)
+- Maintain a 1:1 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. The drawstring MUST be BLACK, not white.

@@ -1,0 +1,19 @@
+Generate a high-resolution MACRO DETAIL Shot of the fabric texture.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS.
+
+Instructions:
+1. Background & Lighting:
+   - STRICTLY MATCH Image 1's lighting mood.
+
+2. Product Appearance:
+   - **STRICT REQUIREMENT**: The generated fabric must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
+   - Capture the weave and sheen.
+
+3. Layout:
+   - Extreme macro view (flat).
+
+Negative prompt:
+STRICT CONSTRAINTS: No out of focus, no pattern hallucination.

@@ -1,0 +1,49 @@
+Generate an image of a FEMALE model wearing the SPECIFIC YELLOW OVERSIZED T-SHIRT shown in the provided reference image.
+
+CRITICAL INSTRUCTION: The provided image is purely for TEXTURE and DESIGN reference. You must EXTRACT the clothing design from it and apply it to the model. Do NOT paste, float, or include the reference image itself in the scene.
+
+STRICT COLOR & PATTERN FIDELITY:
+- **COLOR**: Light Butter Yellow / Pastel Yellow. must be exact.
+- **PRINT**: Center chest graphic featuring abstract watercolor-style splashes in purple, blue, and pink, with black CURSIVE TEXT overlay (reading "Mind Positive" or similar script).
+- **FIDELITY**: The graphic print details and colors must comprise the exact design from the reference.
+
+MODEL & POSE (REPLICATE EXACTLY):
+- Female model, young adult (early 20s), fit/slim build
+- **SKIN**: Fair skin tone. Realistic micro-texture with fine pores and natural matte-sheen variation; natural and healthy skin look.
+- **HAIR**: Shoulder-length, slightly wavy, natural brown.
+- Relaxed confident standing pose, body slightly angled
+- **EYES**: DIRECT EYE CONTACT. The model must look straight into the camera lens.
+- One hand loosely by side, other hand potentially resting on thigh or interacting with hair
+- Weight shifted slightly to one leg for natural stance
+- Neutral to warm smile, friendly expression
+- Body facing toward the camera with slight angle (FRONT VIEW)
+- Natural hair styling
+
+OUTFIT STYLING (THE YELLOW T-SHIRT - CRITICAL DETAILS):
+- **SILHOUETTE**: Oversized / Boxy fit.
+- **SHOULDERS**: Drop shoulders (seam falls below the natural shoulder line).
+- **SLEEVES**: Elbow-length (half sleeves) with a DISTINCT STITCHED CUFF/HEM. Wide sleeve opening.
+- **NECKLINE**: Classic Crew Neck (Round Neck) with ribbing.
+- **LENGTH**: Slightly cropped or standard waist length (boxy cut).
+- **BOTTOMS**: Pair with neutral light-wash denim jeans or white trousers to keep focus on the yellow top.
+
+BACKGROUND & ENVIRONMENT:
+- Minimalist corner studio set
+- NEUTRAL WHITE walls on both sides (corner visible)
+- Light grey matte floor visible at bottom
+- Premium eCommerce photography backdrop
+- REALISTIC studio environment
+
+LIGHTING:
+- NATURAL BALANCED soft, diffused, even studio lighting
+- Neutral color temperature (5000K)
+- No harsh highlights - preserve the pastel yellow color and graphic print details
+- Photorealistic quality
+
+FRAMING:
+- FULL BODY SHOT - Head to toe
+- The ENTIRE outfit must be visible
+- Do NOT crop the head or feet
+- Maintain a 3:4 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text other than the "Mind Positive" graphic. Do NOT change the t-shirt color (must be Yellow). Do NOT make the fit tight (must be Oversized/Boxy).

@@ -1,0 +1,1 @@
+Generate a tight zoomed-in fabric detail shot taken from the same shirt worn in the generated front-view image. Match the studio light direction, color tone, and shadow softness. Capture pleat depth, stitching, weave texture, and button detailing. Use the raw shirt image solely for texture correctness.

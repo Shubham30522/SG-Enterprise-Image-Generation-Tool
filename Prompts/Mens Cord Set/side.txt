@@ -1,0 +1,51 @@
+Generate a SIDE VIEW image focusing on the PANTS portion of the cord set.
+
+Input References:
+- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS from the side angle.
+
+CRITICAL: This must look like the SAME model and SAME environment as the front view, just captured from a side angle with focus on lower body.
+
+MODEL & POSE (REPLICATE EXACTLY):
+- Same male model, viewed from the RIGHT SIDE (profile view)
+- WAIST-DOWN FRAMING - only lower body visible
+- RIGHT hand inserted into the front pocket of the pants
+- Natural standing pose, weight on both feet
+- Slight forward lean for natural stance
+- Body facing perpendicular to the camera (SIDE VIEW - showing profile of pants)
+
+OUTFIT STYLING:
+- Show only the hem/bottom portion of the shirt at the top of frame
+- Focus on the PANTS from the cord set:
+  * Side pocket visible with hand inserted
+  * Straight-leg relaxed fit silhouette
+  * Full length from waist to ankle
+- SAME WHITE chunky platform sneakers as front view (MUST match front view shoes exactly - do NOT change shoe style or color)
+
+BACKGROUND & ENVIRONMENT:
+- STRICTLY MATCH the front view background
+- Same NEUTRAL WHITE corner studio wall - natural white, not blue-tinted
+- Same light grey matte floor visible at bottom (floor line visible horizontally)
+- Same corner studio setup
+
+LIGHTING:
+- STRICTLY MATCH the front view lighting
+- Same NATURAL BALANCED soft, diffused, even lighting
+- Same realistic shadow pattern on the floor
+
+FRAMING:
+- WAIST-DOWN SHOT - Frame from waist to just below the feet
+- Focus on the PANTS - only shirt hem visible at top
+- The ENTIRE pants must be visible from waistband to ankle cuffs - NO CROPPING
+- Include the full sneakers, do not crop the feet
+- Floor visible at bottom
+- Ensure 100% of the pants are visible without any cuts
+- Maintain a 1:1 aspect ratio
+
+CRITICAL PRODUCT DETAILS TO PRESERVE:
+- Side pocket construction with hand inserted
+- Smooth fabric texture
+- Elastic waistband (partially visible)
+- Relaxed straight-leg fit
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT change the shoe style or color from the front view.

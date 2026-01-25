@@ -1,0 +1,32 @@
+Generate an image of a FEMALE model wearing the SPECIFIC GREY WIDE LEG JEANS shown in the provided reference image.
+
+CRITICAL INSTRUCTION: The provided image is purely for TEXTURE and DESIGN reference. You must EXTRACT the clothing design from it and apply it to the model. Do NOT paste, float, or include the reference image itself in the scene.
+
+STRICT COLOR & PATTERN FIDELITY:
+- **COLOR**: GREY. must be exact.
+- **FABRIC**: smooth suit/trouser material (as seen in raw image).
+- **FIDELITY**: STRICT REQUIREMENT: The generated product must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
+
+MODEL & POSE:
+- Female model, young adult (early 20s), fit/slim build
+- **SKIN**: Fair skin tone. Realistic micro-texture.
+- **POSE**: Standing straight, feet shoulder-width apart to show the leg drape.
+- **FRAMING**: WAIST TO TOE VIEW. Focusing entirely on the trousers.
+
+OUTFIT STYLING (CONSISTENT PROPS - MUST MATCH ALL VARIANT PROMPTS):
+- **TOP**: A clean, minimalist WHITE TANK TOP, tucked in.
+- **SHOES**: White minimalist leather sneakers.
+- **ACCESSORIES**: A simple SILVER WATCH on the left wrist. No other jewelry.
+
+OUTFIT STYLING (THE WIDE LEG JEANS):
+- **SILHOUETTE**: Wide Leg / Relaxed Fit.
+- **WAIST**: High waisted with belt loops and distinct front pleats.
+- **LENGTH**: Full length, breaking slightly at the shoe.
+
+BACKGROUND & ENVIRONMENT:
+- Minimalist corner studio set
+- NEUTRAL WHITE walls, Light grey matte floor
+- Premium eCommerce photography backdrop
+
+LIGHTING:
+- NATURAL BALANCED soft, diffused, even studio lighting.

@@ -1,0 +1,23 @@
+Generate a high-resolution close-up Detail Shot of the WAISTBAND area.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS (Close-up).
+
+Instructions:
+1. Background & Lighting:
+   - STRICTLY MATCH Image 1.
+
+2. Product Appearance:
+   - **STRICT REQUIREMENT**: The generated waistband must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
+   - Focus on button, zipper, and belt loops.
+
+3. Outfit Styling (MUST MATCH MASTER PROMPT):
+   - **TOP**: Show the bottom hem of the WHITE TANK TOP tucked into the waistband.
+   - **ACCESSORIES**: Model's hand resting near the pocket/waist, wearing a SILVER WATCH (Consistent with Master Prompt).
+
+4. Layout:
+   - Close-up front view of waist.
+
+Negative prompt:
+STRICT CONSTRAINTS: No full body view, no fuzzy details, no mismatched background.

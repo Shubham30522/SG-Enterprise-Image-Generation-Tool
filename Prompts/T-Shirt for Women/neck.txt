@@ -1,0 +1,45 @@
+Generate an UPPER BODY/NECK VIEW image focusing on the YELLOW T-SHIRT fit and neckline.
+
+Input References:
+- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS of the shirt.
+
+CRITICAL: Focus on the Crew Neck and the Graphic placement on the upper chest.
+
+MODEL & POSE (REPLICATE EXACTLY):
+- Same female model
+- **SKIN**: Fair skin tone. Realistic micro-texture with fine pores.
+- **HAIR**: Shoulder-length, slightly wavy, natural brown.
+- **EYES**: DIRECT EYE CONTACT. Look straight at the camera.
+- Upper body framing - from waist up
+- Friendly confident expression
+
+OUTFIT STYLING:
+- TOP: The YELLOW T-SHIRT.
+  * **NECKLINE**: Ribbed Crew Neck (Round).
+  * **GRAPHIC**: Top portion of the "Mind Positive" graphic visible on chest.
+  * **COLOR**: Light Butter Yellow.
+  * **FIT**: Relaxed/Oversized fit around shoulders.
+  * **SLEEVES**: Loose sleeve opening visible.
+
+BACKGROUND & ENVIRONMENT:
+- STRICTLY MATCH the front view background
+- Same NEUTRAL WHITE corner studio wall
+- Clean, premium studio backdrop
+
+LIGHTING:
+- STRICTLY MATCH the front view lighting
+- Same NATURAL BALANCED soft, diffused, even lighting
+
+FRAMING:
+- UPPER BODY SHOT - From waist up to above the head
+- Focus on the SHIRT - this is the key product showcase
+- Face clearly visible
+- Maintain a 1:1 aspect ratio
+
+CRITICAL PRODUCT DETAILS TO PRESERVE:
+- Shirt neckline/collar construction
+- Graphic print quality
+- Fabric texture and color accuracy
+
+NEGATIVE CONSTRAINT: Do NOT include any text other than the specific graphic. Do NOT change the yellow color.

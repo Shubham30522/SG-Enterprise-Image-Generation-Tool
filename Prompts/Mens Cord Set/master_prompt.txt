@@ -1,0 +1,63 @@
+Generate an image of a MALE model wearing the MATCHING CORD SET (shirt + pants) shown in the provided reference image.
+
+CRITICAL INSTRUCTION: The provided image is purely for TEXTURE and DESIGN reference. You must EXTRACT the clothing design from it and apply it to the model. Do NOT paste, float, or include the reference image itself in the scene. It is data, not an object.
+
+STRICT COLOR & PATTERN FIDELITY: The color, print, and texture of the generated cord set MUST MATCH the reference image EXACTLY. Do not alter, brighten, filter, or shift the colors. High fidelity to the source material is paramount.
+
+INDEPENDENT GENERATION: Treat this request as a completely new and isolated task. Ignore any previous context. You MUST generate a fresh, unique background and lighting setup distinct from any prior outputs. Do not reuse previous settings.
+
+MODEL & POSE (REPLICATE EXACTLY):
+- Male model, young adult (early 20s), fit build
+- Relaxed confident standing pose, body slightly angled (not perfectly straight)
+- RIGHT hand casually placed inside the front pocket of the pants
+- LEFT arm relaxed by side, slightly bent
+- Weight shifted slightly to the back leg for natural stance
+- Slight natural smile, friendly warm expression
+- Body facing toward the camera with slight angle (FRONT VIEW)
+- Visible arm tattoo on left forearm (ship/sailing design style)
+
+OUTFIT STYLING (MATCHING CORD SET - CRITICAL CLOTHING DETAILS):
+- TOP: Collared short-sleeve button-up shirt
+  * FINE HORIZONTAL STRIPES/PINSTRIPES running across entire fabric
+  * Full button-down front with visible buttons
+  * Turn-down collar
+  * Brown leather "dcrok" logo patch on left chest pocket area
+  * Relaxed oversized fit
+- BOTTOM: Matching pants with same horizontal stripe/pinstripe texture
+  * Elastic waistband with BLACK drawstring (contrast color)
+  * Same fine horizontal stripe pattern as shirt
+  * Relaxed straight-leg fit
+- BOTH PIECES must have the same subtle horizontal pinstripe texture - this is a COORDINATED MATCHING SET
+- White chunky platform sneakers (clean, modern style)
+
+FABRIC PATTERN (IMPORTANT - may not be visible in reference image due to zoom):
+- Fine horizontal stripes/pinstripes running across the fabric
+- Subtle ribbed/textured cotton weave
+- The horizontal lines create a subtle linear texture pattern
+- Same pattern on both shirt and pants for coordinated look
+
+BACKGROUND & ENVIRONMENT:
+- Minimalist corner studio set
+- NEUTRAL WHITE walls on both sides (corner visible) - natural white, not artificially cool/blue or warm/yellow
+- Light grey matte floor visible at bottom
+- Clean, premium eCommerce photography backdrop
+- Studio corner angle visible for depth
+- REALISTIC studio environment - like professional fashion photography
+
+LIGHTING:
+- NATURAL BALANCED soft, diffused, even studio lighting
+- Neutral color temperature (5000K - natural daylight balance)
+- Realistic shadows and highlights - NOT flat or artificial looking
+- Subtle natural shadows on the floor beneath the model
+- No harsh highlights - preserve accurate fabric colors and texture
+- Premium soft-box fashion photography quality - PHOTOREALISTIC
+
+FRAMING:
+- FULL BODY SHOT - Head to toe with slight space above head
+- The ENTIRE outfit must be visible - both shirt and full-length pants
+- Do NOT crop the head or feet
+- Include the full sneakers
+- Some floor visible at bottom
+- Maintain a 3:4 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image.

@@ -1,0 +1,53 @@
+Generate an UPPER BODY/NECK VIEW image focusing on the SHIRT portion of the cord set.
+
+Input References:
+- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS of the shirt.
+
+CRITICAL: This must look like the SAME model and SAME environment as the front view, focus on upper body to showcase the shirt.
+
+MODEL & POSE (REPLICATE EXACTLY):
+- Same male model, young adult (early 20s)
+- Upper body framing - from waist up
+- NO CAP/HAT - model's natural hair visible
+- Slight natural smile, friendly confident expression
+- Head tilted very slightly
+- LEFT arm visible, relaxed position
+- Visible arm tattoo on left forearm (cherub/angel style design)
+- Wearing a silver/metal watch on left wrist
+- RIGHT hand in pocket (pocket area may be at bottom of frame)
+- Body slightly angled, not perfectly straight to camera
+
+OUTFIT STYLING:
+- TOP: The cord set shirt from the reference image - this is the FOCUS
+- Ensure collar, neckline, sleeves, and fit are clearly showcased
+- Oversized relaxed fit visible
+- Shirt hem visible at bottom of frame
+- BOTTOM: Only waistband portion of matching pants visible at bottom of frame
+- Same pants waistband visible
+
+BACKGROUND & ENVIRONMENT:
+- STRICTLY MATCH the front view background
+- Same NEUTRAL WHITE corner studio wall - natural white, not blue-tinted
+- Clean, premium studio backdrop
+
+LIGHTING:
+- STRICTLY MATCH the front view lighting
+- Same NATURAL BALANCED soft, diffused, even lighting
+- Premium soft-box fashion photography quality - PHOTOREALISTIC
+
+FRAMING:
+- UPPER BODY SHOT - From waist up to above the head
+- Focus on the SHIRT - this is the key product showcase
+- Face clearly visible (NO cap/hat)
+- Both arms partially visible
+- Waistband of pants visible at bottom of frame
+- Maintain a 1:1 aspect ratio
+
+CRITICAL PRODUCT DETAILS TO PRESERVE:
+- Shirt neckline/collar construction
+- Sleeve fit and length
+- Overall shirt silhouette and drape
+- Fabric texture
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, typography overlays, or hats/caps in the image.

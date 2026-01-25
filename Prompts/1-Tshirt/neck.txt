@@ -1,0 +1,20 @@
+Generate a high-resolution close-up Detail Shot of the NECKLINE/COLLAR area.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS (Close-up).
+
+Instructions:
+1. Background & Lighting:
+   - STRICTLY MATCH Image 1.
+   - Even in close-up, the lighting mood and background texture must be consistent with Image 1.
+
+2. Product Appearance:
+   - Use Image 2 to see the exact construction of the neckline/collar (buttons, stitching, tags).
+   - Match the fabric texture and color from Image 1.
+
+3. Layout:
+   - Zoom in on the neck area as shown in Image 2.
+
+Negative prompt:
+STRICT CONSTRAINTS: No full body view, no fuzzy details, no mismatched background, [no hood, no long sleeves, no crew neckline, no solid color body, no curved hemline]
