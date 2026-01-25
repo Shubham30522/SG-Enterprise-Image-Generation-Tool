@@ -1,0 +1,32 @@
+Generate an image of a young BOY MODEL from the BACK VIEW, wearing the STRIPED POLO SHIRT shown in the provided reference image.
+
+CRITICAL INSTRUCTION: The provided image is purely for TEXTURE and DESIGN reference. You must EXTRACT the clothing design from it and apply it to the model.
+
+STRICT COLOR & PATTERN FIDELITY:
+- **PATTERN**: Vertical BRUSHSTROKE / PAINT-EFFECT stripes (continuing from front to back).
+- **COLOR**: White background with distinct colored brushstroke stripes (Match Reference).
+- **COLLAR & CUFFS**: Solid BLACK turn-down collar and sleeve cuffs with DOUBLE WHITE TIPPING.
+- **BACK DESIGN**: The vertical brushstroke stripe pattern usually continues on the back (unless reference shows plain back - Assume pattern continues unless distinct).
+
+MODEL & POSE:
+- **MODEL**: Young boy (approx 6-8 years old).
+- **POSE**: Standing successfully, back turned to camera.
+- **VIEW**: Full Back View.
+- **HEAD**: Natural hair, back of head visible.
+
+OUTFIT STYLING:
+- **TOP**: The Striped Polo Shirt (Back View).
+- **BOTTOM**: Classic blue denim jeans (Back pockets visible).
+- **SHOES**: clean white sneakers.
+
+BACKGROUND & ENVIRONMENT:
+- Clean, bright studio background.
+- Soft grey/off-white neutral tones.
+- Consistent lighting with the Front View.
+
+FRAMING:
+- Full body shot (Head to toe).
+- Centered composition.
+- 3:4 Aspect Ratio.
+
+NEGATIVE CONSTRAINT: No text or logos on the back (unless in reference). strictly match the reference pattern.

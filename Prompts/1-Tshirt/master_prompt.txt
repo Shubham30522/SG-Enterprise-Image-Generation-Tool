@@ -1,30 +1,32 @@
-Generate a photorealistic product image of a t-shirt.
+Generate an image of a young BOY MODEL wearing the STRIPED POLO SHIRT shown in the provided reference image.
 
-Input References:
-- Image 1 (Raw Product): The ONLY source for the t-shirt structure, fabric details, and cut.
-- Image 2 (Style Reference): The ONLY source for Layout, Background, and Lighting.
+CRITICAL INSTRUCTION: The provided image is purely for TEXTURE and DESIGN reference. You must EXTRACT the clothing design from it and apply it to the model. Do NOT paste, float, or include the reference image itself in the scene.
 
-Instructions:
-1. Product Accuracy (From Image 1):
-   - The t-shirt must be IDENTICAL to Image 1 with 100% accuracy.
-   - Key Attributes to Preserve:
-     - Contrast turn-down collar with white tipping
-     - Short sleeves with matching ribbed contrast cuffs
-     - Vertical irregular variegated stripe pattern
-     - Straight bottom hem
-     - Set-in sleeve construction
-   - Do NOT redesign, smooth, or stylize the fabric. Keep it authentic to Image 1.
+STRICT COLOR & PATTERN FIDELITY:
+- **PATTERN**: Vertical BRUSHSTROKE / PAINT-EFFECT stripes. Irregular, artistic vertical lines resembling painted strokes.
+- **COLOR**: White background with distinct colored brushstroke stripes (Match the Reference Image Color EXACTLY - likely Green, Brown, or Red variant).
+- **COLLAR & CUFFS**: Solid BLACK turn-down collar and sleeve cuffs with DOUBLE WHITE TIPPING stripes at the edges.
+- **FIDELITY**: The brushstroke texture, stripe width, and collar details must match the reference 100%.
 
-2. Layout & Style (From Image 2):
-   - Place the t-shirt exactly like Image 2: Hanging style on a black hanger.
-   - STRICTLY MATCH Image 2's Background Surface: Horizontal wooden planks with warm brown tones.
-   - DO NOT include any accessories, jewelry, necklaces, keychains, or extra props from Image 2.
-   - Only use the hanger and background from Image 2.
-   - Lighting must be soft, diffused, natural, matching Image 2's mood.
+MODEL & POSE:
+- **MODEL**: Young boy (approx 6-8 years old).
+- **LOOK**: Happy, natural expression, friendly smile.
+- **POSE**: Standing comfortably, one hand casually in pocket or by side.
+- **VIEW**: Front View, facing the camera.
 
-3. Configuration:
-   - T-shirt detailed configuration (collar, sleeves, pattern) must match Image 1.
-   - Do NOT add inner layers or undershirts.
+OUTFIT STYLING:
+- **TOP**: The Striped Polo Shirt (Key Product).
+- **BOTTOM**: Classic blue denim jeans (clean, simple fit).
+- **SHOES**: clean white sneakers.
 
-Negative prompt:
-no fabric smoothing, no pattern alteration, no color change, no hood, no long sleeves, no crew neckline, no solid color body, no curved hemline, no stylization, no AI artifacts, no incorrect wrinkles, no logo, no embroidery, no added textures, no layered clothing, no necklace, no keychain, no jewelry, no accessories, no extra props
+BACKGROUND & ENVIRONMENT:
+- Clean, bright studio background.
+- Soft grey/off-white neutral tones.
+- Professional eCommerce lighting (Soft, diffused, no harsh shadows).
+
+FRAMING:
+- Full body shot (Head to toe).
+- Centered composition.
+- 3:4 Aspect Ratio.
+
+NEGATIVE CONSTRAINT: Do not alter the stripe pattern (must be brushstroke style, not straight lines). Do not change the collar color (must be Black with White Tipping).

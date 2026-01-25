@@ -1,20 +1,15 @@
-Generate a high-resolution MACRO DETAIL Shot of the fabric/pattern.
+Generate a MACRO CLOSE-UP DETAIL image of the STRIPED POLO SHIRT, focusing on the COLLAR and CHEST area.
 
-Input References:
-- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
-- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS (Texture/Weave).
+FOCUS POINTS:
+1.  **COLLAR**: The Black turn-down collar with the DOUBLE WHITE TIPPING stripes at the edge. Show the ribbing texture of the collar.
+2.  **PLACKET**: The Black button placket with visible buttons and stitching details.
+3.  **PATTERN**: The start of the vertical BRUSHSTROKE / PAINT-EFFECT stripes on the white fabric. Show the "painted" uneven texture of the colored stripes.
+4.  **FABRIC**: Visible cotton pique/knit texture of the polo shirt.
 
-Instructions:
-1. Background & Lighting:
-   - STRICTLY MATCH Image 1's lighting mood.
-   - If background is visible, it must match Image 1.
+LIGHTING & COMPOSITION:
+- Soft, side lighting to accentuate the fabric weave and collar ribbing.
+- Shallow depth of field (Blur background slightly, focus on collar/placket).
+- High Fidelity texturing.
 
-2. Product Appearance:
-   - Use Image 2 to understand the fine details of the fabric (weave, print quality) in real life.
-   - Match the color and general texture appearance from Image 1.
-
-3. Layout:
-   - Extreme close-up (Macro) view.
-
-Negative prompt:
-STRICT CONSTRAINTS: No full view, no conflicting patterns, no low resolution, no mismatched background, [no hood, no long sleeves, no crew neckline, no solid color body, no curved hemline]
+VIEW:
+- Close-up angled view of the upper chest and collar.
