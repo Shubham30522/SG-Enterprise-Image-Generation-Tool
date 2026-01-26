@@ -19,4 +19,4 @@ Instructions:
    - Position the product centrally.
 
 Negative prompt:
-[no back pleats, no prints or patterns, no short sleeves, no elastic waistband, no hood]
+[no prints, no short sleeves, no zippers, no hood, no ruffles]

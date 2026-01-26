@@ -17,4 +17,4 @@ Instructions:
    - Extreme close-up (Macro) view.
 
 Negative prompt:
-STRICT CONSTRAINTS: No full view, no conflicting patterns, no low resolution, no mismatched background, [no back pleats, no prints or patterns, no short sleeves, no elastic waistband, no hood]
+STRICT CONSTRAINTS: No full view, no conflicting patterns, no low resolution, no mismatched background, [no prints, no short sleeves, no zippers, no hood, no ruffles]

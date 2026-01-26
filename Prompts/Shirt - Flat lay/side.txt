@@ -19,4 +19,4 @@ Instructions:
    - Ensure the fold is crisp and professional.
 
 Negative prompt:
-STRICT CONSTRAINTS: No unfolded view, no mismatched color, no bad folding, no mismatched background, [no back pleats, no prints or patterns, no short sleeves, no elastic waistband, no hood]
+STRICT CONSTRAINTS: No unfolded view, no mismatched color, no bad folding, no mismatched background, [no prints, no short sleeves, no zippers, no hood, no ruffles]

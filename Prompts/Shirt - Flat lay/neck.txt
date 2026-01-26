@@ -17,4 +17,4 @@ Instructions:
    - Zoom in on the neck area as shown in Image 2.
 
 Negative prompt:
-STRICT CONSTRAINTS: No full body view, no fuzzy details, no mismatched background, [no back pleats, no prints or patterns, no short sleeves, no elastic waistband, no hood]
+STRICT CONSTRAINTS: No full body view, no fuzzy details, no mismatched background, [no prints, no short sleeves, no zippers, no hood, no ruffles]

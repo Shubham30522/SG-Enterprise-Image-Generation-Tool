@@ -18,7 +18,7 @@ Instructions:
    - The {product_name} must be IDENTICAL to Image 1 with 100% accuracy.
    - Key Attributes to Preserve:
 {attributes_list}
-   - Do NOT redesign, smooth, or stylize the fabric. Keep it authentic to Image 1.
+   - You MUST generate the {product_name} appearing professionally ironed and wrinkle-free, even if Image 1 has wrinkles. Remove all creases while strictly preserving the fabric texture.
 
 2. Layout & Style (From Image 2):
    - Place the {product_name} exactly like Image 2: {layout_instruction}
@@ -31,7 +31,7 @@ Instructions:
    - Do NOT add inner layers or undershirts.
 
 Negative prompt:
-no fabric smoothing, no pattern alteration, no color change, {negative_constraints}, no stylization, no AI artifacts, no incorrect wrinkles, no logo, no embroidery, no added textures, no layered clothing
+no pattern alteration, no color change, {negative_constraints}, no stylization, no AI artifacts, wrinkles, creases, folds, messy fabric, no logo, no embroidery, no added textures, no layered clothing
 """
 
 
@@ -271,7 +271,7 @@ def auto_tune_prompts(product_name):
         sku_dirs = [d for d in os.listdir(product_dir) if os.path.isdir(os.path.join(product_dir, d))]
         if sku_dirs:
             first_sku = os.path.join(product_dir, sku_dirs[0])
-            images = [f for f in os.listdir(first_sku) if f.lower().endswith(('.jpg', '.png'))]
+            images = [f for f in os.listdir(first_sku) if f.lower().endswith(('.jpg', '.png', '.jpeg', '.heic', '.heif'))]
             if images:
                 raw_image = os.path.join(first_sku, images[0])
     
