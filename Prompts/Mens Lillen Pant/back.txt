@@ -1,0 +1,39 @@
+Generate a BACK VIEW image of the SAME male model wearing the MENS LILLEN PANT.
+
+Input References:
+- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS from the back angle (e.g., back pockets).
+
+CRITICAL: This must look like the SAME model and SAME environment as the front view, just captured from behind.
+STRICT REQUIREMENT: The generated product must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
+
+MODEL & POSE:
+- Male model, relaxed standing pose viewed from BEHIND
+- Hands relaxed by sides, not in pockets (to show pocket details)
+- Body facing directly away from the camera (BACK VIEW)
+- Fit: Show the drape of the linen fabric from behind
+
+OUTFIT STYLING:
+- Same white shirt/t-shirt as front view
+- The pants - ensure the back fit and details are accurately shown:
+  * Back pockets clearly visible (welts or patch, matching reference)
+  * Waistband details
+  * Fabric drape
+- Same shoes as front view
+
+BACKGROUND & ENVIRONMENT:
+- STRICTLY MATCH the front view background
+- Same off-white/cream painted wall
+- Same flooring
+
+LIGHTING:
+- STRICTLY MATCH the front view lighting
+- Same soft, diffused, even lighting
+
+FRAMING:
+- WAIST TO TOE SHOT
+- Focus on the PANTS
+- The ENTIRE back of the pants must be visible from waistband to hem - NO CROPPING
+- 3:4 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image.

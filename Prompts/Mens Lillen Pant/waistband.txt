@@ -1,0 +1,29 @@
+Generate a CLOSE-UP DETAIL SHOT of the WAISTBAND area of the MENS LILLEN PANT.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS (Close-up of waist/fly).
+
+STRICT REQUIREMENT: The generated product must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
+
+MODEL & POSE:
+- Close crop on the midsection of the model
+- Hands can be partially visible (e.g., thumb hooked in pocket) to add natural feeling, or out of frame
+
+OUTFIT STYLING:
+- Same white shirt/t-shirt, tucked in to show waistband clearly
+- The pants:
+  * Focus on the button/drawstring details
+  * Fabric texture at the waist
+  * Belt loops (if any)
+  * Pleats (if any)
+
+BACKGROUND & ENVIRONMENT:
+- STRICTLY MATCH the front view lighting and background tones
+- Soft focus background
+
+FRAMING:
+- MACRO/CLOSE-UP on the Waistband and upper thigh area
+- 1:1 or 3:4 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image.

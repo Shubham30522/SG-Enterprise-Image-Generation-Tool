@@ -1,0 +1,22 @@
+Generate a high-resolution MACRO DETAIL Shot of the MENS LILLEN PANT fabric.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS (Texture/Weave).
+
+STRICT REQUIREMENT: The generated product must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
+
+Instructions:
+1. Background & Lighting:
+   - STRICTLY MATCH Image 1's lighting mood.
+   - If background is visible, it must match Image 1.
+
+2. Product Appearance:
+   - Use Image 2 to understand the fine details of the fabric (linen weave, thread quality) in real life.
+   - Match the color and general texture appearance from Image 1.
+
+3. Layout:
+   - Extreme close-up (Macro) view.
+
+Negative prompt:
+STRICT CONSTRAINTS: No full view, no conflicting patterns, no low resolution, no mismatched background, Do NOT include any text, logos, watermarks, or typography overlays in the image.
