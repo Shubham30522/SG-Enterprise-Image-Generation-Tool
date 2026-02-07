@@ -1,25 +1,24 @@
-Generate a high-resolution image of the product from the SIDE view (Profile).
+Generate a photorealistic image of the SAME female model wearing the SAME wide leg jeans, view from the SIDE.
+   - **MODEL CONSISTENCY REQ**: Model's skin tone, hair, nail polish (none), and styling (shoes, top) MUST MATCH Image 1 (Generated Front).
 
 Input References:
 - Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
-- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS and FOLDING STYLE.
 
 Instructions:
 1. Background & Lighting:
    - STRICTLY MATCH Image 1.
+   - Keep the exact same background surface, lighting mood, and props as Image 1.
 
 2. Product Appearance:
-   - **STRICT REQUIREMENT**: The generated product must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
-   - Show the side seam, the fit across the hips/thighs, and the wide leg drape from the side.
+   - Use Image 2 to understand the dynamic walking pose. The wide leg silhouette should be shown in motion.
+   - Show the simple Slanted Side Pockets at the hip.
+   - The fabric texture and color must EXACTLY match Image 1.
+   - This determines how the product looks in real life from this specific angle/fold.
 
-3. Outfit Styling (MUST MATCH MASTER PROMPT):
-   - **TOP**: The same clean WHITE TANK TOP (side view), tucked in.
-   - **SHOES**: The same White minimalist leather sneakers.
-   - **ACCESSORIES**: (If arm visible) Simple SILVER WATCH on wrist.
-
-4. Layout:
-   - Side profile of the model.
-   - Slight walking stride to demonstrate the flow/width of the leg.
+3. Layout:
+   - Match the specific WALKING POSE from Image 2: One leg forward in mid-stride, showcasing the wide leg drape. Hands in motion or interacting naturally.
+   - Standard straight hem that breaks cleanly at the shoe top (NO bunching or pooling on floor).
 
 Negative prompt:
-STRICT CONSTRAINTS: No front view, no mismatched outfit, no mismatched color.
+STRICT CONSTRAINTS: No unfolded view, no mismatched color, no mismatched background, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry, no changed top, no changed shoes, no floor sweeping length, no pooling fabric at ankles]

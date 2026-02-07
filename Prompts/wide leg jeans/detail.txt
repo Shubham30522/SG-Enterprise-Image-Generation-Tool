@@ -1,19 +1,21 @@
-Generate a high-resolution MACRO DETAIL Shot of the fabric texture.
+Generate a photorealistic 3/4 ANGLE FASHION SHOT of the female model wearing wide leg jeans.
+   - **MODEL CONSISTENCY REQ**: Model's skin tone, hair, nails (no polish), and styling (shoes, top) MUST MATCH Image 1 (Generated Front).
 
 Input References:
 - Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
-- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS (Texture/Weave).
 
 Instructions:
 1. Background & Lighting:
    - STRICTLY MATCH Image 1's lighting mood.
+   - If background is visible, it must match Image 1.
 
 2. Product Appearance:
-   - **STRICT REQUIREMENT**: The generated fabric must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
-   - Capture the weave and sheen.
+   - Use Image 2 to understand the specific 3/4 angle fashion pose. Model turned slightly, showcasing front and side fit.
+   - Match the color and general texture appearance from Image 1.
 
 3. Layout:
-   - Extreme macro view (flat).
+   - Full body or 3/4 body shot, angled view. NOT a macro shot.
 
 Negative prompt:
-STRICT CONSTRAINTS: No out of focus, no pattern hallucination.
+STRICT CONSTRAINTS: No full view, no conflicting patterns, no low resolution, no mismatched background, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry, no changed top, no changed shoes]

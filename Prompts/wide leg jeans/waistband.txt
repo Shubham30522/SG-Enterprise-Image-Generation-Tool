@@ -13,11 +13,12 @@ Instructions:
    - Focus on button, zipper, and belt loops.
 
 3. Outfit Styling (MUST MATCH MASTER PROMPT):
-   - **TOP**: Show the bottom hem of the WHITE TANK TOP tucked into the waistband.
-   - **ACCESSORIES**: Model's hand resting near the pocket/waist, wearing a SILVER WATCH (Consistent with Master Prompt).
+   - **TOP**: Clothing (top) and skin tone MUST MATCH Image 1 (Generated Front).
+   - **ACCESSORIES**: NO watches, NO jewelry, NO bracelets. Hands must be bare if visible.
+   - **MODEL CONSISTENCY**: Hands must have NO NAIL POLISH. Skin tone must match Image 1.
 
 4. Layout:
    - Close-up front view of waist.
 
 Negative prompt:
-STRICT CONSTRAINTS: No full body view, no fuzzy details, no mismatched background.
+STRICT CONSTRAINTS: No full body view, no fuzzy details, no mismatched background, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no watches, no jewelry, no bracelets, no accessories, no changed top]

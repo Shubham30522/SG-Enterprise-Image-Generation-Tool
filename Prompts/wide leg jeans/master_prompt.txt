@@ -1,32 +1,31 @@
-Generate an image of a FEMALE model wearing the SPECIFIC GREY WIDE LEG JEANS shown in the provided reference image.
+Generate a photorealistic image of a female model wearing wide leg jeans.
 
-CRITICAL INSTRUCTION: The provided image is purely for TEXTURE and DESIGN reference. You must EXTRACT the clothing design from it and apply it to the model. Do NOT paste, float, or include the reference image itself in the scene.
+Input References:
+- Image 1 (Raw Product): The ONLY source for the wide leg jeans structure, fabric details, cut, AND COLOR.
+- Image 2 (Style Reference): The ONLY source for Layout, Background, Props, and Lighting.
 
-STRICT COLOR & PATTERN FIDELITY:
-- **COLOR**: GREY. must be exact.
-- **FABRIC**: smooth suit/trouser material (as seen in raw image).
-- **FIDELITY**: STRICT REQUIREMENT: The generated product must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
+Instructions:
+1. Product Accuracy (From Image 1):
+   - The wide leg jeans must be IDENTICAL to Image 1 with 100% accuracy.
+   - Key Attributes to Preserve:
+Wide leg silhouette
+Smooth, flat-finish encased elastic waistband (approx. 1.5 inch width)
+Clean pull-on style front (no fly, no center seam bulk)
+Slanted side entry pockets at hips
+Wide straight leg cut from hip to hem
+Solid dark navy coloration (STRICTLY SOURCE FROM IMAGE 1)
+   - You MUST generate the wide leg jeans appearing professionally ironed and wrinkle-free, even if Image 1 has wrinkles. Remove all creases while strictly preserving the fabric texture and original color from Image 1.
 
-MODEL & POSE:
-- Female model, young adult (early 20s), fit/slim build
-- **SKIN**: Fair skin tone. Realistic micro-texture.
-- **POSE**: Standing straight, feet shoulder-width apart to show the leg drape.
-- **FRAMING**: WAIST TO TOE VIEW. Focusing entirely on the trousers.
+2. Layout & Style (From Image 2):
+   - Place the wide leg jeans exactly like Image 2: On-model standing pose
+   - STRICTLY MATCH Image 2's Background Surface: Solid off-white studio backdrop
+   - STRICTLY MATCH Image 2's Surrounding Props: White sneakers, black crop top
+   - Lighting must be soft, diffused, natural, matching Image 2's mood.
+   - **MODEL CONSISTENCY REQ**: Model's physical details (skin tone, lack of nail polish, hair) and styling (shoes, top) MUST MATCH the generated Front View.
 
-OUTFIT STYLING (CONSISTENT PROPS - MUST MATCH ALL VARIANT PROMPTS):
-- **TOP**: A clean, minimalist WHITE TANK TOP, tucked in.
-- **SHOES**: White minimalist leather sneakers.
-- **ACCESSORIES**: A simple SILVER WATCH on the left wrist. No other jewelry.
+3. Configuration:
+   - wide leg jeans detailed configuration (waistband constructions, pocket placement) must match Image 1.
+   - Do NOT add inner layers or undershirts.
 
-OUTFIT STYLING (THE WIDE LEG JEANS):
-- **SILHOUETTE**: Wide Leg / Relaxed Fit.
-- **WAIST**: High waisted with belt loops and distinct front pleats.
-- **LENGTH**: Full length, breaking slightly at the shoe.
-
-BACKGROUND & ENVIRONMENT:
-- Minimalist corner studio set
-- NEUTRAL WHITE walls, Light grey matte floor
-- Premium eCommerce photography backdrop
-
-LIGHTING:
-- NATURAL BALANCED soft, diffused, even studio lighting.
+Negative prompt:
+no pattern alteration, no color change from Image 1, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry, no changed top, no changed shoes], no stylization, no AI artifacts, wrinkles, creases, folds, messy fabric, no logo, no embroidery, no added textures, no layered clothing
