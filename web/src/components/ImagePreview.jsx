@@ -1,0 +1,138 @@
+import { useEffect } from 'react'
+
+export default function ImagePreview({ 
+  carouselImages = [], 
+  focusedIndex = 0, 
+  onNavigate, 
+  onRegenerate,
+  isProcessing, 
+  statusText 
+}) {
+  
+  // Keyboard Navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') onNavigate(-1)
+      if (e.key === 'ArrowRight') onNavigate(1)
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [onNavigate])
+
+  const currentImage = carouselImages[focusedIndex]
+  const prevImage = carouselImages[focusedIndex - 1]
+  const nextImage = carouselImages[focusedIndex + 1]
+
+  return (
+    <div className="glass-card flex-1 min-h-[400px] flex items-center justify-center overflow-hidden relative group">
+      
+      {carouselImages.length > 0 ? (
+        <>
+          {/* Previous Image (Left Side) */}
+          {prevImage && (
+            <div 
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-48 h-64 opacity-40 blur-[2px] scale-90 z-0 transition-all duration-300 cursor-pointer hover:opacity-60"
+              onClick={() => onNavigate(-1)}
+            >
+              <img 
+                src={prevImage.src} 
+                alt={prevImage.pose} 
+                className="w-full h-full object-cover rounded-lg border border-white/10"
+              />
+            </div>
+          )}
+
+          {/* Next Image (Right Side) */}
+          {nextImage && (
+            <div 
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-48 h-64 opacity-40 blur-[2px] scale-90 z-0 transition-all duration-300 cursor-pointer hover:opacity-60"
+              onClick={() => onNavigate(1)}
+            >
+              <img 
+                src={nextImage.src} 
+                alt={nextImage.pose} 
+                className="w-full h-full object-cover rounded-lg border border-white/10"
+              />
+            </div>
+          )}
+
+          {/* Main Image (Center) */}
+          <div className="relative z-10 max-w-[80%] max-h-[90%] transition-all duration-300 transform scale-100 flex flex-col items-center">
+            <img
+              src={currentImage.src}
+              alt={currentImage.pose}
+              className="max-h-[65vh] object-contain rounded-xl shadow-2xl border border-white/20 animate-fade-in"
+            />
+            
+            {/* Pose Label & Regenerate */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="text-sm font-semibold text-white">{currentImage.pose}</span>
+              <div className="h-4 w-px bg-white/30" />
+              <button 
+                onClick={onRegenerate}
+                className="text-xs text-amber hover:text-amber-300 font-medium flex items-center gap-1.5 transition-colors disabled:opacity-50"
+                disabled={isProcessing}
+              >
+                ↻ Regenerate
+              </button>
+            </div>
+          </div>
+
+          {/* Navigation Buttons */}
+          <button 
+            onClick={() => onNavigate(-1)}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30"
+            disabled={focusedIndex === 0}
+          >
+            ←
+          </button>
+          
+          <button 
+            onClick={() => onNavigate(1)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30"
+            disabled={focusedIndex === carouselImages.length - 1}
+          >
+            →
+          </button>
+
+          {/* Current Index Indicator */}
+          <div className="absolute bottom-4 right-4 text-xs text-white/50 bg-black/30 px-2 py-1 rounded">
+            {focusedIndex + 1} / {carouselImages.length}
+          </div>
+        </>
+      ) : (
+        /* Empty State */
+        <div className="flex flex-col items-center gap-4 text-center px-8 z-10">
+          {isProcessing ? (
+            <>
+              <div className="relative">
+                <div className="w-16 h-16 border-4 border-accent/20 rounded-full" />
+                <div className="w-16 h-16 border-4 border-accent border-t-transparent rounded-full animate-spin absolute top-0 left-0" />
+              </div>
+              <p className="text-text-secondary text-sm max-w-xs">
+                {statusText || 'Generating...'}
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="text-5xl opacity-30">🖼️</div>
+              <p className="text-text-muted text-sm">
+                Generated images will appear here
+              </p>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Global Processing Overlay (when regenerating) */}
+      {isProcessing && carouselImages.length > 0 && (
+        <div className="absolute inset-0 bg-black/40 z-30 flex items-center justify-center rounded-2xl backdrop-blur-[1px]">
+          <div className="flex flex-col items-center gap-3 bg-bg-primary/80 p-6 rounded-2xl border border-white/10 shadow-xl">
+            <div className="w-10 h-10 border-3 border-accent/30 border-t-accent rounded-full animate-spin" />
+            <p className="text-white text-sm font-medium">{statusText || 'Processing...'}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
