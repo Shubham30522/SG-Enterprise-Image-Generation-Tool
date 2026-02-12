@@ -9,12 +9,22 @@ Instructions:
    - The wide leg jeans must be IDENTICAL to Image 1 with 100% accuracy.
    - Key Attributes to Preserve:
 Wide leg silhouette
-Smooth, flat-finish encased elastic waistband (approx. 1.5 inch width)
+Encased elastic waistband (approx. 1.5 inch width) with VISIBLE HORIZONTAL TOPSTITCHING LINE running across the waistband, creating a defined waistband band at the top. There is also a CENTER FRONT SEAM (vertical topstitching) running down the middle. The fabric is MATTE finish, not shiny.
 Clean pull-on style front (no fly, no center seam bulk)
 Slanted side entry pockets at hips
 Wide straight leg cut from hip to hem
 Solid dark navy coloration (STRICTLY SOURCE FROM IMAGE 1)
    - You MUST generate the wide leg jeans appearing professionally ironed and wrinkle-free, even if Image 1 has wrinkles. Remove all creases while strictly preserving the fabric texture and original color from Image 1.
+   - **STRICT PROHIBITION**: CHANGING COLOR IS NOT ALLOWED. The generated jeans MUST have the EXACT SAME COLOR as the Input Image 1. Do not lighten, darken, or shift the hue. Any color deviation is a failure.
+   - **STRICT PROHIBITION**: NO NEW PATTERNS. Especially on the waistband, do not generate any stitching, ribbing, or designs that are not in Image 1. The waistband must be SOLID and SMOOTH if Image 1 is solid. Do not guess patterns.
+   - **STRICT REQUIREMENT**: THE PRODUCT MUST BE TOTALLY WRINKLE-FREE. REMOVE ALL CREASES, FOLDS, AND WRINKLES. The fabric must appear perfectly smooth and professionally ironed. Even if the Input Image 1 shows wrinkles, you MUST fix them. Any visible wrinkle or bunching is a failure.
+   - **WAISTBAND CONSTRUCTION DETAILS (MUST MATCH IMAGE 1):**
+     * There is a VISIBLE HORIZONTAL TOPSTITCHING LINE running across the waistband (about 1.5 inches below the top edge)
+     * There is a CENTER FRONT SEAM (vertical topstitching line) running down the middle front
+     * The waistband band sits FLAT - no elastic gathering, no puckering, no bunched texture
+     * **CRITICAL: The LEFT and RIGHT side portions of the waistband (on either side of the center seam) must be COMPLETELY SMOOTH with NO wrinkles, creases, or fabric bunching**
+     * The fabric should have a MATTE finish, not shiny
+   - DO NOT generate gathered elastic texture. DO NOT add any pattern not in Image 1.
 
 2. Layout & Style (From Image 2):
    - Place the wide leg jeans exactly like Image 2: On-model standing pose
@@ -22,10 +32,11 @@ Solid dark navy coloration (STRICTLY SOURCE FROM IMAGE 1)
    - STRICTLY MATCH Image 2's Surrounding Props: White sneakers, black crop top
    - Lighting must be soft, diffused, natural, matching Image 2's mood.
    - **MODEL CONSISTENCY REQ**: Model's physical details (skin tone, lack of nail polish, hair) and styling (shoes, top) MUST MATCH the generated Front View.
+   - **CRITICAL: DO NOT COPY CLOTHING FROM IMAGE 2**. The reference image may show a DIFFERENT waistband style (e.g., with elastic gathering, ribbing, or wrinkles). COMPLETELY IGNORE the clothing details in Image 2. Use ONLY Image 1 for ALL product details including waistband construction, fabric texture, and patterns.
 
 3. Configuration:
    - wide leg jeans detailed configuration (waistband constructions, pocket placement) must match Image 1.
    - Do NOT add inner layers or undershirts.
 
 Negative prompt:
-no pattern alteration, no color change from Image 1, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry, no changed top, no changed shoes], no stylization, no AI artifacts, wrinkles, creases, folds, messy fabric, no logo, no embroidery, no added textures, no layered clothing
+no pattern alteration, no color change from Image 1, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry, no changed top, no changed shoes], no stylization, no AI artifacts, wrinkles on waistband, creases on waistband, folds on waistband, bunched waistband fabric, wrinkled waistband sides, messy fabric, no logo, no embroidery, no added textures, no layered clothing, no elastic gathering on waistband, no puckered waistband, no ribbed waistband texture

@@ -11,11 +11,21 @@ Instructions:
    - If background is visible, it must match Image 1.
 
 2. Product Appearance:
-   - Use Image 2 to understand the specific 3/4 angle fashion pose. Model turned slightly, showcasing front and side fit.
-   - Match the color and general texture appearance from Image 1.
+   - **CRITICAL: ALL CLOTHING DETAILS MUST COME FROM IMAGE 1 ONLY.**
+   - Use Image 2 ONLY to understand the POSE (3/4 angle fashion stance). Do NOT copy any clothing/fabric details from Image 2.
+   - The waistband, fabric texture, color, and all construction details MUST match Image 1 (the raw product), NOT Image 2.
+   - **WAISTBAND CONSTRUCTION DETAILS (MUST MATCH IMAGE 1):**
+     * There is a VISIBLE HORIZONTAL TOPSTITCHING LINE running across the waistband
+     * There is a CENTER FRONT SEAM (vertical topstitching line) running down the middle front
+     * The waistband band sits FLAT - no elastic gathering, no puckering, no bunched texture
+     * **CRITICAL: The LEFT and RIGHT side portions of the waistband (on either side of the center seam) must be COMPLETELY SMOOTH with NO wrinkles, creases, or fabric bunching**
+     * The fabric should have a MATTE finish, not shiny
+   - **STRICT PROHIBITION**: CHANGING COLOR IS NOT ALLOWED.
+   - **STRICT PROHIBITION**: DO NOT generate gathered elastic texture.
+   - **STRICT REQUIREMENT**: THE PRODUCT MUST BE TOTALLY WRINKLE-FREE.
 
 3. Layout:
    - Full body or 3/4 body shot, angled view. NOT a macro shot.
 
 Negative prompt:
-STRICT CONSTRAINTS: No full view, no conflicting patterns, no low resolution, no mismatched background, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry, no changed top, no changed shoes]
+STRICT CONSTRAINTS: No full view, no conflicting patterns, no low resolution, no mismatched background, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry, no changed top, no changed shoes], wrinkles on waistband, creases on waistband, bunched waistband fabric, wrinkled waistband sides, no elastic gathering on waistband, no puckered waistband

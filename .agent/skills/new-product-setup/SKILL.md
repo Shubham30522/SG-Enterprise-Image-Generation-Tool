@@ -40,8 +40,9 @@ This skill guides the agent through the process of adding a new product to the G
     - **Step 4b (Style Consistency)**:
       - Inherit the _Style_ (Lighting, Background) from existing products (e.g., "T-Shirt for Women") if no reference is given.
     - **Step 4c (Critical: Product Preservation)**:
-      - **Mandatory**: In every single prompt file, ADD this rule:
+      - **Mandatory**: In every single prompt file, ADD these rules:
         > "STRICT REQUIREMENT: The generated product must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details."
+        > "STRICT PROHIBITION: CHANGING COLOR IS NOT ALLOWED. The generated product MUST have the EXACT SAME COLOR as the Input Image. Do not lighten, darken, or shift the hue. Any color deviation is a failure."
     - **Step 4d (Complementary Styling & Consistency)**:
       - **Mandatory**: Always describe a complete, stylish outfit.
         - If Product is **Bottoms**: explicitly describe a matching top (e.g., "Pair with a crisp white t-shirt tucked in") and shoes (e.g., "White minimalist sneakers").
@@ -54,6 +55,14 @@ This skill guides the agent through the process of adding a new product to the G
         - **Skin Tone & Features**: Must match Image 1 (Generated Front).
         - **Nails**: Explicitly forbid nail polish (`no nail polish` in negative prompt) unless it's a specific feature.
         - **Clothing/Shoes**: If visible in detail shots, they must match the main outfit.
+
+    - **Step 4f (Critical: Defect Removal)**:
+      - **Mandatory**: You MUST strictly instruct the AI to remove all wrinkles, regardless of the input image state. ADD this rule to ALL prompt files:
+        > "STRICT REQUIREMENT: THE PRODUCT MUST BE TOTALLY WRINKLE-FREE. REMOVE ALL CREASES, FOLDS, AND WRINKLES. The fabric must appear perfectly smooth and professionally ironed. Even if the Input Image shows wrinkles, you MUST fix them. Any visible wrinkle or bunching is a failure."
+
+    - **Step 4g (Critical: Hallucination Prevention)**:
+      - **Mandatory**: Explicitly prohibit generating non-existent details. ADD this rule to ALL prompt files:
+        > "STRICT PROHIBITION: NO NEW PATTERNS. Do not generate any stitching, ribbing, or designs that are not in the Input Image. If the input is solid/plain, the output MUST be solid/plain. Do not guess patterns on waistbands, cuffs, or collars."
 
 5.  **Verification**
     - Verify that the folder exists.

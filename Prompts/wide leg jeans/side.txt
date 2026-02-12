@@ -11,14 +11,22 @@ Instructions:
    - Keep the exact same background surface, lighting mood, and props as Image 1.
 
 2. Product Appearance:
-   - Use Image 2 to understand the dynamic walking pose. The wide leg silhouette should be shown in motion.
+   - **CRITICAL: ALL CLOTHING DETAILS MUST COME FROM IMAGE 1 ONLY.**
+   - Use Image 2 ONLY to understand the POSE (walking motion). Do NOT copy any clothing/fabric details from Image 2.
+   - The waistband, fabric texture, color, and all construction details MUST match Image 1 (the raw product), NOT Image 2.
+   - **WAISTBAND CONSTRUCTION DETAILS (MUST MATCH IMAGE 1):**
+     * There is a VISIBLE HORIZONTAL TOPSTITCHING LINE running across the waistband
+     * The waistband band sits FLAT - no elastic gathering, no puckering, no bunched texture
+     * **CRITICAL: The waistband must be COMPLETELY SMOOTH with NO wrinkles, creases, or fabric bunching**
+     * The fabric should have a MATTE finish, not shiny
    - Show the simple Slanted Side Pockets at the hip.
-   - The fabric texture and color must EXACTLY match Image 1.
-   - This determines how the product looks in real life from this specific angle/fold.
+   - **STRICT PROHIBITION**: CHANGING COLOR IS NOT ALLOWED.
+   - **STRICT PROHIBITION**: DO NOT generate gathered elastic texture.
+   - **STRICT REQUIREMENT**: THE PRODUCT MUST BE TOTALLY WRINKLE-FREE.
 
 3. Layout:
    - Match the specific WALKING POSE from Image 2: One leg forward in mid-stride, showcasing the wide leg drape. Hands in motion or interacting naturally.
    - Standard straight hem that breaks cleanly at the shoe top (NO bunching or pooling on floor).
 
 Negative prompt:
-STRICT CONSTRAINTS: No unfolded view, no mismatched color, no mismatched background, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry, no changed top, no changed shoes, no floor sweeping length, no pooling fabric at ankles]
+STRICT CONSTRAINTS: No unfolded view, no mismatched color, no mismatched background, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry, no changed top, no changed shoes, no floor sweeping length, no pooling fabric at ankles], wrinkles on waistband, creases on waistband, bunched waistband fabric, wrinkled waistband sides, no elastic gathering on waistband, no puckered waistband
