@@ -5,8 +5,15 @@ import ImagePreview from './components/ImagePreview'
 import ActionButtons from './components/ActionButtons'
 import StatusBar from './components/StatusBar'
 import ResultsGallery from './components/ResultsGallery'
+import ProductManager from './components/ProductManager'
+import CreateProductModal from './components/CreateProductModal'
 
 export default function App() {
+  // ─── Page Navigation ────────────────────────────────
+  const [currentPage, setCurrentPage] = useState('generation') // 'generation' | 'product-manager'
+  const [managedProduct, setManagedProduct] = useState('')
+  const [showCreateModal, setShowCreateModal] = useState(false)
+
   // ─── Product / SKU State ────────────────────────────
   const [products, setProducts] = useState([])
   const [selectedProduct, setSelectedProduct] = useState('')
@@ -50,15 +57,35 @@ export default function App() {
   const eventSourceRef = useRef(null)
 
   // ─── Load Products on Mount ────────────────────────
-  useEffect(() => {
+  const loadProducts = useCallback(() => {
     api.fetchProducts().then(prods => {
       setProducts(prods)
-      if (prods.length > 0) {
+      if (prods.length > 0 && !selectedProduct) {
         const initial = prods.includes('shirt') ? 'shirt' : prods[0]
         setSelectedProduct(initial)
       }
     }).catch(err => setErrorMsg(err.message))
+  }, [selectedProduct])
+
+  useEffect(() => { loadProducts() }, [])
+
+  // ─── Product Manager Navigation ────────────────────
+  const handleManageProduct = useCallback((productName) => {
+    setManagedProduct(productName)
+    setCurrentPage('product-manager')
   }, [])
+
+  const handleBackToGeneration = useCallback(() => {
+    setCurrentPage('generation')
+    loadProducts() // refresh product list
+  }, [loadProducts])
+
+  const handleProductCreated = useCallback((productName) => {
+    setShowCreateModal(false)
+    loadProducts()
+    setManagedProduct(productName)
+    setCurrentPage('product-manager')
+  }, [loadProducts])
 
   // ─── Load SKUs + Poses when Product Changes ────────
   useEffect(() => {
@@ -506,59 +533,71 @@ export default function App() {
           isProcessing={isProcessing}
           anyPoseSelected={anyPoseSelected}
           skuCount={skus.length}
+          currentPage={currentPage}
+          onManageProduct={handleManageProduct}
+          onShowCreateModal={() => setShowCreateModal(true)}
+          onGoToGeneration={() => setCurrentPage('generation')}
         />
 
-        {/* Main Content */}
-        <main className="flex-1 flex flex-col overflow-y-auto p-6 gap-5">
-          {/* Progress Tracker */}
-          {currentSku && (
-            <div className="glass-card px-5 py-3 flex items-center justify-between">
-              <span className="text-sm text-text-secondary">
-                Processing <strong className="text-text-primary">{currentSkuIndex + 1}</strong> / {skus.length} : <strong className="text-amber">{currentSku}</strong>
-              </span>
-              {variantProgress.total > 0 && (
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-text-muted">{batchStatus}</span>
-                  <div className="progress-bar w-32">
-                    <div className="progress-bar-fill" style={{ width: `${(variantProgress.current / variantProgress.total) * 100}%` }} />
+        {/* Main Content - Conditional */}
+        {currentPage === 'product-manager' && managedProduct ? (
+          <ProductManager
+            product={managedProduct}
+            onBack={handleBackToGeneration}
+            onProductsChanged={loadProducts}
+          />
+        ) : (
+          <main className="flex-1 flex flex-col overflow-y-auto p-6 gap-5">
+            {/* Progress Tracker */}
+            {currentSku && (
+              <div className="glass-card px-5 py-3 flex items-center justify-between">
+                <span className="text-sm text-text-secondary">
+                  Processing <strong className="text-text-primary">{currentSkuIndex + 1}</strong> / {skus.length} : <strong className="text-amber">{currentSku}</strong>
+                </span>
+                {variantProgress.total > 0 && (
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs text-text-muted">{batchStatus}</span>
+                    <div className="progress-bar w-32">
+                      <div className="progress-bar-fill" style={{ width: `${(variantProgress.current / variantProgress.total) * 100}%` }} />
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          )}
+                )}
+              </div>
+            )}
 
-          {/* Image Preview Carousel */}
-          <ImagePreview
-            carouselImages={carouselImages}
-            focusedIndex={focusedIndex}
-            onNavigate={handleNavigate}
-            onRegenerate={handleRegenerateFocused}
-            isProcessing={isProcessing}
-            statusText={isProcessing ? statusText : null}
-          />
-
-          {/* Action Buttons */}
-          <ActionButtons
-            isProcessing={isProcessing}
-            hasImage={!!currentImage}
-            hasSavedFront={hasSavedFront}
-            onSaveAndAutoGen={saveAndAutoGen}
-            onSaveFront={saveFrontOnly}
-            onGenerateVariants={generateVariants}
-            onRegenerate={regenerate}
-            onSkip={skip}
-          />
-
-          {/* Results Gallery */}
-          {generatedImages.length > 0 && (
-            <ResultsGallery
-              images={generatedImages}
-              product={selectedProduct}
-              outputFolder={savedOutputFolder}
-              batchComplete={batchComplete}
+            {/* Image Preview Carousel */}
+            <ImagePreview
+              carouselImages={carouselImages}
+              focusedIndex={focusedIndex}
+              onNavigate={handleNavigate}
+              onRegenerate={handleRegenerateFocused}
+              isProcessing={isProcessing}
+              statusText={isProcessing ? statusText : null}
             />
-          )}
-        </main>
+
+            {/* Action Buttons */}
+            <ActionButtons
+              isProcessing={isProcessing}
+              hasImage={!!currentImage}
+              hasSavedFront={hasSavedFront}
+              onSaveAndAutoGen={saveAndAutoGen}
+              onSaveFront={saveFrontOnly}
+              onGenerateVariants={generateVariants}
+              onRegenerate={regenerate}
+              onSkip={skip}
+            />
+
+            {/* Results Gallery */}
+            {generatedImages.length > 0 && (
+              <ResultsGallery
+                images={generatedImages}
+                product={selectedProduct}
+                outputFolder={savedOutputFolder}
+                batchComplete={batchComplete}
+              />
+            )}
+          </main>
+        )}
       </div>
 
       {/* Status Bar */}
@@ -567,6 +606,14 @@ export default function App() {
         error={errorMsg}
         onDismissError={() => setErrorMsg('')}
       />
+
+      {/* Create Product Modal */}
+      {showCreateModal && (
+        <CreateProductModal
+          onClose={() => setShowCreateModal(false)}
+          onCreated={handleProductCreated}
+        />
+      )}
     </div>
   )
 }

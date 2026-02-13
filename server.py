@@ -97,6 +97,15 @@ class GenerateVariantsRequest(BaseModel):
 class AutoTuneRequest(BaseModel):
     product: str
 
+class CreateProductRequest(BaseModel):
+    name: str
+    category: str  # "top", "bottom", "dress"
+    initial_color: str  # First SKU/color name
+
+class SavePromptsRequest(BaseModel):
+    master_prompt: Optional[str] = None
+    variants: Optional[dict[str, str]] = None  # {"Back": "content", ...}
+
 
 # ─── API Endpoints ───────────────────────────────────────────────────────
 
@@ -110,6 +119,143 @@ def list_products():
     products = [d for d in os.listdir(BASE_INPUT_FOLDER)
                 if os.path.isdir(os.path.join(BASE_INPUT_FOLDER, d))]
     return {"products": products}
+
+
+@app.post("/api/products")
+def create_product(req: CreateProductRequest):
+    """Create a new product with prompt templates and initial SKU folder."""
+    product_name = req.name.strip()
+    if not product_name:
+        raise HTTPException(400, "Product name is required")
+    
+    prompt_dir = os.path.join(BASE_PROMPT_FOLDER, product_name)
+    input_dir = os.path.join(BASE_INPUT_FOLDER, product_name, req.initial_color.strip())
+    
+    if os.path.exists(prompt_dir):
+        raise HTTPException(409, f"Product '{product_name}' already exists")
+    
+    os.makedirs(prompt_dir, exist_ok=True)
+    os.makedirs(input_dir, exist_ok=True)
+    
+    # Generate prompt templates based on category
+    templates = _get_prompt_templates(product_name, req.category.lower())
+    for filename, content in templates.items():
+        filepath = os.path.join(prompt_dir, filename)
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(content)
+    
+    return {
+        "status": "created",
+        "product": product_name,
+        "prompt_files": list(templates.keys()),
+        "sku": req.initial_color.strip()
+    }
+
+
+@app.post("/api/products/{product_name}/skus")
+def create_sku(product_name: str, color: str = Form(...)):
+    """Add a new color/SKU folder for an existing product."""
+    color_name = color.strip()
+    if not color_name:
+        raise HTTPException(400, "Color name is required")
+    
+    product_input_dir = os.path.join(BASE_INPUT_FOLDER, product_name)
+    if not os.path.exists(product_input_dir):
+        raise HTTPException(404, f"Product '{product_name}' not found")
+    
+    sku_dir = os.path.join(product_input_dir, color_name)
+    if os.path.exists(sku_dir):
+        raise HTTPException(409, f"Color '{color_name}' already exists")
+    
+    os.makedirs(sku_dir)
+    return {"status": "created", "sku": color_name}
+
+
+@app.post("/api/products/{product_name}/{sku_name}/upload")
+async def upload_sku_image(
+    product_name: str,
+    sku_name: str,
+    image_type: str = Form(...),  # Front, Back, Side, Detail, Neck, etc.
+    file: UploadFile = File(...)
+):
+    """Upload an image for a SKU, automatically renamed by type."""
+    sku_dir = os.path.join(BASE_INPUT_FOLDER, product_name, sku_name)
+    if not os.path.exists(sku_dir):
+        raise HTTPException(404, f"SKU folder not found: {product_name}/{sku_name}")
+    
+    ext = os.path.splitext(file.filename)[1] or ".jpg"
+    safe_name = f"{image_type.strip()}{ext}"
+    save_path = os.path.join(sku_dir, safe_name)
+    
+    content = await file.read()
+    with open(save_path, "wb") as f:
+        f.write(content)
+    
+    return {
+        "status": "uploaded",
+        "filename": safe_name,
+        "path": save_path,
+        "preview_url": f"/api/input-image/{product_name}/{sku_name}/{safe_name}"
+    }
+
+
+@app.post("/api/products/{product_name}/prompts")
+def save_prompts(product_name: str, req: SavePromptsRequest):
+    """Save edited prompt files for a product."""
+    prompt_dir = os.path.join(BASE_PROMPT_FOLDER, product_name)
+    if not os.path.exists(prompt_dir):
+        raise HTTPException(404, f"Prompts not found for '{product_name}'")
+    
+    saved_files = []
+    
+    # Save master prompt
+    if req.master_prompt is not None:
+        master_path = os.path.join(prompt_dir, "master_prompt.txt")
+        with open(master_path, "w", encoding="utf-8") as f:
+            f.write(req.master_prompt)
+        saved_files.append("master_prompt.txt")
+    
+    # Save variant prompts
+    if req.variants:
+        for variant_key, content in req.variants.items():
+            # Convert key like "Back" -> "back.txt"
+            filename = f"{variant_key.lower()}.txt"
+            filepath = os.path.join(prompt_dir, filename)
+            with open(filepath, "w", encoding="utf-8") as f:
+                f.write(content)
+            saved_files.append(filename)
+    
+    return {"status": "saved", "files": saved_files}
+
+
+@app.delete("/api/products/{product_name}")
+def delete_product(product_name: str):
+    """Delete a product's prompt and input folders."""
+    prompt_dir = os.path.join(BASE_PROMPT_FOLDER, product_name)
+    input_dir = os.path.join(BASE_INPUT_FOLDER, product_name)
+    
+    deleted = []
+    if os.path.exists(prompt_dir):
+        shutil.rmtree(prompt_dir)
+        deleted.append("prompts")
+    if os.path.exists(input_dir):
+        shutil.rmtree(input_dir)
+        deleted.append("input_images")
+    
+    if not deleted:
+        raise HTTPException(404, f"Product '{product_name}' not found")
+    
+    return {"status": "deleted", "product": product_name, "deleted": deleted}
+
+
+@app.delete("/api/products/{product_name}/skus/{sku_name}")
+def delete_sku(product_name: str, sku_name: str):
+    """Delete a specific SKU/color folder."""
+    sku_dir = os.path.join(BASE_INPUT_FOLDER, product_name, sku_name)
+    if not os.path.exists(sku_dir):
+        raise HTTPException(404, f"SKU '{sku_name}' not found")
+    shutil.rmtree(sku_dir)
+    return {"status": "deleted", "sku": sku_name}
 
 
 @app.get("/api/products/{product_name}/skus")
@@ -400,6 +546,231 @@ def download_as_zip(product_name: str, folder_name: str):
         media_type="application/zip",
         headers={"Content-Disposition": f"attachment; filename={folder_name}.zip"}
     )
+
+
+# ─── Prompt Template Factory ──────────────────────────────────────────────
+
+def _get_prompt_templates(product_name: str, category: str) -> dict[str, str]:
+    """
+    Generate default prompt template files based on product category.
+    Returns a dict of {filename: content}.
+    """
+    name_lower = product_name.lower()
+    
+    # Mandatory rules baked into every prompt
+    FIDELITY_RULE = (
+        "STRICT REQUIREMENT: The generated product must match the Input Image (Raw Product) "
+        "with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.\n"
+        "STRICT PROHIBITION: CHANGING COLOR IS NOT ALLOWED. The generated product MUST have "
+        "the EXACT SAME COLOR as the Input Image. Do not lighten, darken, or shift the hue."
+    )
+    WRINKLE_RULE = (
+        "STRICT REQUIREMENT: THE PRODUCT MUST BE TOTALLY WRINKLE-FREE. REMOVE ALL CREASES, "
+        "FOLDS, AND WRINKLES. The fabric must appear perfectly smooth and professionally ironed. "
+        "Even if the Input Image shows wrinkles, you MUST fix them."
+    )
+    HALLUCINATION_RULE = (
+        "STRICT PROHIBITION: NO NEW PATTERNS. Do not generate any stitching, ribbing, or designs "
+        "that are not in the Input Image. If the input is solid/plain, the output MUST be solid/plain."
+    )
+    
+    MANDATORY_BLOCK = f"\n\n{FIDELITY_RULE}\n\n{WRINKLE_RULE}\n\n{HALLUCINATION_RULE}"
+    
+    # Category-specific structures
+    if category == "bottom":
+        templates = {
+            "master_prompt.txt": f"""Generate a photorealistic e-commerce image of a model wearing the {name_lower}.
+
+Input References:
+- Image 1 (Raw Product): The ONLY source for the {name_lower} structure, fabric, and color.
+- Image 2 (Style Reference): Source for Layout, Background, Props, and Lighting.
+
+Instructions:
+1. Product Accuracy: The {name_lower} must be IDENTICAL to Image 1.
+2. Layout & Style: Follow Image 2's background and lighting.
+3. Complementary Styling: Pair with a crisp white t-shirt tucked in and white minimalist sneakers.
+
+Negative prompt: no pattern alteration, no color change, wrinkles, creases, no logo, no added textures{MANDATORY_BLOCK}""",
+
+            "back.txt": f"""Generate a high-resolution image of the model from behind, showcasing the back of the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, STYLE, and MODEL.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS from the back.
+
+Instructions:
+1. Background & Lighting: STRICTLY MATCH Image 1.
+2. Product: Use Image 2 for back details (pockets, yoke, seams). Color and texture must match Image 1.
+3. Model: Same model, same outfit (white t-shirt, white sneakers), same skin tone as Image 1.
+
+Negative prompt: no mismatched background, no color change, nail polish{MANDATORY_BLOCK}""",
+
+            "waistband.txt": f"""Generate a high-resolution close-up detail shot of the WAISTBAND area of the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE waistband construction details.
+
+Instructions:
+1. Background & Lighting: STRICTLY MATCH Image 1.
+2. Product: Show button, zipper fly, belt loops, and waistband stitching exactly as in Image 2.
+3. Color and texture must match Image 1.
+
+Negative prompt: no full body view, no mismatched background{MANDATORY_BLOCK}""",
+
+            "detail.txt": f"""Generate a high-resolution MACRO DETAIL shot of the fabric/texture of the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING.
+- Image 2 (Raw Product Image): Source for REAL LIFE fabric texture (weave, print quality).
+
+Instructions:
+1. Background & Lighting: STRICTLY MATCH Image 1's mood.
+2. Product: Extreme close-up of fabric. Color and texture must match Image 1.
+
+Negative prompt: no full view, no conflicting patterns{MANDATORY_BLOCK}""",
+
+            "side.txt": f"""Generate a high-resolution image of the model from the side, showcasing the side profile of the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, STYLE, and MODEL.
+- Image 2 (Raw Product Image): Source for side profile details.
+
+Instructions:
+1. Background & Lighting: STRICTLY MATCH Image 1.
+2. Product: Side profile showing fit and drape. Color and texture must match Image 1.
+3. Model: Same model, same outfit (white t-shirt, white sneakers), same skin tone.
+
+Negative prompt: no mismatched background, nail polish{MANDATORY_BLOCK}""",
+        }
+    elif category == "top":
+        templates = {
+            "master_prompt.txt": f"""Generate a photorealistic e-commerce image of a model wearing the {name_lower}.
+
+Input References:
+- Image 1 (Raw Product): The ONLY source for the {name_lower} structure, fabric, and color.
+- Image 2 (Style Reference): Source for Layout, Background, Props, and Lighting.
+
+Instructions:
+1. Product Accuracy: The {name_lower} must be IDENTICAL to Image 1.
+2. Layout & Style: Follow Image 2's background and lighting.
+3. Complementary Styling: Pair with light wash denim jeans and white minimalist sneakers.
+
+Negative prompt: no pattern alteration, no color change, wrinkles, creases, no logo, no added textures{MANDATORY_BLOCK}""",
+
+            "back.txt": f"""Generate a high-resolution image of the model from behind, showcasing the back of the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, STYLE, and MODEL.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS.
+
+Instructions:
+1. Background & Lighting: STRICTLY MATCH Image 1.
+2. Product: Back view details from Image 2. Color and texture must match Image 1.
+3. Model: Same model, same outfit (denim jeans, white sneakers), same skin tone.
+
+Negative prompt: no mismatched background, nail polish{MANDATORY_BLOCK}""",
+
+            "neck.txt": f"""Generate a high-resolution close-up Detail Shot of the NECKLINE/COLLAR area of the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE collar/neckline construction.
+
+Instructions:
+1. Background & Lighting: STRICTLY MATCH Image 1.
+2. Product: Show collar, stitching, buttons exactly as in Image 2.
+
+Negative prompt: no full body view, no fuzzy details{MANDATORY_BLOCK}""",
+
+            "detail.txt": f"""Generate a high-resolution MACRO DETAIL shot of the fabric/texture of the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING.
+- Image 2 (Raw Product Image): Source for REAL LIFE fabric texture.
+
+Instructions:
+1. Extreme close-up (Macro) view of the fabric.
+2. Color and texture must match Image 1.
+
+Negative prompt: no full view, no conflicting patterns{MANDATORY_BLOCK}""",
+
+            "side.txt": f"""Generate a high-resolution image of the model from the side, showcasing the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, STYLE, and MODEL.
+- Image 2 (Raw Product Image): Source for side profile details.
+
+Instructions:
+1. Background & Lighting: STRICTLY MATCH Image 1.
+2. Model: Same model, same outfit (denim jeans, white sneakers), same skin tone.
+
+Negative prompt: no mismatched background, nail polish{MANDATORY_BLOCK}""",
+        }
+    else:  # dress or default
+        templates = {
+            "master_prompt.txt": f"""Generate a photorealistic e-commerce image of a model wearing the {name_lower}.
+
+Input References:
+- Image 1 (Raw Product): The ONLY source for the {name_lower} structure, fabric, and color.
+- Image 2 (Style Reference): Source for Layout, Background, Props, and Lighting.
+
+Instructions:
+1. Product Accuracy: The {name_lower} must be IDENTICAL to Image 1.
+2. Layout & Style: Follow Image 2's background and lighting.
+3. Complementary Styling: Pair with elegant heels or minimalist sandals.
+
+Negative prompt: no pattern alteration, no color change, wrinkles, creases, no logo, no added textures{MANDATORY_BLOCK}""",
+
+            "back.txt": f"""Generate a high-resolution image of the model from behind, showcasing the back of the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, STYLE, and MODEL.
+- Image 2 (Raw Product Image): Source for REAL LIFE back details.
+
+Instructions:
+1. Background & Lighting: STRICTLY MATCH Image 1.
+2. Product: Back view from Image 2. Color and texture must match Image 1.
+3. Model: Same model, same accessories, same skin tone.
+
+Negative prompt: no mismatched background, nail polish{MANDATORY_BLOCK}""",
+
+            "neck.txt": f"""Generate a high-resolution close-up Detail Shot of the NECKLINE area of the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING.
+- Image 2 (Raw Product Image): Source for neckline construction details.
+
+Instructions:
+1. Close-up of neckline. Match background and lighting from Image 1.
+
+Negative prompt: no full body view{MANDATORY_BLOCK}""",
+
+            "detail.txt": f"""Generate a high-resolution MACRO DETAIL shot of the fabric/texture of the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING.
+- Image 2 (Raw Product Image): Source for fabric texture.
+
+Instructions:
+1. Extreme close-up of fabric. Color and texture must match Image 1.
+
+Negative prompt: no full view, no conflicting patterns{MANDATORY_BLOCK}""",
+
+            "side.txt": f"""Generate a high-resolution image of the model from the side, showcasing the {name_lower}.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, STYLE, and MODEL.
+- Image 2 (Raw Product Image): Source for side details and hem drape.
+
+Instructions:
+1. Background & Lighting: STRICTLY MATCH Image 1.
+2. Model: Same model, same accessories, same skin tone.
+
+Negative prompt: no mismatched background, nail polish{MANDATORY_BLOCK}""",
+        }
+    
+    return templates
 
 
 # ─── Background Generation Logic ─────────────────────────────────────────

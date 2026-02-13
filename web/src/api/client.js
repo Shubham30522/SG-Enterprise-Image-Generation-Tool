@@ -134,6 +134,86 @@ export async function autoTunePrompts(product) {
   return await res.json();
 }
 
+// ─── Product Management ───────────────────────────────
+
+export async function createProduct(name, category, initialColor) {
+  const res = await fetch(`${BASE}/api/products`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, category, initial_color: initialColor }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to create product');
+  }
+  return await res.json();
+}
+
+export async function createSku(product, color) {
+  const formData = new FormData();
+  formData.append('color', color);
+  const res = await fetch(`${BASE}/api/products/${encodeURIComponent(product)}/skus`, {
+    method: 'POST',
+    body: formData,
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to create SKU');
+  }
+  return await res.json();
+}
+
+export async function uploadSkuImage(product, sku, imageType, file) {
+  const formData = new FormData();
+  formData.append('image_type', imageType);
+  formData.append('file', file);
+  const res = await fetch(
+    `${BASE}/api/products/${encodeURIComponent(product)}/${encodeURIComponent(sku)}/upload`,
+    { method: 'POST', body: formData }
+  );
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to upload image');
+  }
+  return await res.json();
+}
+
+export async function savePrompts(product, masterPrompt, variants) {
+  const res = await fetch(`${BASE}/api/products/${encodeURIComponent(product)}/prompts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ master_prompt: masterPrompt, variants }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to save prompts');
+  }
+  return await res.json();
+}
+
+export async function deleteProduct(product) {
+  const res = await fetch(`${BASE}/api/products/${encodeURIComponent(product)}`, {
+    method: 'DELETE',
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to delete product');
+  }
+  return await res.json();
+}
+
+export async function deleteSku(product, sku) {
+  const res = await fetch(
+    `${BASE}/api/products/${encodeURIComponent(product)}/skus/${encodeURIComponent(sku)}`,
+    { method: 'DELETE' }
+  );
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || 'Failed to delete SKU');
+  }
+  return await res.json();
+}
+
 // ─── Download ─────────────────────────────────────────
 
 export function getDownloadZipUrl(product, folder) {
