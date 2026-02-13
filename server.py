@@ -96,6 +96,7 @@ class GenerateVariantsRequest(BaseModel):
 
 class AutoTuneRequest(BaseModel):
     product: str
+    reference_image_path: Optional[str] = None
 
 class CreateProductRequest(BaseModel):
     name: str
@@ -517,7 +518,7 @@ async def stream_generation_events(job_id: str):
 @app.post("/api/auto-tune")
 def auto_tune(req: AutoTuneRequest):
     """Run auto-tune on a product's prompts."""
-    result = configure_prompts.auto_tune_prompts(req.product)
+    result = configure_prompts.auto_tune_prompts(req.product, req.reference_image_path)
     if result == "Success":
         return {"status": "success", "message": "Prompts auto-tuned and reloaded"}
     else:

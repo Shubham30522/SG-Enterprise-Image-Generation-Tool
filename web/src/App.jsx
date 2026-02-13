@@ -473,7 +473,7 @@ export default function App() {
     setIsAutoTuning(true)
     setStatusText(`Auto-Tuning '${selectedProduct}'... Please wait.`)
     try {
-      await api.autoTunePrompts(selectedProduct)
+      await api.autoTunePrompts(selectedProduct, refImagePath)
       setStatusText('Prompts Auto-Tuned & Reloaded!')
       // Refresh poses
       const poseData = await api.fetchPoses(selectedProduct)
@@ -486,7 +486,7 @@ export default function App() {
     } finally {
       setIsAutoTuning(false)
     }
-  }, [selectedProduct])
+  }, [selectedProduct, refImagePath])
 
   // ─── Cleanup ───────────────────────────────────────
   useEffect(() => {

@@ -236,7 +236,7 @@ def generate_master_prompt_content(product_name, style_data, reality_data):
         negative_constraints=constraints
     )
 
-def auto_tune_prompts(product_name):
+def auto_tune_prompts(product_name, reference_image_path=None):
     print(f"Starting Auto-Tune for {product_name}...")
     
     product_dir = os.path.join(BASE_INPUT_FOLDER, product_name)
@@ -247,7 +247,14 @@ def auto_tune_prompts(product_name):
 
     # 1. Find Reference Image
     ref_image = None
-    if os.path.exists(product_dir):
+    
+    # Priority 0: Explicit path passed from API (Sidebar Upload)
+    if reference_image_path and os.path.exists(reference_image_path):
+        ref_image = reference_image_path
+        print(f"Using provided reference image: {ref_image}")
+    
+    # Priority 1: Search in product folder
+    if not ref_image and os.path.exists(product_dir):
         valid_exts = ('.png', '.jpg', '.jpeg', '.heic', '.heif')
         # Priority: explicit "reference" name
         for f in os.listdir(product_dir):
