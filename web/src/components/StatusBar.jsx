@@ -1,6 +1,6 @@
 export default function StatusBar({ text, error, onDismissError }) {
   return (
-    <div className="px-6 py-2.5 border-t border-white/10 bg-bg-secondary/50 backdrop-blur-sm flex items-center justify-between">
+    <div className="px-6 py-2.5 border-t border-border bg-bg-secondary/80 backdrop-blur-sm flex items-center justify-between">
       <span className="text-sm text-text-secondary truncate flex-1">
         {text}
       </span>

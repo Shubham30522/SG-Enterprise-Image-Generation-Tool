@@ -10,12 +10,18 @@ export default function CreateProductModal({ onClose, onCreated }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!name.trim() || !color.trim()) {
-      setError('Product name and color are required.')
+    if (!name.trim()) {
+      setError('Product Name is required')
       return
     }
+    if (!color.trim()) {
+      setError('Initial Color SKU is required')
+      return
+    }
+
     setLoading(true)
     setError('')
+
     try {
       const result = await api.createProduct(name.trim(), category, color.trim())
       onCreated(result.product)
@@ -27,19 +33,19 @@ export default function CreateProductModal({ onClose, onCreated }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md animate-fade-in" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in" onClick={onClose}>
       <div 
-        className="glass-card p-8 w-full max-w-lg mx-4 shadow-2xl border-white/10 transform scale-100 transition-all bg-bg-primary relative overflow-hidden" 
+        className="glass-card p-8 w-full max-w-lg mx-4 shadow-2xl border-border transform scale-100 transition-all bg-white relative overflow-hidden" 
         onClick={e => e.stopPropagation()}
       >
         {/* Decorative Grid Background */}
-        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.03] pointer-events-none" />
         
         {/* Glow Effect */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
-        <h2 className="text-2xl font-bold bg-linear-to-r from-white to-gray-400 bg-clip-text text-transparent mb-6 flex items-center gap-3 relative z-10">
-          <span className="text-3xl filter drop-shadow-lg">✨</span> Create New Product
+        <h2 className="text-2xl font-bold bg-linear-to-r from-text-primary to-text-secondary bg-clip-text text-transparent mb-6 flex items-center gap-3 relative z-10">
+          <span className="text-3xl filter drop-shadow-sm">✨</span> Create New Product
         </h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10">
@@ -54,7 +60,7 @@ export default function CreateProductModal({ onClose, onCreated }) {
               onChange={e => setName(e.target.value)}
               placeholder="e.g. Mens Linen Pant"
               autoFocus
-              className="w-full bg-bg-secondary border border-white/10 rounded-xl px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all shadow-inner"
+              className="w-full bg-surface border border-border rounded-xl px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all shadow-inner"
             />
           </div>
 
@@ -68,7 +74,7 @@ export default function CreateProductModal({ onClose, onCreated }) {
                 <select
                   value={category}
                   onChange={e => setCategory(e.target.value)}
-                  className="w-full bg-bg-secondary border border-white/10 rounded-xl px-4 py-3.5 text-sm text-text-primary focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all appearance-none cursor-pointer hover:bg-bg-secondary/80"
+                  className="w-full bg-surface border border-border rounded-xl px-4 py-3.5 text-sm text-text-primary focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all appearance-none cursor-pointer hover:bg-surface-hover"
                 >
                   <option value="top">Top (Shirt)</option>
                   <option value="bottom">Bottom (Pant)</option>
@@ -88,13 +94,13 @@ export default function CreateProductModal({ onClose, onCreated }) {
                 value={color}
                 onChange={e => setColor(e.target.value)}
                 placeholder="e.g. Beige"
-                className="w-full bg-bg-secondary border border-white/10 rounded-xl px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all shadow-inner"
+                className="w-full bg-surface border border-border rounded-xl px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all shadow-inner"
               />
             </div>
           </div>
 
           {error && (
-            <div className="text-xs font-medium text-red-300 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 flex items-center gap-2 animate-pulse">
+            <div className="text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3 flex items-center gap-2 animate-pulse">
               ⚠️ {error}
             </div>
           )}
@@ -104,7 +110,7 @@ export default function CreateProductModal({ onClose, onCreated }) {
             <button 
               type="button" 
               onClick={onClose} 
-              className="flex-1 px-4 py-3.5 rounded-xl border border-white/10 text-text-secondary hover:bg-white/5 hover:text-white transition-colors text-sm font-bold tracking-wide"
+              className="flex-1 px-4 py-3.5 rounded-xl border border-border text-text-secondary hover:bg-surface-hover hover:text-text-primary transition-colors text-sm font-bold tracking-wide"
               disabled={loading}
             >
               Cancel

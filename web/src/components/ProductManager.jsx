@@ -32,15 +32,21 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
     try {
       const data = await api.fetchSkus(product)
       setSkus(data.skus)
-      if (data.skus.length > 0 && !selectedSku) {
-        setSelectedSku(data.skus[0])
-      }
+      return data.skus
     } catch (err) {
       setError(err.message)
+      return []
     }
-  }, [product, selectedSku])
+  }, [product])
 
-  useEffect(() => { loadSkus() }, [product])
+  useEffect(() => { 
+    setSelectedSku('')
+    loadSkus().then(fetchedSkus => {
+        if (fetchedSkus.length > 0) {
+            setSelectedSku(fetchedSkus[0])
+        }
+    })
+  }, [product, loadSkus])
 
   // ─── Load SKU Images ───────────────────────────────
   useEffect(() => {
@@ -175,28 +181,28 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
   const promptTabs = ['Master', ...Object.keys(variants)]
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden bg-bg-primary/50 relative">
+    <div className="flex-1 flex flex-col overflow-hidden bg-bg-primary relative">
       {/* Background Gradient Blob */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* ─── Header ─── */}
-      <div className="px-8 py-5 border-b border-white/5 bg-bg-secondary/40 backdrop-blur-xl flex items-center justify-between shadow-lg z-10">
+      <div className="px-8 py-5 border-b border-border bg-bg-card/80 backdrop-blur-xl flex items-center justify-between shadow-sm z-10">
         <div className="flex items-center gap-4">
           <button 
             onClick={onBack} 
-            className="group flex items-center gap-2 text-text-muted hover:text-text-primary transition-colors text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-white/5"
+            className="group flex items-center gap-2 text-text-muted hover:text-text-primary transition-colors text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-surface-hover"
           >
             <span className="group-hover:-translate-x-1 transition-transform">←</span> Back
           </button>
-          <div className="w-px h-6 bg-white/10" />
+          <div className="w-px h-6 bg-border" />
           <h2 className="text-2xl font-bold bg-linear-to-r from-text-primary to-text-secondary bg-clip-text text-transparent flex items-center gap-3">
-            <span className="text-2xl filter drop-shadow-md">📦</span> {product}
+            <span className="text-2xl filter drop-shadow-sm">📦</span> {product}
           </h2>
         </div>
         <div className="flex items-center gap-3">
           <button 
             onClick={handleDeleteProduct} 
-            className="text-xs font-medium text-red-400/80 hover:text-red-400 transition-all px-4 py-2 rounded-xl hover:bg-red-400/10 border border-transparent hover:border-red-400/20"
+            className="text-xs font-medium text-red-500/80 hover:text-red-600 transition-all px-4 py-2 rounded-xl hover:bg-red-50 border border-transparent hover:border-red-200"
           >
             🗑️ Delete Product
           </button>
@@ -204,46 +210,46 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
       </div>
 
       {/* ─── Tabs ─── */}
-      <div className="px-8 pt-6 flex gap-4 border-b border-white/5 bg-linear-to-b from-bg-secondary/20 to-transparent">
+      <div className="px-8 pt-6 flex gap-4 border-b border-border bg-linear-to-b from-surface to-transparent">
         <button
           onClick={() => setActiveTab('images')}
           className={`relative px-6 py-3 text-sm font-semibold rounded-t-xl transition-all ${
             activeTab === 'images' 
-              ? 'text-accent bg-white/5 border-b-2 border-accent' 
-              : 'text-text-muted hover:text-text-primary hover:bg-white/5'
+              ? 'text-accent bg-bg-card border-t border-x border-border border-b-white -mb-px shadow-sm' 
+              : 'text-text-muted hover:text-text-primary hover:bg-surface-hover border border-transparent'
           }`}
         >
           🖼️ Images & Colors
           {activeTab === 'images' && (
-            <div className="absolute inset-0 bg-accent/5 rounded-t-xl pointer-events-none" />
+            <div className="absolute -top-1 left-0 right-0 h-1 bg-accent rounded-t-xl" />
           )}
         </button>
         <button
           onClick={() => setActiveTab('prompts')}
           className={`relative px-6 py-3 text-sm font-semibold rounded-t-xl transition-all ${
             activeTab === 'prompts' 
-              ? 'text-accent bg-white/5 border-b-2 border-accent' 
-              : 'text-text-muted hover:text-text-primary hover:bg-white/5'
+              ? 'text-accent bg-bg-card border-t border-x border-border border-b-white -mb-px shadow-sm' 
+              : 'text-text-muted hover:text-text-primary hover:bg-surface-hover border border-transparent'
           }`}
         >
           📝 Prompt Editor
           {activeTab === 'prompts' && (
-            <div className="absolute inset-0 bg-accent/5 rounded-t-xl pointer-events-none" />
+            <div className="absolute -top-1 left-0 right-0 h-1 bg-accent rounded-t-xl" />
           )}
         </button>
       </div>
 
       {/* ─── Content ─── */}
-      <div className="flex-1 overflow-y-auto p-8 relative scroll-smooth">
+      <div className="flex-1 overflow-y-auto p-8 relative scroll-smooth bg-surface/30">
         {/* Status Messages */}
         {error && (
-          <div className="mb-6 text-sm font-medium text-red-300 bg-red-500/10 border border-red-500/20 rounded-xl px-5 py-3 flex items-center justify-between shadow-lg backdrop-blur-sm animate-fade-in">
+          <div className="mb-6 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-xl px-5 py-3 flex items-center justify-between shadow-lg backdrop-blur-sm animate-fade-in">
             <span className="flex items-center gap-2">⚠️ {error}</span>
-            <button onClick={() => setError('')} className="text-red-300/60 hover:text-red-300 transition-colors">✕</button>
+            <button onClick={() => setError('')} className="text-red-400 hover:text-red-600 transition-colors">✕</button>
           </div>
         )}
         {success && (
-          <div className="mb-6 text-sm font-medium text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-5 py-3 shadow-lg backdrop-blur-sm flex items-center gap-2 animate-fade-in">
+          <div className="mb-6 text-sm font-medium text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-xl px-5 py-3 shadow-lg backdrop-blur-sm flex items-center gap-2 animate-fade-in">
             <span>✅ {success}</span>
           </div>
         )}
@@ -252,8 +258,8 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
         {activeTab === 'images' && (
           <div className="animate-fade-in space-y-8">
             {/* Color Selector */}
-            <div className="glass-card p-6 relative overflow-hidden group border-white/5 hover:border-white/10">
-              <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            <div className="glass-card p-6 relative overflow-hidden group border-border hover:border-accent/20 bg-white shadow-sm">
+              <div className="absolute inset-0 bg-linear-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
               
               <div className="flex items-center justify-between mb-5 relative z-10">
                 <div className="flex items-center gap-3">
@@ -266,7 +272,7 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
                   {selectedSku && (
                     <button 
                       onClick={handleDeleteSku} 
-                      className="px-4 py-2 text-xs font-medium text-red-400/70 hover:text-red-400 transition-colors rounded-lg hover:bg-red-400/5 hover:shadow-red-500/10 border border-transparent hover:border-red-400/10"
+                      className="px-4 py-2 text-xs font-medium text-red-500/80 hover:text-red-600 transition-colors rounded-lg hover:bg-red-50 border border-transparent hover:border-red-200"
                     >
                       Delete Color
                     </button>
@@ -288,14 +294,14 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
                     className={`px-5 py-2.5 text-sm font-medium rounded-xl transition-all border transform hover:-translate-y-0.5 duration-200 ${
                       selectedSku === sku
                         ? 'bg-accent text-white border-accent shadow-lg shadow-accent/30'
-                        : 'bg-surface text-text-secondary border-white/10 hover:border-white/20 hover:bg-white/5 hover:text-white'
+                        : 'bg-white text-text-secondary border-border hover:border-accent/40 hover:bg-surface-hover hover:text-text-primary shadow-sm'
                     }`}
                   >
                     {sku}
                   </button>
                 ))}
                 {skus.length === 0 && (
-                  <div className="w-full text-center py-8 border-2 border-dashed border-white/10 rounded-xl">
+                  <div className="w-full text-center py-8 border-2 border-dashed border-border rounded-xl bg-surface/50">
                     <p className="text-text-muted">No colors found. Start by adding one!</p>
                   </div>
                 )}
@@ -306,13 +312,13 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
             {selectedSku && (
               <div className="animate-fade-in delay-100">
                 <h3 className="text-lg font-bold text-text-primary mb-5 flex items-center gap-2">
-                  Reference Images <span className="text-text-muted font-normal text-sm ml-2">for <span className="text-accent/80">{selectedSku}</span></span>
+                  Reference Images <span className="text-text-muted font-normal text-sm ml-2">for <span className="text-accent">{selectedSku}</span></span>
                 </h3>
                 <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                   {IMAGE_TYPES.map((type, idx) => (
                     <div
                       key={type}
-                      className="glass-card p-4 flex flex-col items-center gap-3 min-h-[240px] cursor-pointer group relative overflow-hidden   hover:border-accent/30 hover:shadow-xl hover:shadow-accent/5 transition-all duration-300 bg-bg-card/50"
+                      className="glass-card p-4 flex flex-col items-center gap-3 min-h-[240px] cursor-pointer group relative overflow-hidden border-border hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5 transition-all duration-300 bg-white"
                       onClick={() => fileInputRefs.current[type]?.click()}
                       onDrop={(e) => handleDrop(type, e)}
                       onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
@@ -335,15 +341,15 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
                           {type}
                         </span>
                         {skuImages[type] && (
-                          <span className="text-emerald-400 text-[10px] bg-emerald-400/10 px-2 py-0.5 rounded-full border border-emerald-400/20">
+                          <span className="text-emerald-500 text-[10px] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-bold">
                             ✓ Ready
                           </span>
                         )}
                       </div>
 
-                      <div className="flex-1 w-full flex items-center justify-center relative rounded-xl bg-black/20 overflow-hidden border border-white/5 group-hover:border-white/10 transition-colors shadow-inner">
+                      <div className="flex-1 w-full flex items-center justify-center relative rounded-xl bg-surface overflow-hidden border border-border group-hover:border-accent/20 transition-colors shadow-inner">
                         {uploading[type] ? (
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-20">
+                          <div className="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-sm z-20">
                             <svg className="w-8 h-8 animate-spin text-accent" viewBox="0 0 24 24" fill="none">
                               <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeDasharray="30 70" />
                             </svg>
@@ -355,7 +361,7 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
                               alt={type}
                               className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
                             />
-                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-2 backdrop-blur-[2px]">
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-2 backdrop-blur-[1px]">
                               <span className="text-white font-medium text-xs bg-accent px-4 py-2 rounded-lg shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform">
                                 ↻ Change Image
                               </span>
@@ -363,7 +369,7 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
                           </>
                         ) : (
                           <div className="flex flex-col items-center justify-center text-text-muted group-hover:text-text-secondary transition-colors gap-3">
-                             <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 text-2xl border border-white/5 group-hover:border-accent/30 group-hover:bg-accent/10 group-hover:text-accent shadow-sm">
+                             <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center group-hover:scale-110 transition-transform duration-300 text-2xl border border-border group-hover:border-accent/30 group-hover:bg-accent/5 group-hover:text-accent shadow-sm">
                                📷
                              </div>
                              <span className="text-xs font-medium opacity-60 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
@@ -381,11 +387,11 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
             {/* Add Color Modal */}
             {showAddColor && (
               <div 
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md animate-fade-in" 
+                className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in" 
                 onClick={() => setShowAddColor(false)}
               >
                 <div 
-                  className="glass-card p-8 w-96 shadow-2xl border-white/10 transform scale-100 transition-all bg-[#0f172a]" 
+                  className="glass-card p-8 w-96 shadow-2xl transform scale-100 transition-all bg-white" 
                   onClick={e => e.stopPropagation()}
                 >
                   <h3 className="text-xl font-bold text-text-primary mb-2 flex items-center gap-2">
@@ -407,14 +413,14 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
                         placeholder="e.g. Navy-Blue, 02-Charcoal"
                         autoFocus
                         onKeyDown={e => e.key === 'Enter' && handleAddColor()}
-                        className="w-full bg-bg-secondary border border-white/10 rounded-xl px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all shadow-inner"
+                        className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all shadow-inner"
                       />
                     </div>
                     
                     <div className="flex gap-3 pt-2">
                       <button 
                         onClick={() => setShowAddColor(false)} 
-                        className="flex-1 px-4 py-3 rounded-xl border border-white/10 text-text-secondary hover:bg-white/5 hover:text-white transition-colors text-sm font-medium"
+                        className="flex-1 px-4 py-3 rounded-xl border border-border text-text-secondary hover:bg-surface-hover hover:text-text-primary transition-colors text-sm font-medium"
                         disabled={addingColor}
                       >
                         Cancel
@@ -438,11 +444,11 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
         {activeTab === 'prompts' && (
           <div className="animate-fade-in flex flex-col h-full gap-6">
             {/* Info Banner */}
-            <div className="bg-amber-500/10 border border-amber-500/20 text-amber-200 text-sm rounded-xl px-6 py-4 flex items-start gap-4 shadow-lg backdrop-blur-sm">
+            <div className="bg-amber-50 border border-amber-200 text-amber-900 text-sm rounded-xl px-6 py-4 flex items-start gap-4 shadow-sm">
               <span className="text-xl mt-0.5">💡</span>
               <div>
-                <strong className="font-semibold text-amber-100 block mb-1">Important Tip</strong>
-                <span className="opacity-90 leading-relaxed block">
+                <strong className="font-semibold text-amber-800 block mb-1">Important Tip</strong>
+                <span className="opacity-90 leading-relaxed block text-amber-800/80">
                   Prompts are shared across <strong>all color variants</strong>. 
                   Do NOT write specific colors like "Red Shirt" or "Blue Jeans". 
                   The AI automatically detects the color from your <strong>Front Input Image</strong>.
@@ -461,7 +467,7 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
                     className={`text-left px-4 py-3 rounded-xl transition-all flex items-center justify-between group ${
                       activePromptTab === tab
                         ? 'bg-accent text-white shadow-lg shadow-accent/20 font-medium scale-105 origin-left'
-                        : 'bg-surface hover:bg-white/5 text-text-secondary hover:text-white border border-white/5 hover:border-white/10'
+                        : 'bg-white hover:bg-surface-hover text-text-secondary hover:text-text-primary border border-border hover:border-accent/30 shadow-sm'
                     }`}
                   >
                     <span className="flex items-center gap-2">
@@ -473,15 +479,15 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
               </div>
 
               {/* Editor Area */}
-              <div className="flex-1 flex flex-col gap-0 min-h-[400px] glass-card overflow-hidden border-white/10">
+              <div className="flex-1 flex flex-col gap-0 min-h-[400px] glass-card overflow-hidden border-border bg-white shadow-lg">
                 {/* Editor Toolbar */}
-                <div className="bg-white/5 px-5 py-3 border-b border-white/5 flex items-center justify-between">
+                <div className="bg-surface px-5 py-3 border-b border-border flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-bold text-text-secondary uppercase tracking-wider">
                       Editing: <span className="text-text-primary">{activePromptTab}</span>
                     </span>
                   </div>
-                  <span className={`text-xs px-3 py-1 rounded-full font-medium transition-colors ${promptDirty ? 'bg-amber-500/20 text-amber-300 border border-amber-500/20' : 'text-emerald-400 bg-emerald-400/10 border border-emerald-400/20'}`}>
+                  <span className={`text-xs px-3 py-1 rounded-full font-medium transition-colors ${promptDirty ? 'bg-amber-50 text-amber-600 border border-amber-200' : 'text-emerald-600 bg-emerald-50 border border-emerald-200'}`}>
                     {promptDirty ? '● Unsaved Changes' : '✓ Saved'}
                   </span>
                 </div>
@@ -489,13 +495,13 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
                 <textarea
                   value={getPromptContent()}
                   onChange={e => setPromptContent(e.target.value)}
-                  className="flex-1 w-full bg-bg-primary/30 p-6 text-sm text-text-primary font-mono leading-relaxed focus:outline-none transition-all resize-none"
+                  className="flex-1 w-full bg-white p-6 text-sm text-text-primary font-slate-900 leading-relaxed focus:outline-none transition-all resize-none shadow-inner"
                   placeholder="Enter prompt instructions here..."
                   spellCheck={false}
                 />
 
                 {/* Editor Footer */}
-                <div className="bg-white/5 px-5 py-4 border-t border-white/5 flex justify-end">
+                <div className="bg-surface px-5 py-4 border-t border-border flex justify-end">
                    <button
                     onClick={handleSavePrompts}
                     className={`btn-success text-sm px-8 py-2.5 shadow-lg shadow-emerald-500/20 flex items-center gap-2 transform transition-all hover:-translate-y-1 ${savingPrompts ? 'opacity-70 cursor-wait' : ''}`}

@@ -11,7 +11,7 @@ import CreateProductModal from './components/CreateProductModal'
 export default function App() {
   // ─── Page Navigation ────────────────────────────────
   const [currentPage, setCurrentPage] = useState('generation') // 'generation' | 'product-manager'
-  const [managedProduct, setManagedProduct] = useState('')
+
   const [showCreateModal, setShowCreateModal] = useState(false)
 
   // ─── Product / SKU State ────────────────────────────
@@ -71,9 +71,12 @@ export default function App() {
 
   // ─── Product Manager Navigation ────────────────────
   const handleManageProduct = useCallback((productName) => {
-    setManagedProduct(productName)
+    // If clicking Manage from Sidebar for a different product, update selection
+    if (productName && productName !== selectedProduct) {
+        setSelectedProduct(productName)
+    }
     setCurrentPage('product-manager')
-  }, [])
+  }, [selectedProduct])
 
   const handleBackToGeneration = useCallback(() => {
     setCurrentPage('generation')
@@ -83,7 +86,7 @@ export default function App() {
   const handleProductCreated = useCallback((productName) => {
     setShowCreateModal(false)
     loadProducts()
-    setManagedProduct(productName)
+    setSelectedProduct(productName)
     setCurrentPage('product-manager')
   }, [loadProducts])
 
@@ -498,7 +501,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-bg-secondary/50 backdrop-blur-md">
+      <header className="px-6 py-4 border-b border-border flex items-center justify-between bg-bg-secondary/80 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <span className="text-2xl">✨</span>
           <h1 className="text-xl font-bold bg-linear-to-r from-accent to-amber bg-clip-text text-transparent">
@@ -540,9 +543,9 @@ export default function App() {
         />
 
         {/* Main Content - Conditional */}
-        {currentPage === 'product-manager' && managedProduct ? (
+        {currentPage === 'product-manager' && selectedProduct ? (
           <ProductManager
-            product={managedProduct}
+            product={selectedProduct}
             onBack={handleBackToGeneration}
             onProductsChanged={loadProducts}
           />
