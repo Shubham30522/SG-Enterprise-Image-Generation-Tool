@@ -165,6 +165,7 @@ export default function App() {
         break
       case 'variant_progress':
         setBatchStatus(event.data.message)
+        setStatusText(event.data.message)
         setVariantProgress({ current: event.data.current, total: event.data.total })
         break
       case 'variant_ready':
@@ -194,11 +195,13 @@ export default function App() {
                 ? prev // stay on it (it was already there)
                 : carouselImages.length // append -> focus new (length of OLD arr is index of new)
         })
+        setStatusText(`${event.data.pose} view generated ✓`)
         break
       case 'done':
         setIsProcessing(false)
         setBatchStatus(event.data.message || 'Complete')
         setBatchComplete(true)
+        setStatusText(event.data.message || 'All images generated! ✓')
         // Update output folder from server if provided (ensures correct ZIP path)
         if (event.data.output_folder) {
           setSavedOutputFolder(event.data.output_folder)
@@ -329,6 +332,7 @@ export default function App() {
       setSavedFrontPath(result.saved_path)
       setSavedOutputFolder(result.output_folder)
       setHasSavedFront(true)
+      setStatusText('Front saved ✓ Starting variant generation...')
 
       // Immediately start variants
       const selectedPoseList = Object.entries(selectedPoses)
