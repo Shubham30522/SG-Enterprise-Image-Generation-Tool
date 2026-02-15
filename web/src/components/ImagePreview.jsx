@@ -24,7 +24,7 @@ export default function ImagePreview({
   const nextImage = carouselImages[focusedIndex + 1]
 
   return (
-    <div className="glass-card flex-1 min-h-[400px] flex items-center justify-center overflow-hidden relative group bg-white border-border shadow-sm">
+    <div className="glass-card flex-1 min-h-[280px] flex items-center justify-center overflow-hidden relative group bg-white border-border shadow-sm">
       
       {carouselImages.length > 0 ? (
         <>
@@ -61,7 +61,7 @@ export default function ImagePreview({
             <img
               src={currentImage.src}
               alt={currentImage.pose}
-              className="max-h-[65vh] object-contain rounded-xl shadow-2xl border border-border animate-fade-in bg-surface"
+              className="max-h-[50vh] object-contain rounded-xl shadow-2xl border border-border animate-fade-in bg-surface"
             />
             
             {/* Pose Label & Regenerate */}
@@ -102,12 +102,12 @@ export default function ImagePreview({
         </>
       ) : (
         /* Empty State */
-        <div className="flex flex-col items-center gap-4 text-center px-8 z-10">
+        <div className="flex flex-col items-center gap-3 text-center px-8 z-10 py-8">
           {isProcessing ? (
             <>
               <div className="relative">
-                <div className="w-16 h-16 border-4 border-accent/20 rounded-full" />
-                <div className="w-16 h-16 border-4 border-accent border-t-transparent rounded-full animate-spin absolute top-0 left-0" />
+                <div className="w-12 h-12 border-4 border-accent/20 rounded-full" />
+                <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin absolute top-0 left-0" />
               </div>
               <p className="text-text-secondary text-sm max-w-xs font-medium">
                 {statusText || 'Generating...'}

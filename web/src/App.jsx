@@ -585,7 +585,7 @@ export default function App() {
             onProductsChanged={loadProducts}
           />
         ) : (
-          <main className="flex-1 flex flex-col overflow-y-auto p-6 gap-5">
+          <main className="flex-1 flex flex-col overflow-y-auto p-4 gap-3">
             {/* Progress Tracker */}
             {currentSku && (
               <div className="glass-card px-5 py-3 flex items-center justify-between">
