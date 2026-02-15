@@ -199,6 +199,10 @@ export default function App() {
         setIsProcessing(false)
         setBatchStatus(event.data.message || 'Complete')
         setBatchComplete(true)
+        // Update output folder from server if provided (ensures correct ZIP path)
+        if (event.data.output_folder) {
+          setSavedOutputFolder(event.data.output_folder)
+        }
         break
       case 'error':
         setIsProcessing(false)
@@ -622,8 +626,10 @@ export default function App() {
               <ResultsGallery
                 images={generatedImages}
                 product={selectedProduct}
+                sku={currentSku}
                 outputFolder={savedOutputFolder}
                 batchComplete={batchComplete}
+                frontImageBase64={hasSavedFront ? currentImageData : null}
               />
             )}
           </main>
