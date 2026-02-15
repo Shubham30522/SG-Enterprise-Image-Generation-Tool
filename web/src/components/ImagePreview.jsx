@@ -31,7 +31,7 @@ export default function ImagePreview({
           {/* Previous Image (Left Side) */}
           {prevImage && (
             <div 
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-48 h-64 opacity-40 blur-[2px] scale-90 z-0 transition-all duration-300 cursor-pointer hover:opacity-60"
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-36 h-56 opacity-40 blur-[2px] scale-90 z-0 transition-all duration-300 cursor-pointer hover:opacity-60"
               onClick={() => onNavigate(-1)}
             >
               <img 
@@ -45,7 +45,7 @@ export default function ImagePreview({
           {/* Next Image (Right Side) */}
           {nextImage && (
             <div 
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-48 h-64 opacity-40 blur-[2px] scale-90 z-0 transition-all duration-300 cursor-pointer hover:opacity-60"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-36 h-56 opacity-40 blur-[2px] scale-90 z-0 transition-all duration-300 cursor-pointer hover:opacity-60"
               onClick={() => onNavigate(1)}
             >
               <img 
@@ -57,7 +57,7 @@ export default function ImagePreview({
           )}
 
           {/* Main Image (Center) */}
-          <div className="relative z-10 max-w-[80%] max-h-[90%] transition-all duration-300 transform scale-100 flex flex-col items-center">
+          <div className="relative z-10 max-w-[60%] max-h-[90%] transition-all duration-300 transform scale-100 flex flex-col items-center">
             <img
               src={currentImage.src}
               alt={currentImage.pose}
@@ -81,7 +81,7 @@ export default function ImagePreview({
           {/* Navigation Buttons */}
           <button 
             onClick={() => onNavigate(-1)}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/80 hover:bg-white text-text-primary border border-border backdrop-blur transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30 shadow-lg hover:scale-110"
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/80 hover:bg-white text-text-primary border border-border backdrop-blur transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30 shadow-lg hover:scale-110"
             disabled={focusedIndex === 0}
           >
             ←
@@ -89,7 +89,7 @@ export default function ImagePreview({
           
           <button 
             onClick={() => onNavigate(1)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/80 hover:bg-white text-text-primary border border-border backdrop-blur transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30 shadow-lg hover:scale-110"
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/80 hover:bg-white text-text-primary border border-border backdrop-blur transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30 shadow-lg hover:scale-110"
             disabled={focusedIndex === carouselImages.length - 1}
           >
             →
