@@ -9,17 +9,17 @@ CRITICAL: This is an ON-MODEL detail shot, NOT a flat lay. The focus is purely o
 ===== EXACT WAISTBAND CONSTRUCTION (MATCH PRECISELY — DO NOT HALLUCINATE) =====
 
 WAISTBAND DETAIL:
-- HALF-ELASTIC waistband design clearly visible in close-up
-- Show the transition from the FLAT, SMOOTH center front panel to the ELASTICATED/GATHERED sections on the sides
-- BUTTON FIDELITY (CRITICAL): The waistband button MUST be IDENTICAL to the button shown in Image 1 (Generated Front View). It is a SILVER/GREY METALLIC round button with visible buttonholes (4-hole sew-through style), medium-sized, sitting on a small FABRIC TAB/EXTENSION at the center front of the waistband. Do NOT change the button color, size, or style — it must look like the EXACT SAME button as in Image 1. Do NOT generate a small dark flat disc button, a snap button, or a tack button.
-- NO visible zipper fly — just the button closure on the clean flat front panel
+- FULLY ELASTICATED waistband — the ENTIRE waistband is gathered/ruched with visible elastic gathering, INCLUDING the center front
+- This is a PULL-ON style — there is NO BUTTON, NO ZIPPER, NO CLOSURE of any kind
+- Show the elastic gathering/ruching clearly across the full width of the waistband
+- Do NOT add a button or any closure — the waistband is PURE ELASTIC pull-on style
 - Visible topstitching along the waistband edges (tone-on-tone)
 - Moderate waistband width (approximately 3-4 cm)
 
 POCKET DETAIL:
 - Part of the SLANT / DIAGONAL on-seam front pocket opening should be visible
 - Clean-edged pocket opening with neat topstitching
-- NO cargo pockets visible in this waist-focused shot
+- The cargo flap pocket on the right thigh MAY be partially visible at the edge of the frame
 
 FABRIC TEXTURE:
 - Cotton twill / chino-style woven fabric texture must be clearly visible
@@ -63,8 +63,8 @@ LIGHTING:
 FRAMING:
 - EXTREME CLOSE-UP / MACRO SHOT
 - Frame from just below the chest to upper thigh
-- PRIMARY FOCUS: Center front button, half-elastic waistband construction, and pocket opening
+- PRIMARY FOCUS: Fully elasticated waistband construction, elastic gathering texture, and pocket opening
 - The waistband details should be sharp and clear
 - Maintain a 1:1 aspect ratio (square format) or similar high-detail crop
 
-NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT include the full body or face. Do NOT show feet. Do NOT add belt loops if not present in reference. Do NOT generate a flat lay image.
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT include the full body or face. Do NOT show feet. Do NOT add a button, zipper, or any waistband closure — this is a PURE ELASTIC pull-on waistband. Do NOT add belt loops if not present in reference. Do NOT generate a flat lay image.

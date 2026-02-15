@@ -10,23 +10,22 @@ CRITICAL: This must look like the SAME model and SAME environment as the front v
 
 WAISTBAND (BACK VIEW):
 - The back of the waistband is FULLY ELASTICATED — visible gathered/ruched elastic running across the ENTIRE width of the back waistband
-- Unlike the front (which has a flat center panel), the back waistband is ALL gathered elastic with no flat/smooth sections
+- The ENTIRE waistband (front AND back) is ALL gathered elastic — this is a PULL-ON style with NO flat panels anywhere
 - Same moderate waistband width as front (approximately 3-4 cm)
 - NO button or closure visible on the back
 
-BACK POCKETS:
-- EXACTLY 2 back pockets — one on each side (left and right)
-- Pocket style: HORIZONTAL WELT / JETTED pockets (simple horizontal slit openings)
-- The pockets are positioned at the upper hip/seat area, slightly below the waistband
-- Clean, minimal construction — just a horizontal slit opening with neat topstitching
-- NO flaps on the back pockets
-- NO buttons on the back pockets
-- NO patch-style pockets (they are WELT/JETTED, meaning sewn into the fabric with only the slit visible)
-- TOTAL back pockets: exactly 2
+BACK POCKET:
+- 1 BACK FLAP POCKET on the LEFT side (wearer's left when viewed from behind)
+- The pocket has a rectangular FLAP that folds over the pocket opening
+- The flap is secured with a single DARK / BLACK circular button
+- Positioned at the upper hip/seat area, slightly below the waistband
+- Visible topstitching around the flap edges
+- This is the ONLY back pocket — there is ONLY ONE, on the LEFT side
+- NO welt pockets, NO additional pockets on the opposite side
 
-NO CARGO POCKETS:
-- There are NO cargo pockets, NO thigh pockets, NO flap pockets anywhere on the back
-- The back of each leg is completely PLAIN below the back pockets
+CARGO POCKET (VISIBLE FROM BEHIND):
+- The cargo flap pocket on the RIGHT THIGH (wearer's right) may be partially visible from behind
+- If visible, it should show the side edge/profile of the rectangular flap with its dark button
 
 CENTER BACK SEAM:
 - Visible center back seam running vertically down the seat of the shorts
@@ -45,7 +44,7 @@ FABRIC:
 - Do NOT replicate any creases or wrinkles from the reference image
 
 STITCHING:
-- Clean topstitching along waistband seam, back pocket openings, side seams, and hem
+- Clean topstitching along waistband seam, back pocket flap, side seams, and hem
 - All stitching is tone-on-tone (same color as the fabric)
 
 NO LABELS/BRANDING ON BACK:
@@ -95,8 +94,8 @@ LIGHTING:
 
 FRAMING:
 - Frame from LOWER CHEST down to the FEET (full lower body including sneakers) — MATCH FRONT VIEW FRAMING
-- Focus on the WAISTBAND, HIP AREA, and BACK WELT POCKETS
-- Both back welt pockets must be clearly visible
+- Focus on the WAISTBAND, HIP AREA, and BACK FLAP POCKET
+- The single back flap pocket with its dark button must be clearly visible
 - Maintain a 3:4 aspect ratio
 
-NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT add cargo pockets, flap pockets, patch pockets, or any pocket type other than the 2 horizontal welt pockets described above. Do NOT extend the shorts below the knee — the hem must end AT or JUST ABOVE the knee (19-inch total garment length). Do NOT add any branding or labels on the back. Do NOT omit the watch or any accessories listed in MODEL CONSISTENCY. Do NOT change the t-shirt color from olive/dark green.
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT add welt pockets or a second back pocket — there is ONLY 1 back flap pocket on the LEFT side. Do NOT add a waistband button or zipper — this is a PULL-ON elastic waist. Do NOT extend the shorts below the knee — the hem must end AT or JUST ABOVE the knee (19-inch total garment length). Do NOT add any branding or labels on the back. Do NOT omit the watch or any accessories listed in MODEL CONSISTENCY. Do NOT change the t-shirt color from olive/dark green.

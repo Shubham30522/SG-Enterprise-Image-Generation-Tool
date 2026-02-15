@@ -8,23 +8,30 @@ INDEPENDENT GENERATION: Treat this request as a completely new and isolated task
 
 ===== EXACT GARMENT CONSTRUCTION (MATCH THESE DETAILS PRECISELY — DO NOT HALLUCINATE) =====
 
-This is a PLAIN COTTON KNEE-LENGTH BERMUDA SHORTS — NOT a cargo, NOT a full-length capri. Follow these construction details exactly:
+This is a COTTON KNEE-LENGTH BERMUDA SHORTS with a CARGO FLAP POCKET — NOT a full-length capri. Follow these construction details exactly:
 
 WAISTBAND:
-- HALF-ELASTIC waistband design
-- Elasticated/gathered sections on BOTH the left and right sides of the waistband (visible ruching/gathering from the elastic)
-- FLAT, SMOOTH center front panel (no elastic gathering in the center front — the front panel sits flat and clean)
-- Single circular button closure at top center front — COLOR MUST MATCH REFERENCE IMAGE EXACTLY (likely BLACK or DARK GREY contrast button). Do NOT generate a silver button if the reference is dark.
-- NO visible zipper fly — the front closure is ONLY the single button on a clean flat front panel
+- FULLY ELASTICATED waistband — the ENTIRE waistband (front, sides, AND back) is gathered/ruched with visible elastic gathering
+- This is a PULL-ON style — there is NO button, NO zipper fly, NO flat front panel
+- The elastic gathering/ruching is visible ALL AROUND the waistband, INCLUDING the center front — there is NO smooth flat front panel
+- NO closure of any kind on the waistband — pure pull-on elastic
 - The waistband has a moderate width (approximately 3-4 cm)
 
-POCKETS:
-- EXACTLY 2 front pockets ONLY — one on each side
+FRONT POCKETS:
+- EXACTLY 2 front slant/diagonal on-seam pockets — one on each side
 - Pocket style: SLANT / DIAGONAL on-seam pockets (angled cut-in pockets that follow the hip seam)
 - The pocket openings are clean-edged with neat topstitching along the pocket mouth
-- NO cargo pockets anywhere (no thigh pockets, no flap pockets, no button-secured flaps)
-- NO back pockets visible from the front view
-- TOTAL visible pockets from front: exactly 2 (one left, one right — both slant style)
+
+CARGO POCKET (IMPORTANT — THIS IS A KEY DESIGN FEATURE):
+- 1 CARGO FLAP POCKET on the RIGHT THIGH (wearer's right leg)
+- The cargo pocket has a rectangular FLAP that folds over the pocket opening
+- The flap is secured with a single DARK / BLACK circular button
+- The pocket is positioned on the outer side of the right thigh, approximately mid-thigh height
+- The flap has visible topstitching around its edges
+- This is the ONLY cargo pocket — there is ONLY ONE, on the RIGHT leg ONLY
+- Do NOT add a second cargo pocket on the left leg
+
+TOTAL VISIBLE POCKETS FROM FRONT: 3 (two front slant pockets + one cargo flap pocket on right thigh)
 
 BRANDING / LABEL:
 - SEN brand label positioned on the LOWER LEFT THIGH (wearer's left leg), near the hem area
@@ -107,8 +114,8 @@ LIGHTING:
 FRAMING:
 - Frame from LOWER CHEST down to the FEET (full lower body including sneakers)
 - The bermuda shorts should be the PRIMARY FOCUS of the frame
-- Ensure the slant pockets, half-elastic waistband, and SEN label are clearly visible
+- Ensure the slant pockets, cargo flap pocket on right thigh, fully-elastic waistband, and SEN label are clearly visible
 - Left hand in pocket and right hand holding sunglasses should both be prominently visible
 - Maintain a 3:4 aspect ratio
 
-NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT add cargo pockets, flap pockets, or any pocket type other than the 2 slant side pockets described above. Do NOT extend the shorts below the knee — the hem must end AT or JUST ABOVE the knee (19-inch total garment length). Do NOT omit the watch, sunglasses, or any accessories listed in MODEL CONSISTENCY. Do NOT change the t-shirt color from olive/dark green.
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT add a SECOND cargo pocket — there is ONLY ONE cargo pocket on the RIGHT thigh. Do NOT add a waistband button or zipper — this is a PULL-ON elastic waist with NO closure. Do NOT extend the shorts below the knee — the hem must end AT or JUST ABOVE the knee (19-inch total garment length). Do NOT omit the watch, sunglasses, or any accessories listed in MODEL CONSISTENCY. Do NOT change the t-shirt color from olive/dark green.

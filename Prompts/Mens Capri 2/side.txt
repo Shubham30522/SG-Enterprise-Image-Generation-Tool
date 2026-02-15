@@ -9,18 +9,25 @@ CRITICAL: This must look like the SAME model and SAME environment as the front v
 ===== EXACT SIDE-VIEW GARMENT CONSTRUCTION (MATCH PRECISELY — DO NOT HALLUCINATE) =====
 
 WAISTBAND (SIDE VIEW):
-- HALF-ELASTIC waistband — from the side, you will see the ELASTICATED/GATHERED section (the side portion has visible ruching from the elastic)
-- The flat center front panel transitions into the gathered elastic on the sides
-- Single circular button closure visible at the front edge (COLOR MUST MATCH REFERENCE — likely BLACK/DARK)
+- FULLY ELASTICATED waistband — from the side, you will see the ELASTICATED/GATHERED section (the ENTIRE waistband is gathered, including the front)
+- This is a PULL-ON style — NO button, NO zipper, NO flat front panel
+- The elastic gathering/ruching is visible all around
 - Moderate waistband width (approximately 3-4 cm)
-- NO visible zipper fly
 
 POCKETS (SIDE VIEW):
 - The SLANT / DIAGONAL on-seam front pocket opening should be clearly visible from the side angle
-- This is a simple angled cut-in pocket — NOT a cargo pocket
-- NO cargo pockets anywhere (no thigh pockets, no flap pockets, no button-secured flaps on the sides)
-- The back WELT pocket (horizontal slit) may be partially visible from the side angle
-- TOTAL pockets: 1 front slant pocket visible + possibly 1 back welt pocket partially visible from side
+- This is a simple angled cut-in pocket
+
+CARGO POCKET (KEY FEATURE — SIDE VIEW):
+- If viewing the RIGHT SIDE of the garment: the CARGO FLAP POCKET on the RIGHT THIGH is the most prominent pocket feature
+- The cargo pocket has a rectangular FLAP with a single DARK / BLACK circular button
+- Positioned on the outer thigh, approximately mid-thigh height
+- If viewing the LEFT SIDE: the cargo pocket is NOT visible (it is only on the RIGHT leg)
+
+BACK POCKET (SIDE VIEW):
+- The back FLAP pocket may be partially visible from the side angle
+- If visible, it has a rectangular flap with a dark button
+- TOTAL pockets: 1 front slant pocket visible + possibly the cargo flap pocket (right side) or back flap pocket partially visible
 
 BRANDING / LABEL (SIDE VIEW):
 - If viewing the LEFT SIDE of the garment (wearer's left), the SEN brand label should be visible on the lower thigh area near the hem
@@ -46,7 +53,7 @@ FABRIC:
 - Do NOT replicate any creases or wrinkles from the reference image
 
 STITCHING:
-- Clean topstitching along waistband, pocket openings, side seams, and hem
+- Clean topstitching along waistband, pocket openings, cargo flap edges, side seams, and hem
 - All stitching is tone-on-tone (same color as the fabric)
 
 ===== END OF SIDE-VIEW GARMENT CONSTRUCTION =====
@@ -93,9 +100,9 @@ LIGHTING:
 
 FRAMING:
 - Frame from LOWER CHEST down to the FEET (full lower body including sneakers) — MATCH FRONT VIEW FRAMING
-- Focus on the WAISTBAND, HIP AREA, and SIDE POCKET profile
+- Focus on the WAISTBAND, HIP AREA, and CARGO POCKET profile (if viewing right side)
 - The bermuda shorts should be the PRIMARY FOCUS of the frame
-- Ensure the slant pocket and side waistband elastic gathering are clearly visible
+- Ensure the cargo flap pocket (if right side) or SEN label (if left side) and side waistband elastic gathering are clearly visible
 - Maintain a 3:4 aspect ratio
 
-NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT add cargo pockets, flap pockets, or any pocket type other than the slant side pocket described above. Do NOT extend the shorts below the knee — the hem must end AT or JUST ABOVE the knee (19-inch total garment length). Do NOT omit the watch or any accessories listed in MODEL CONSISTENCY. Do NOT change the t-shirt color from olive/dark green.
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT add a second cargo pocket — there is ONLY ONE on the right thigh. Do NOT add a waistband button or zipper — this is a PULL-ON elastic waist. Do NOT extend the shorts below the knee — the hem must end AT or JUST ABOVE the knee (19-inch total garment length). Do NOT omit the watch or any accessories listed in MODEL CONSISTENCY. Do NOT change the t-shirt color from olive/dark green.
