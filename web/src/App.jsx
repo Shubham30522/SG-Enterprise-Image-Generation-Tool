@@ -456,6 +456,30 @@ export default function App() {
     setBatchStatus('')
   }, [currentJobId, currentSkuIndex, skus])
 
+  // ─── Direct Color/SKU Selection ─────────────────────
+  const handleSkuChange = useCallback((index) => {
+    if (index === currentSkuIndex) return
+    // Cancel any running job
+    if (currentJobId) {
+      try { api.cancelGeneration(currentJobId) } catch {}
+    }
+    if (eventSourceRef.current) eventSourceRef.current.close()
+    setCurrentSkuIndex(index)
+    setCurrentImage(null)
+    setCurrentImageData(null)
+    setHasSavedFront(false)
+    setSavedFrontPath(null)
+    setGeneratedImages([])
+    setCarouselImages([])
+    setFocusedIndex(0)
+    setBatchComplete(false)
+    setIsProcessing(false)
+    setErrorMsg('')
+    setBatchStatus('')
+    setVariantProgress({ current: 0, total: 0 })
+    setStatusText(`Switched to color: ${skus[index]}. Ready.`)
+  }, [currentJobId, currentSkuIndex, skus])
+
   // Auto-start processing when skuIndex changes (after skip)
   useEffect(() => {
     if (currentSkuIndex > 0 && isProcessing) {
@@ -536,6 +560,9 @@ export default function App() {
           isProcessing={isProcessing}
           anyPoseSelected={anyPoseSelected}
           skuCount={skus.length}
+          skus={skus}
+          currentSkuIndex={currentSkuIndex}
+          onSkuChange={handleSkuChange}
           currentPage={currentPage}
           onManageProduct={handleManageProduct}
           onShowCreateModal={() => setShowCreateModal(true)}

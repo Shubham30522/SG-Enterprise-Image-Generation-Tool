@@ -7,7 +7,7 @@ export default function Sidebar({
   matchBg, onMatchBgChange,
   onAutoTune, isAutoTuning,
   onStart, isProcessing, anyPoseSelected,
-  skuCount,
+  skuCount, skus, currentSkuIndex, onSkuChange,
   currentPage, onManageProduct, onShowCreateModal, onGoToGeneration
 }) {
   const allChecked = poses.length > 0 && poses.every(p => selectedPoses[p])
@@ -92,6 +92,28 @@ export default function Sidebar({
       {/* ─── Generation Controls (only visible in generation mode) ─── */}
       {currentPage === 'generation' && (
         <div className="bg-surface rounded-2xl p-4 border border-border space-y-5 animate-fade-in shadow-inner">
+          {/* Color / SKU Selector */}
+          {skus && skus.length > 0 && (
+            <div>
+              <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2 block">Target Color</label>
+              <div className="relative group">
+                <select
+                  value={currentSkuIndex}
+                  onChange={e => onSkuChange(Number(e.target.value))}
+                  disabled={isProcessing}
+                  className="w-full bg-bg-card border border-border rounded-xl px-4 py-3 text-sm text-text-primary focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-all cursor-pointer disabled:opacity-50 appearance-none shadow-sm hover:border-accent/30"
+                >
+                  {skus.map((sku, idx) => (
+                    <option key={sku} value={idx} className="bg-bg-secondary text-text-primary py-2">
+                      {sku}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none transition-transform group-hover:translate-y-0">▼</div>
+              </div>
+              <p className="text-[10px] text-text-muted mt-1.5 px-1">Color {currentSkuIndex + 1} of {skus.length}</p>
+            </div>
+          )}
           {/* Pose Checkboxes */}
           <div>
             <div className="flex items-center justify-between mb-3">
