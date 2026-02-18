@@ -1,0 +1,19 @@
+Generate a high-resolution close-up detail shot of the WAISTBAND area of the women's pant.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE waistband construction details.
+
+Instructions:
+1. Background & Lighting: STRICTLY MATCH Image 1.
+2. Product: Show button, zipper fly, belt loops, and waistband stitching exactly as in Image 2.
+3. Color and texture must match Image 1.
+
+Negative prompt: no full body view, no mismatched background
+
+STRICT REQUIREMENT: The generated product must match the Input Image (Raw Product) with 100% fidelity. DO NOT alter the color, fabric texture, or stitching details.
+STRICT PROHIBITION: CHANGING COLOR IS NOT ALLOWED. The generated product MUST have the EXACT SAME COLOR as the Input Image. Do not lighten, darken, or shift the hue.
+
+STRICT REQUIREMENT: THE PRODUCT MUST BE TOTALLY WRINKLE-FREE. REMOVE ALL CREASES, FOLDS, AND WRINKLES. The fabric must appear perfectly smooth and professionally ironed. Even if the Input Image shows wrinkles, you MUST fix them.
+
+STRICT PROHIBITION: NO NEW PATTERNS. Do not generate any stitching, ribbing, or designs that are not in the Input Image. If the input is solid/plain, the output MUST be solid/plain.

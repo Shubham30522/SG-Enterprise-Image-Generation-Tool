@@ -4,7 +4,7 @@ export default function ActionButtons({
   onRegenerate, onSkip
 }) {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 gap-3 max-w-3xl mx-auto w-full">
       {/* Row 1 */}
       <button
         className="btn-success text-sm"

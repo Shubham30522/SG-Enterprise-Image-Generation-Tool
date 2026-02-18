@@ -28,8 +28,53 @@ export default function App() {
   const [matchPose, setMatchPose] = useState(false)
   const [matchBg, setMatchBg] = useState(false)
 
+  // Variant References { [pose]: path } and { [pose]: previewUrl }
+  const [variantRefPaths, setVariantRefPaths] = useState({}) 
+  const [variantRefPreviews, setVariantRefPreviews] = useState({})
+
+  // ─── Reference Image Upload ────────────────────────
+  const handleRefUpload = useCallback(async (file) => {
+    try {
+      if (!file) {
+          setRefImagePath('')
+          setRefImagePreview(null)
+          return
+      }
+      const result = await api.uploadReferenceImage(file)
+      setRefImagePath(result.path)
+      // Create preview URL
+      setRefImagePreview(URL.createObjectURL(file))
+    } catch (err) {
+      setErrorMsg(err.message)
+    }
+  }, [])
+
+  const handleVariantRefUpload = useCallback(async (file, pose) => {
+    try {
+        if (!file) {
+            setVariantRefPaths(prev => {
+                const next = { ...prev }
+                delete next[pose]
+                return next
+            })
+            setVariantRefPreviews(prev => {
+                const next = { ...prev }
+                delete next[pose]
+                return next
+            })
+            return
+        }
+        const result = await api.uploadReferenceImage(file)
+        setVariantRefPaths(prev => ({ ...prev, [pose]: result.path }))
+        setVariantRefPreviews(prev => ({ ...prev, [pose]: URL.createObjectURL(file) }))
+    } catch (err) {
+        setErrorMsg(`Failed to upload ${pose} ref: ${err.message}`)
+    }
+  }, [])
   // ─── Generation State ──────────────────────────────
   const [isProcessing, setIsProcessing] = useState(false)
+  const [isAutoTuning, setIsAutoTuning] = useState(false)
+
   const [currentSkuIndex, setCurrentSkuIndex] = useState(0)
   const [currentImage, setCurrentImage] = useState(null) // base64
   const [currentImageData, setCurrentImageData] = useState(null) // raw base64 for saving
@@ -134,17 +179,7 @@ export default function App() {
 
   const anyPoseSelected = Object.values(selectedPoses).some(v => v)
 
-  // ─── Reference Image Upload ────────────────────────
-  const handleRefUpload = useCallback(async (file) => {
-    try {
-      const result = await api.uploadReferenceImage(file)
-      setRefImagePath(result.path)
-      // Create preview URL
-      setRefImagePreview(URL.createObjectURL(file))
-    } catch (err) {
-      setErrorMsg(err.message)
-    }
-  }, [])
+
 
   // ─── SSE Event Handler ─────────────────────────────
   const handleSSEEvent = useCallback((event) => {
@@ -313,6 +348,7 @@ export default function App() {
         resolution: resolution,
         selected_poses: selectedPoseList,
         front_image_path: savedFrontPath,
+        variant_ref_paths: variantRefPaths,
       })
       setCurrentJobId(result.job_id)
       if (eventSourceRef.current) eventSourceRef.current.close()
@@ -356,6 +392,7 @@ export default function App() {
         resolution: resolution,
         selected_poses: selectedPoseList,
         front_image_path: result.saved_path,
+        variant_ref_paths: variantRefPaths,
       })
       setCurrentJobId(varResult.job_id)
       if (eventSourceRef.current) eventSourceRef.current.close()
@@ -427,6 +464,7 @@ export default function App() {
                 resolution: resolution,
                 selected_poses: [pose],
                 front_image_path: savedFrontPath,
+                variant_ref_paths: variantRefPaths,
             })
             setCurrentJobId(result.job_id)
             if (eventSourceRef.current) eventSourceRef.current.close()
@@ -496,7 +534,7 @@ export default function App() {
   }, [currentSkuIndex]) // intentionally not adding startProcessing to deps
 
   // ─── Auto-Tune ─────────────────────────────────────
-  const [isAutoTuning, setIsAutoTuning] = useState(false)
+  // (State moved to top)
 
   const handleAutoTune = useCallback(async () => {
     if (!selectedProduct) return
@@ -562,6 +600,8 @@ export default function App() {
           onMatchPoseChange={setMatchPose}
           matchBg={matchBg}
           onMatchBgChange={setMatchBg}
+          variantRefs={variantRefPreviews}
+          onVariantRefUpload={handleVariantRefUpload}
           onAutoTune={handleAutoTune}
           isAutoTuning={isAutoTuning}
           onStart={startProcessing}
@@ -585,7 +625,7 @@ export default function App() {
             onProductsChanged={loadProducts}
           />
         ) : (
-          <main className="flex-1 flex flex-col overflow-y-auto p-4 gap-3">
+          <main className="flex-1 flex flex-col overflow-y-auto p-4 gap-6 max-w-7xl mx-auto w-full pb-10">
             {/* Progress Tracker */}
             {currentSku && (
               <div className="glass-card px-5 py-3 flex items-center justify-between">

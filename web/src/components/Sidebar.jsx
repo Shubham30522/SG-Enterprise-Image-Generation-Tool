@@ -5,6 +5,7 @@ export default function Sidebar({
   refImagePreview, onRefUpload,
   matchPose, onMatchPoseChange,
   matchBg, onMatchBgChange,
+  variantRefs, onVariantRefUpload,
   onAutoTune, isAutoTuning,
   onStart, isProcessing, anyPoseSelected,
   skuCount, skus, currentSkuIndex, onSkuChange,
@@ -142,17 +143,57 @@ export default function Sidebar({
             </div>
           </div>
 
-          {/* Resolution & Toggles */}
-          <div className="space-y-4">
-             {/* Resolution */}
+
+
+            {/* Variant References */}
+            {anyPoseSelected && poses.filter(p => selectedPoses[p] && p !== 'Front').length > 0 && (
+              <div>
+                <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2 block">Variant Style References</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {poses.filter(p => selectedPoses[p] && p !== 'Front').map(pose => (
+                     <div key={pose} className="flex flex-col gap-1 bg-white p-2 rounded-lg border border-border shadow-sm">
+                        <span className="text-[10px] font-bold text-text-secondary">{pose}</span>
+                        <div className="w-full h-16 border border-dashed border-border rounded-lg bg-surface hover:bg-surface-hover cursor-pointer relative overflow-hidden group transition-all hover:border-accent/40">
+                           {variantRefs && variantRefs[pose] ? (
+                              <div className="w-full h-full relative group/preview">
+                                 <img src={variantRefs[pose]} alt={pose} className="w-full h-full object-cover opacity-80" />
+                                 <button 
+                                    onClick={(e) => { e.stopPropagation(); onVariantRefUpload(null, pose); }}
+                                    className="absolute top-0.5 right-0.5 bg-white/80 rounded-full p-0.5 text-text-muted hover:text-red-500 opacity-0 group-hover/preview:opacity-100 transition-opacity"
+                                 >
+                                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6L6 18M6 6l12 12" /></svg>
+                                 </button>
+                              </div>
+                           ) : (
+                              <label className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer gap-0.5">
+                                 <span className="text-xl leading-none text-text-muted/50">+</span>
+                                 <span className="text-[8px] text-text-muted group-hover:text-accent transition-colors">Upload</span>
+                                 <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files[0] && onVariantRefUpload(e.target.files[0], pose)} /> 
+                              </label>
+                           )}
+                        </div>
+                     </div>
+                  ))}
+                </div>
+                 <p className="text-[9px] text-text-muted italic px-1 mt-1 opacity-70">
+                    * Uploads here override pose/style for specific angles.
+                  </p>
+              </div>
+            )}
+
+            {/* Resolution Selector */}
             <div>
-              <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2 block">Quality</label>
-              <div className="grid grid-cols-3 gap-1 bg-white p-1 rounded-lg border border-border shadow-sm">
-                {['1K', '2K', '4K'].map(res => (
+              <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2 block">Resolution</label>
+              <div className="flex bg-surface rounded-lg p-1 border border-border">
+                {['1K', '2K', '3K', '4K'].map(res => (
                   <button
                     key={res}
                     onClick={() => onResolutionChange(res)}
-                    className={`text-xs font-medium py-1.5 rounded-md transition-all ${resolution === res ? 'bg-slate-100 text-text-primary shadow-inner font-bold' : 'text-text-muted hover:text-text-secondary'}`}
+                    className={`flex-1 py-1.5 text-xs font-bold rounded-md transition-all ${
+                      resolution === res 
+                        ? 'bg-bg-card text-text-primary shadow-sm border border-border/50' 
+                        : 'text-text-muted hover:text-text-secondary'
+                    }`}
                   >
                     {res}
                   </button>
@@ -160,9 +201,11 @@ export default function Sidebar({
               </div>
             </div>
 
-            {/* Reference */}
-             <div>
-              <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2 block">Reference Image</label>
+             {/* Resolution & Toggles */}
+             <div className="space-y-4">
+               {/* Reference */}
+               <div>
+                <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2 block">Main Style Reference</label>
               <div className="group relative">
                 <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-border rounded-xl bg-white hover:bg-surface-hover hover:border-accent/30 cursor-pointer transition-all overflow-hidden shadow-sm">
                    {refImagePreview ? (

@@ -23,8 +23,9 @@ This skill guides the agent through the process of adding a new product to the G
 3.  **Smart Angle Selection (Logical Analysis)**
     - **Goal**: You must define exactly 5 prompt files to showcase the product comprehensively.
     - **If Reference Images ARE Provided**:
-      - Create 5 prompt files corresponding _exactly_ to the angles/layouts in the provided reference images.
-      - Name them intuitively (e.g., `prompt_folded.txt`, `prompt_texture.txt`).
+      - **Option A (UI - Recommended)**: You can skip manual folder placement for reference images. Use the **Variant Style References** in the Sidebar to upload specific references for Back/Side/etc. directly before generation.
+      - **Option B (Manual)**: Create 5 prompt files...
+      - If using manual files: Name them intuitively (e.g., `prompt_folded.txt`, `prompt_texture.txt`).
     - **If NO Reference Images are Provided**:
       - **THINK**: What is this product? What are the 5 essential views?
       - **Deduce** the best angles. DO NOT blindly copy "Neck" or "Side" if it doesn't fit.

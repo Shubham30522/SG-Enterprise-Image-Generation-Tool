@@ -93,6 +93,7 @@ class GenerateVariantsRequest(BaseModel):
     resolution: str = "1K"
     selected_poses: list[str]  # e.g. ["Back", "Side", "Neck", "Detail"]
     front_image_path: Optional[str] = None  # path to saved front image
+    variant_ref_paths: Optional[dict[str, str]] = None # Key: Pose, Value: Path to reference image
 
 class AutoTuneRequest(BaseModel):
     product: str
@@ -819,8 +820,17 @@ def _run_front_generation(job: JobState, req: GenerateFrontRequest):
         input_images = []
         if front_img:
             input_images.append(front_img)
-        if product_ref:
+        # Logic to add Reference Image (Image 2)
+        if req.reference_image_path and os.path.exists(req.reference_image_path):
+             # UI Uploaded Reference takes precedence
+             input_images.append(req.reference_image_path)
+             print(f"DEBUG: Added UI Reference Image: {req.reference_image_path}")
+        elif product_ref:
+             # Fallback to file in folder
             input_images.append(product_ref)
+            print(f"DEBUG: Added Folder Reference Image: {product_ref}")
+
+        print(f"DEBUG (Front Gen): Input Images for {req.sku}: {input_images}")
         
         if not input_images:
             job.push_event("error", {"message": f"No images found for SKU: {req.sku}"})
@@ -940,6 +950,25 @@ def _run_variant_generation(job: JobState, req: GenerateVariantsRequest):
             if not prompt_text:
                 continue
             
+            # --- Reference Injection Logic ---
+            # 1. Global Injection (Environment) from Main Reference (if passed via front gen or available)
+            # Need to pass main ref path? currently _run_front_generation handles it. 
+            # Ideally we should pass "environment_description" from front gen to variants, but for now let's focus on per-variant ref.
+            
+            # 2. Specific Variant Ref Injection (Pose & Style)
+            if req.variant_ref_paths and pose_key in req.variant_ref_paths:
+                ref_path = req.variant_ref_paths[pose_key]
+                if os.path.exists(ref_path):
+                    job.push_event("status", {"message": f"Analyzing {pose_key} reference..."})
+                    analysis = api_client.analyze_reference_image(ref_path)
+                    if analysis:
+                        prompt_text = api_client.inject_prompt_overrides(
+                            prompt_text, analysis,
+                            inject_pose=True, # Always inject pose from specific ref
+                            inject_bg=True    # Also inject BG to match ref
+                        )
+            # ----------------------------------
+
             # Build input list: [Generated Front] + [Specific Raw Image]
             current_inputs = []
             if req.front_image_path and os.path.exists(req.front_image_path):

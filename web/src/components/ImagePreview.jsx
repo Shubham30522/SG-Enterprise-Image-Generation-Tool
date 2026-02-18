@@ -24,20 +24,20 @@ export default function ImagePreview({
   const nextImage = carouselImages[focusedIndex + 1]
 
   return (
-    <div className="glass-card flex-1 min-h-[280px] flex items-center justify-center overflow-hidden relative group bg-white border-border shadow-sm">
+    <div className="glass-card h-[550px] shrink-0 flex items-center justify-center overflow-hidden relative group bg-white border-border shadow-sm">
       
       {carouselImages.length > 0 ? (
         <>
           {/* Previous Image (Left Side) */}
           {prevImage && (
             <div 
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-36 h-56 opacity-40 blur-[2px] scale-90 z-0 transition-all duration-300 cursor-pointer hover:opacity-60"
+              className="absolute left-16 top-1/2 -translate-y-1/2 w-64 h-96 opacity-60 blur-[1px] scale-90 z-0 transition-all duration-300 cursor-pointer hover:opacity-80 hover:scale-95 hover:z-20 hover:blur-none"
               onClick={() => onNavigate(-1)}
             >
               <img 
                 src={prevImage.src} 
                 alt={prevImage.pose} 
-                className="w-full h-full object-cover rounded-lg border border-border"
+                className="w-full h-full object-cover rounded-xl border border-border shadow-lg"
               />
             </div>
           )}
@@ -45,23 +45,23 @@ export default function ImagePreview({
           {/* Next Image (Right Side) */}
           {nextImage && (
             <div 
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-36 h-56 opacity-40 blur-[2px] scale-90 z-0 transition-all duration-300 cursor-pointer hover:opacity-60"
+              className="absolute right-16 top-1/2 -translate-y-1/2 w-64 h-96 opacity-60 blur-[1px] scale-90 z-0 transition-all duration-300 cursor-pointer hover:opacity-80 hover:scale-95 hover:z-20 hover:blur-none"
               onClick={() => onNavigate(1)}
             >
               <img 
                 src={nextImage.src} 
                 alt={nextImage.pose} 
-                className="w-full h-full object-cover rounded-lg border border-border"
+                className="w-full h-full object-cover rounded-xl border border-border shadow-lg"
               />
             </div>
           )}
 
           {/* Main Image (Center) */}
-          <div className="relative z-10 max-w-[60%] max-h-[90%] transition-all duration-300 transform scale-100 flex flex-col items-center">
+          <div className="relative z-10 max-w-full max-h-full transition-all duration-300 transform scale-100 flex flex-col items-center px-2">
             <img
               src={currentImage.src}
               alt={currentImage.pose}
-              className="max-h-[50vh] object-contain rounded-xl shadow-2xl border border-border animate-fade-in bg-surface"
+              className="max-h-[530px] w-auto object-contain rounded-xl shadow-2xl border border-border animate-fade-in bg-surface"
             />
             
             {/* Pose Label & Regenerate */}
