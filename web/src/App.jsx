@@ -675,7 +675,6 @@ export default function App() {
               onSaveAndAutoGen={saveAndAutoGen}
               onSaveFront={saveFrontOnly}
               onGenerateVariants={generateVariants}
-              onRegenerate={regenerate}
               onSkip={skip}
             />
 

@@ -185,7 +185,7 @@ export default function Sidebar({
             <div>
               <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2 block">Resolution</label>
               <div className="flex bg-surface rounded-lg p-1 border border-border">
-                {['1K', '2K', '3K', '4K'].map(res => (
+                {['1K', '2K', '4K'].map(res => (
                   <button
                     key={res}
                     onClick={() => onResolutionChange(res)}

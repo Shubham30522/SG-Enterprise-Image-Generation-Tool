@@ -1,7 +1,7 @@
 export default function ActionButtons({
   isProcessing, hasImage, hasSavedFront,
   onSaveAndAutoGen, onSaveFront, onGenerateVariants,
-  onRegenerate, onSkip
+  onSkip
 }) {
   return (
     <div className="grid grid-cols-2 gap-3 max-w-3xl mx-auto w-full">
@@ -35,16 +35,8 @@ export default function ActionButtons({
         </button>
       )}
 
-      {/* Row 2 */}
-      <button
-        className="btn-ghost text-sm border-red-500/20 hover:border-red-500/40 text-red-400 hover:text-red-300"
-        onClick={onRegenerate}
-        disabled={isProcessing || !hasImage}
-        title="Regenerate the front image"
-      >
-        🔄 Regenerate Front
-      </button>
 
+      {/* Row 2 */}
       <button
         className="btn-ghost text-sm"
         onClick={onSkip}
