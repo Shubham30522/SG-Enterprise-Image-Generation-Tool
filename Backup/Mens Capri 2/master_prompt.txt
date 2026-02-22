@@ -1,0 +1,108 @@
+Generate an image of a MALE model wearing the men's cotton bermuda shorts shown in the provided reference image.
+
+CRITICAL INSTRUCTION: The provided image is purely for TEXTURE and DESIGN reference. You must EXTRACT the clothing design from it and apply it to the model. Do NOT paste, float, or include the reference image itself in the scene. It is data, not an object.
+
+STRICT COLOR & PATTERN FIDELITY: The color and texture of the generated bermuda shorts MUST MATCH the reference image EXACTLY. Do not alter, brighten, filter, or shift the colors. High fidelity to the source material is paramount.
+
+INDEPENDENT GENERATION: Treat this request as a completely new and isolated task. Ignore any previous context. You MUST generate a fresh, unique background and lighting setup distinct from any prior outputs. Do not reuse previous settings.
+
+===== EXACT GARMENT CONSTRUCTION (MATCH THESE DETAILS PRECISELY — DO NOT HALLUCINATE) =====
+
+This is a COTTON KNEE-LENGTH BERMUDA SHORTS / CAPRI with a CARGO FLAP POCKET. Follow these construction details exactly:
+
+WAISTBAND:
+- FULLY ELASTICATED waistband — the ENTIRE waistband (front, sides, AND back) is gathered with visible elastic.
+- BELT LOOPS are PRESENT around the waistband (visible in back and assumed in front).
+- This is a PULL-ON style — NO zipper fly, but it features belt loops for styling.
+- The elastic gathering/ruching is visible ALL AROUND.
+- The waistband has a moderate width (approximately 3-4 cm).
+
+FRONT POCKETS (HIPS):
+- EXACTLY 2 front slant/diagonal on-seam pockets — one on each hip (Left and Right).
+- Pocket style: Standard SLANT / DIAGONAL on-seam pockets.
+- These are the standard pockets at the waist/hips.
+
+CARGO POCKET (RIGHT LEG ONLY):
+- 1 CARGO FLAP POCKET on the RIGHT THIGH (wearer's right leg).
+- ABSOLUTELY NO CARGO POCKET ON THE LEFT LEG.
+- The Right thigh features the Cargo Pocket with a flap and button.
+- The Left thigh is completely CLEAN (smooth fabric) except for the Brand Label near the hem.
+- ASYMMETRICAL DESIGN: Right = Cargo Pocket, Left = Label Only.
+
+BACK POCKET (RIGHT SIDE):
+- 1 BACK FLAP POCKET on the RIGHT SIDE (wearer's right buttock).
+- The pocket has a rectangular FLAP secured with a single DARK / BLACK circular button.
+- Left buttock is clean (no pocket).
+
+BRANDING / LABEL (LEFT LEG ONLY):
+- SEN brand label positioned on the LOWER LEFT THIGH (wearer's left leg), near the hem area.
+- The label is a small, rectangular, HORIZONTAL black woven patch.
+- LEFT SIDE of label: "STREET WEAR" at top, "WSEEWELL.in" below, "#1947" at bottom.
+- RIGHT SIDE of label: Large bold white "SEN" text.
+- The label sits FLAT against the plain fabric of the left thigh.
+- REMINDER: There is NO pocket under or near this label.
+
+LENGTH & FIT:
+- TOTAL GARMENT LENGTH: 19-20 inches (~50 cm).
+- Hem ends JUST ABOVE THE KNEE or RIGHT AT THE KNEE.
+- Relaxed / regular fit.
+- Straight-cut leg opening.
+
+HEM:
+- Plain, straight-cut hem at the bottom of each leg.
+- NO cuffs, NO turn-ups — just a clean straight hemline.
+- Neat topstitching visible along the hem edge.
+
+STITCHING & SEAMS:
+- Clean, visible topstitching along all construction lines (pocket mouths, waistband, hem, side seams).
+- Visible center seams (front and back).
+- All stitching is tone-on-tone.
+- NO decorative contrast stitching.
+
+FABRIC:
+- Cotton twill / chino-style woven fabric.
+- MATTE finish — no sheen.
+- Smooth, clean texture — appear WRINKLE-FREE.
+- Medium weight fabric.
+
+===== END OF GARMENT CONSTRUCTION =====
+
+MODEL & POSE:
+- Male model, relaxed casual standing pose
+- LEFT hand casually placed INSIDE the left side pocket of the bermuda shorts
+- RIGHT hand hanging naturally by the right side, holding BROWN/TORTOISESHELL AVIATOR SUNGLASSES loosely at hip level
+- Weight slightly shifted to one leg, natural streetwear stance — body SLIGHTLY ANGLED (not perfectly straight-on), giving a relaxed editorial feel
+- Confident, casual summer vibe
+- Body facing mostly toward the camera (FRONT VIEW, with a slight natural angle)
+- Head may be cropped at the top of frame — focus is chest-down
+- Dark-faced SPORTS/ANALOG WATCH clearly visible on LEFT WRIST
+
+OUTFIT STYLING:
+- WHITE oversized t-shirt (slightly tucked or hem visible at waist)
+- The cotton bermuda shorts from the reference image (as described in EXACT GARMENT CONSTRUCTION above)
+- WHITE CREW-LENGTH SOCKS visible above the sneakers
+- CREAM/OFF-WHITE CHUNKY SNEAKERS (bulky sole style, not slim canvas)
+
+BACKGROUND & ENVIRONMENT:
+- Modern, trendy STUDIO setting (NOT outdoor)
+- Clean WHITE or LIGHT GREY wall behind the model
+- GREY CONCRETE / STONE TEXTURED FLOOR beneath the model's feet
+- Professional eCommerce studio aesthetic — clean, modern, aspirational
+- The studio setup should feel trendy and fashion-forward
+
+LIGHTING:
+- Soft, even, DIFFUSED STUDIO LIGHTING (NOT natural outdoor daylight)
+- Professional studio strobes/softboxes creating clean, even illumination
+- Soft, subtle shadows on the floor — no harsh directional shadows
+- NO sunlight reflections, glare, or color casts on the fabric
+- The bermuda shorts color must remain TRUE and CONSISTENT throughout — no washed out or overexposed areas
+- Preserve the EXACT fabric color as shown in the reference image without any lighting-induced color shifts
+
+FRAMING:
+- Frame from LOWER CHEST down to the FEET (full lower body including sneakers)
+- The bermuda shorts should be the PRIMARY FOCUS of the frame
+- Ensure the slant pockets, cargo flap pocket on right thigh, fully-elastic waistband, and SEN label are clearly visible
+- Left hand in pocket and right hand holding sunglasses should both be prominently visible
+- Maintain a 3:4 aspect ratio
+
+NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays. Do NOT add a cargo pocket to the LEFT LEG — the Left Leg must be CLEAN except for the label. There is ONLY ONE cargo pocket (RIGHT side). Do NOT add a waistband button or zipper. Do NOT extend the shorts below the knee. Do NOT omit the watch/sunglasses. Do NOT change the t-shirt color from WHITE.

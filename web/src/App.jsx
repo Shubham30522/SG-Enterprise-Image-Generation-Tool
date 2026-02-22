@@ -191,9 +191,23 @@ export default function App() {
         setCurrentImage(`data:image/jpeg;base64,${event.data.image_base64}`)
         setCurrentImageData(event.data.image_base64)
         setAllSkuImages(event.data.all_sku_images || [])
-        // Update Carousel
-        setCarouselImages([{ pose: 'Front', src: `data:image/jpeg;base64,${event.data.image_base64}` }])
-        setFocusedIndex(0)
+        // Update Carousel (Append or Update — preserve existing variant images)
+        setCarouselImages(prev => {
+          const frontEntry = { pose: 'Front', src: `data:image/jpeg;base64,${event.data.image_base64}` }
+          if (prev.length === 0) return [frontEntry]
+          const idx = prev.findIndex(img => img.pose === 'Front')
+          if (idx !== -1) {
+            const newArr = [...prev]
+            newArr[idx] = frontEntry
+            return newArr
+          }
+          return [frontEntry, ...prev]
+        })
+        // Only reset focus to Front if this is a fresh generation (no other images)
+        setFocusedIndex(prev => {
+          // If carousel was empty before, focus on 0; otherwise keep current focus
+          return prev
+        })
         setIsProcessing(false)
         setStatusText('Front View Ready. Click Save to generate variants.')
         setErrorMsg('')

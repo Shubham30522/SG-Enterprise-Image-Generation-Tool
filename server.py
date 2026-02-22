@@ -104,6 +104,11 @@ class CreateProductRequest(BaseModel):
     category: str  # "top", "bottom", "dress"
     initial_color: str  # First SKU/color name
 
+class SaveFrontRequest(BaseModel):
+    product: str
+    sku: str
+    image_data: str  # base64 encoded image
+
 class SavePromptsRequest(BaseModel):
     master_prompt: Optional[str] = None
     variants: Optional[dict[str, str]] = None  # {"Back": "content", ...}
@@ -435,23 +440,19 @@ def save_and_generate_variants(req: GenerateVariantsRequest):
 
 
 @app.post("/api/generate/save-front")
-def save_front_only(
-    product: str = Form(...),
-    sku: str = Form(...),
-    image_data: str = Form(...)  # base64 encoded image
-):
+def save_front_only(req: SaveFrontRequest):
     """Save the current front image to output folder. Returns the saved path."""
-    product_output = os.path.join(OUTPUT_FOLDER, product)
+    product_output = os.path.join(OUTPUT_FOLDER, req.product)
     os.makedirs(product_output, exist_ok=True)
     
-    sku_output = utils.get_unique_folder(product_output, sku)
+    sku_output = utils.get_unique_folder(product_output, req.sku)
     
-    output_filename = f"{sku}_Front.jpg"
+    output_filename = f"{req.sku}_Front.jpg"
     saved_path = os.path.join(sku_output, output_filename)
     
     # Decode and save
     from PIL import Image
-    image_bytes = base64.b64decode(image_data)
+    image_bytes = base64.b64decode(req.image_data)
     img = Image.open(io.BytesIO(image_bytes))
     img.convert('RGB').save(saved_path, quality=100)
     

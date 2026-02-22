@@ -1,108 +1,132 @@
-Generate a SIDE VIEW image of the SAME male model wearing the men's cotton bermuda shorts.
+{
+  "objective": "Generate a SIDE VIEW image of the SAME male model wearing the men's cotton bermuda shorts.",
 
-Input References:
-- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
-- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS from the side angle.
+  "input_references": {
+    "image_1": "Generated Front — Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.",
+    "image_2": "Raw Product Image — Source for REAL LIFE PRODUCT DETAILS from the side angle."
+  },
 
-CRITICAL: This must look like the SAME model and SAME environment as the front view, just captured from a side angle.
+  "critical_instruction": "This must look like the SAME model and SAME environment as the front view, just captured from a side angle.",
 
-===== EXACT SIDE-VIEW GARMENT CONSTRUCTION (MATCH PRECISELY — DO NOT HALLUCINATE) =====
+  "garment_construction_side": {
+    "description": "EXACT SIDE-VIEW GARMENT CONSTRUCTION — MATCH PRECISELY — DO NOT HALLUCINATE.",
 
-WAISTBAND (SIDE VIEW):
-- FULLY ELASTICATED waistband — from the side, you will see the ELASTICATED/GATHERED section (the ENTIRE waistband is gathered, including the front)
-- This is a PULL-ON style — NO button, NO zipper, NO flat front panel
-- The elastic gathering/ruching is visible all around
-- Moderate waistband width (approximately 3-4 cm)
+    "waistband": {
+      "elastication": "FULLY ELASTICATED waistband visible from the side.",
+      "belt_loops": "BELT LOOPS are visible.",
+      "closure": "PULL-ON style but features belt loops.",
+      "gathering": "The elastic gathering/ruching is visible."
+    },
 
-POCKETS (SIDE VIEW):
-- The SLANT / DIAGONAL on-seam front pocket opening should be clearly visible from the side angle
-- This is a simple angled cut-in pocket
+    "pockets": {
+      "left_side_view": {
+        "label": "LABEL SIDE",
+        "cargo_pocket": "NO cargo pocket. NO flap pocket.",
+        "visible_elements": "Shows ONLY the SEN brand label near the hem.",
+        "hip_pocket": "Standard slant pocket opening at the hip is visible.",
+        "thigh": "The lower thigh is completely CLEAN/FLAT (except for the label).",
+        "strict_rule": "ABSOLUTELY NO POCKET under or near the label."
+      },
+      "right_side_view": {
+        "label": "CARGO SIDE",
+        "cargo_pocket": "CARGO FLAP POCKET is the prominent feature. 1 CARGO FLAP POCKET on the RIGHT THIGH with a dark button.",
+        "branding": "NO label on this side.",
+        "hip_pocket": "Slant pocket opening at hip is visible.",
+        "back_pocket_visibility": "Edge of the RIGHT BACK FLAP POCKET may be visible near the rear."
+      }
+    },
 
-CARGO POCKET (KEY FEATURE — SIDE VIEW):
-- If viewing the RIGHT SIDE of the garment: the CARGO FLAP POCKET on the RIGHT THIGH is the most prominent pocket feature
-- The cargo pocket has a rectangular FLAP with a single DARK / BLACK circular button
-- Positioned on the outer thigh, approximately mid-thigh height
-- If viewing the LEFT SIDE: the cargo pocket is NOT visible (it is only on the RIGHT leg)
+    "branding_label": {
+      "visibility": "VISIBLE ONLY ON LEFT SIDE VIEW.",
+      "location": "Located on lower left thigh near hem.",
+      "text": "\"STREET WEAR\" / \"SEN\" text on a black patch.",
+      "surface": "The patch sits on the FLAT fabric of the leg.",
+      "pocket_rule": "There is NO pocket underneath the patch.",
+      "right_side_rule": "NOT visible on Right Side View."
+    },
 
-BACK POCKET (SIDE VIEW):
-- The back FLAP pocket may be partially visible from the side angle
-- If visible, it has a rectangular flap with a dark button
-- TOTAL pockets: 1 front slant pocket visible + possibly the cargo flap pocket (right side) or back flap pocket partially visible
+    "length_and_fit": {
+      "total_length": "19-20 inches (~50 cm).",
+      "hem_position": "JUST ABOVE THE KNEE or RIGHT AT THE KNEE.",
+      "fit": "Relaxed / regular fit.",
+      "leg_opening": "Straight-cut."
+    },
 
-BRANDING / LABEL (SIDE VIEW):
-- If viewing the LEFT SIDE of the garment (wearer's left), the SEN brand label should be visible on the lower thigh area near the hem
-- The label is a small, rectangular, HORIZONTAL black woven patch
-- LEFT SIDE of label: "STREET WEAR" (underlined) at top, "WSEEWELL.in" below, "#1947" at bottom
-- RIGHT SIDE of label: Large bold white "SEN" text
-- If viewing the RIGHT SIDE, no label is visible
+    "hem": {
+      "style": "Plain, straight-cut hem — NO cuffs, NO turn-ups.",
+      "stitching": "Neat topstitching visible along the hem edge."
+    },
 
-LENGTH & FIT:
-- TOTAL GARMENT LENGTH: 19 inches (~50 cm) from waistband to hem
-- Hem ends JUST ABOVE THE KNEE or RIGHT AT THE KNEE — KNEE-LENGTH BERMUDA style
-- Longer than regular casual shorts but shorter than 3/4 capri — the hem should NOT go below the knee
-- Relaxed / regular fit silhouette visible from the side
-- Straight-cut leg opening
+    "fabric": {
+      "type": "Cotton twill / chino-style woven fabric, MATTE finish.",
+      "texture": "Smooth, clean texture — WRINKLE-FREE."
+    },
 
-HEM:
-- Plain, straight-cut hem — NO cuffs, NO turn-ups
-- Neat topstitching visible along the hem edge
+    "stitching": {
+      "details": "Clean topstitching along waistband, pocket openings, cargo flap, side seams, and hem.",
+      "thread_color": "Tone-on-tone stitching."
+    }
+  },
 
-FABRIC:
-- Cotton twill / chino-style woven fabric, MATTE finish
-- Bermuda shorts must appear SMOOTH, CLEAN, and WRINKLE-FREE
-- Do NOT replicate any creases or wrinkles from the reference image
+  "model_consistency": {
+    "description": "CRITICAL — MUST BE IDENTICAL ACROSS ALL VIEWS. Do NOT add, remove, or change ANY of these details.",
+    "model": "SAME male model: same skin tone, same body build, same height.",
+    "hairstyle": "SAME hairstyle and hair color.",
+    "top": "SAME WHITE oversized t-shirt (partially visible) — a neutral color.",
+    "watch": "SAME Dark-faced SPORTS/ANALOG WATCH on the LEFT WRIST — MUST appear in this image, do NOT omit it.",
+    "sunglasses": "SAME BROWN/TORTOISESHELL AVIATOR SUNGLASSES — if the right hand is visible, the model should be holding them.",
+    "shoes": "SAME CREAM/OFF-WHITE CHUNKY SNEAKERS (not low-top canvas, chunky/bulky sole).",
+    "socks": "SAME WHITE CREW-LENGTH SOCKS visible above the sneakers.",
+    "restrictions": [
+      "NO nail polish, NO rings, NO bracelets other than the watch.",
+      "NO additional accessories beyond what is listed above."
+    ]
+  },
 
-STITCHING:
-- Clean topstitching along waistband, pocket openings, cargo flap edges, side seams, and hem
-- All stitching is tone-on-tone (same color as the fabric)
+  "model_and_pose": {
+    "model": "SAME male model as front view, relaxed standing pose viewed from the SIDE (profile view).",
+    "hands": "Relaxed by sides or thumbs hooked in pockets (sunglasses may be visible in hand).",
+    "stance": "Natural, confident streetwear stance.",
+    "body_orientation": "Body facing perpendicular to the camera (SIDE VIEW — showing the profile).",
+    "watch": "Dark-faced SPORTS/ANALOG WATCH visible on LEFT WRIST."
+  },
 
-===== END OF SIDE-VIEW GARMENT CONSTRUCTION =====
+  "outfit_styling": {
+    "top": "Same WHITE oversized t-shirt as front view.",
+    "bottom": "The cotton bermuda shorts as described in garment_construction_side.",
+    "socks": "Same WHITE CREW-LENGTH SOCKS.",
+    "shoes": "Same CREAM/OFF-WHITE CHUNKY SNEAKERS as front view."
+  },
 
-===== MODEL CONSISTENCY (CRITICAL — MUST BE IDENTICAL ACROSS ALL VIEWS) =====
-The following model details MUST remain EXACTLY THE SAME as the front view. Do NOT add, remove, or change ANY of these details:
-- SAME male model: same skin tone, same body build, same height
-- SAME hairstyle and hair color
-- SAME top: Olive / dark green oversized t-shirt — NOT black, NOT grey, it is OLIVE/DARK GREEN
-- SAME watch: Dark-faced SPORTS/ANALOG WATCH on the LEFT WRIST — MUST appear in this image, do NOT omit it
-- SAME sunglasses: BROWN/TORTOISESHELL AVIATOR SUNGLASSES — if the right hand is visible, the model should be holding them
-- SAME shoes: CREAM/OFF-WHITE CHUNKY SNEAKERS (not low-top canvas, chunky/bulky sole)
-- SAME socks: WHITE CREW-LENGTH SOCKS visible above the sneakers
-- NO nail polish, NO rings, NO bracelets other than the watch
-- NO additional accessories beyond what is listed above
-===== END OF MODEL CONSISTENCY =====
+  "background_and_environment": {
+    "rule": "STRICTLY MATCH the front view background — same STUDIO setting.",
+    "wall": "Same clean WHITE or LIGHT GREY wall.",
+    "floor": "Same GREY CONCRETE / STONE TEXTURED FLOOR.",
+    "aesthetic": "Same professional eCommerce studio aesthetic."
+  },
 
-MODEL & POSE:
-- SAME male model as front view, relaxed standing pose viewed from the SIDE (profile view)
-- Hands relaxed by sides or thumbs hooked in pockets (sunglasses may be visible in hand)
-- Natural, confident streetwear stance
-- Body facing perpendicular to the camera (SIDE VIEW — showing the profile)
-- Dark-faced SPORTS/ANALOG WATCH visible on LEFT WRIST
+  "lighting": {
+    "rule": "STRICTLY MATCH the front view lighting.",
+    "type": "Soft, even, DIFFUSED STUDIO LIGHTING (NOT outdoor daylight).",
+    "source": "Same professional studio strobes/softboxes.",
+    "restrictions": "NO sunlight reflections, glare, or color casts on the fabric.",
+    "color_consistency": "The bermuda shorts color must remain TRUE and CONSISTENT — same as front view and reference image.",
+    "shadows": "Same subtle shadow pattern on the floor."
+  },
 
-OUTFIT STYLING:
-- Same OLIVE / DARK GREEN oversized t-shirt as front view
-- The cotton bermuda shorts as described in EXACT SIDE-VIEW GARMENT CONSTRUCTION above
-- Same WHITE CREW-LENGTH SOCKS
-- Same CREAM/OFF-WHITE CHUNKY SNEAKERS as front view
+  "framing": {
+    "crop": "Frame from LOWER CHEST down to the FEET (full lower body including sneakers) — MATCH FRONT VIEW FRAMING.",
+    "focus": "Focus on the WAISTBAND, HIP AREA, and SIDE PROFILE.",
+    "primary_subject": "The bermuda shorts should be the PRIMARY FOCUS of the frame.",
+    "visible_elements": "Ensure the specific side details (Cargo Right OR Label Left) are clearly visible and CORRECT.",
+    "aspect_ratio": "3:4"
+  },
 
-BACKGROUND & ENVIRONMENT:
-- STRICTLY MATCH the front view background — same STUDIO setting
-- Same clean WHITE or LIGHT GREY wall
-- Same GREY CONCRETE / STONE TEXTURED FLOOR
-- Same professional eCommerce studio aesthetic
-
-LIGHTING:
-- STRICTLY MATCH the front view lighting
-- Soft, even, DIFFUSED STUDIO LIGHTING (NOT outdoor daylight)
-- Same professional studio strobes/softboxes
-- NO sunlight reflections, glare, or color casts on the fabric
-- The bermuda shorts color must remain TRUE and CONSISTENT — same as front view and reference image
-- Same subtle shadow pattern on the floor
-
-FRAMING:
-- Frame from LOWER CHEST down to the FEET (full lower body including sneakers) — MATCH FRONT VIEW FRAMING
-- Focus on the WAISTBAND, HIP AREA, and CARGO POCKET profile (if viewing right side)
-- The bermuda shorts should be the PRIMARY FOCUS of the frame
-- Ensure the cargo flap pocket (if right side) or SEN label (if left side) and side waistband elastic gathering are clearly visible
-- Maintain a 3:4 aspect ratio
-
-NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT add a second cargo pocket — there is ONLY ONE on the right thigh. Do NOT add a waistband button or zipper — this is a PULL-ON elastic waist. Do NOT extend the shorts below the knee — the hem must end AT or JUST ABOVE the knee (19-inch total garment length). Do NOT omit the watch or any accessories listed in MODEL CONSISTENCY. Do NOT change the t-shirt color from olive/dark green.
+  "negative_constraints": [
+    "Do NOT include any text, logos, watermarks, or typography overlays in the image.",
+    "Do NOT add cargo pockets, flap pockets, or any pocket type to the LEFT side (label side).",
+    "Do NOT extend the shorts below the knee — the hem must end AT or JUST ABOVE the knee (19-inch total garment length).",
+    "Do NOT omit the watch or any accessories listed in model_consistency.",
+    "Do NOT change the t-shirt color from WHITE."
+  ]
+}

@@ -1,70 +1,88 @@
-Generate a ZOOMED-IN DETAIL SHOT of the WAISTBAND area of the men's cotton bermuda shorts, worn by the MALE MODEL.
+{
+  "objective": "Generate a ZOOMED-IN DETAIL SHOT of the WAISTBAND area of the men's cotton cargo bermuda shorts, worn by the MALE MODEL.",
 
-Input References:
-- Image 1 (Generated Front): Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.
-- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS and textures.
+  "input_references": {
+    "image_1": "Generated Front — Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, and STYLE.",
+    "image_2": "Raw Product Image — Source for REAL LIFE PRODUCT DETAILS and textures."
+  },
 
-CRITICAL: This is an ON-MODEL detail shot, NOT a flat lay. The focus is purely on the WAISTBAND CONSTRUCTION and TEXTURE.
+  "critical_instruction": "This is an ON-MODEL detail shot, NOT a flat lay. The focus is purely on the WAISTBAND CONSTRUCTION and TEXTURE.",
 
-===== EXACT WAISTBAND CONSTRUCTION (MATCH PRECISELY — DO NOT HALLUCINATE) =====
+  "waistband_construction": {
+    "description": "EXACT WAISTBAND CONSTRUCTION — MATCH PRECISELY — DO NOT HALLUCINATE.",
 
-WAISTBAND DETAIL:
-- HALF-ELASTIC waistband design clearly visible in close-up
-- Show the transition from the FLAT, SMOOTH center front panel to the ELASTICATED/GATHERED sections on the sides
-- BUTTON FIDELITY (CRITICAL): The waistband button MUST be IDENTICAL to the button shown in Image 1 (Generated Front View). It is a SILVER/GREY METALLIC round button with visible buttonholes (4-hole sew-through style), medium-sized, sitting on a small FABRIC TAB/EXTENSION at the center front of the waistband. Do NOT change the button color, size, or style — it must look like the EXACT SAME button as in Image 1. Do NOT generate a small dark flat disc button, a snap button, or a tack button.
-- NO visible zipper fly — just the button closure on the clean flat front panel
-- Visible topstitching along the waistband edges (tone-on-tone)
-- Moderate waistband width (approximately 3-4 cm)
+    "waistband_detail": {
+      "elastication": "FULLY ELASTICATED waistband — the ENTIRE waistband is gathered/ruched with visible elastic gathering.",
+      "belt_loops": "NO BELT LOOPS — the waistband is PURE elastic with no loops.",
+      "closure": "PULL-ON style — NO ZIPPER FLY, NO BUTTON CLOSURE, NO BELT LOOPS.",
+      "gathering": "Show the elastic gathering/ruching clearly.",
+      "stitching": "Visible topstitching along the waistband edges.",
+      "width": "Moderate waistband width (approximately 3-4 cm)."
+    },
 
-POCKET DETAIL:
-- Part of the SLANT / DIAGONAL on-seam front pocket opening should be visible
-- Clean-edged pocket opening with neat topstitching
-- NO cargo pockets visible in this waist-focused shot
+    "pocket_detail": {
+      "front_pocket": "Part of the SLANT / DIAGONAL on-seam front pocket opening should be visible.",
+      "pocket_edge": "Clean-edged pocket opening with neat topstitching.",
+      "cargo_pocket": "The top of the CARGO FLAP POCKET may be partially visible below the waistband area."
+    },
 
-FABRIC TEXTURE:
-- Cotton twill / chino-style woven fabric texture must be clearly visible
-- MATTE finish — no sheen, no satin
-- Smooth, clean texture — WRINKLE-FREE
+    "fabric_texture": {
+      "type": "Cotton twill / chino-style woven fabric texture must be clearly visible.",
+      "finish": "MATTE finish — no sheen, no satin.",
+      "texture": "Smooth, clean texture — WRINKLE-FREE."
+    },
 
-STITCHING:
-- Sharp focus on the STITCHING details along the waistband and pocket mouth
-- All stitching is tone-on-tone (same color as the fabric)
+    "stitching": {
+      "focus": "Sharp focus on the STITCHING details along the waistband and pocket mouth.",
+      "thread_color": "All stitching is tone-on-tone (same color as the fabric)."
+    }
+  },
 
-===== END OF WAISTBAND CONSTRUCTION =====
+  "model_consistency": {
+    "description": "CRITICAL — MUST BE IDENTICAL ACROSS ALL VIEWS. Do NOT add, remove, or change ANY of these details.",
+    "model": "SAME male model: same skin tone, same body build.",
+    "top": "SAME WHITE oversized t-shirt (partially visible) — a neutral color.",
+    "watch": "SAME Dark-faced SPORTS/ANALOG WATCH on the LEFT WRIST (if wrist is visible in frame).",
+    "restrictions": "NO additional accessories beyond what is listed above."
+  },
 
-===== MODEL CONSISTENCY (CRITICAL — MUST BE IDENTICAL ACROSS ALL VIEWS) =====
-The following model details MUST remain EXACTLY THE SAME as the front view. Do NOT add, remove, or change ANY of these details:
-- SAME male model: same skin tone, same body build
-- SAME top: Olive / dark green oversized t-shirt (hem visible at waist, slightly tucked or loose) — NOT black, NOT grey
-- SAME watch: Dark-faced SPORTS/ANALOG WATCH on the LEFT WRIST (if wrist is visible in frame)
-- NO additional accessories beyond what is listed above
-===== END OF MODEL CONSISTENCY =====
+  "model_and_pose": {
+    "framing": "Close-up on the model's midsection (waist to upper thigh).",
+    "hands": "One hand (Left or Right) interacting with the waistband or pocket area to add context.",
+    "pose": "Natural, relaxed pose.",
+    "fit": "Clothing should fit naturally.",
+    "highlight": "Highlighting the comfort of the elastic waistband."
+  },
 
-MODEL & POSE:
-- Close-up on the model's midsection (waist to upper thigh)
-- One hand (Left or Right) interacting with the waistband or pocket area to add context
-- Natural, relaxed pose
-- Clothing should fit naturally
-- Highlighting the comfort of the elastic waistband
+  "outfit_styling": {
+    "top": "WHITE oversized t-shirt (partially visible at top of frame).",
+    "hero_content": "The cotton cargo bermuda shorts waistband area is the HERO content."
+  },
 
-OUTFIT STYLING:
-- Olive / dark green oversized t-shirt (partially visible at top of frame)
-- The cotton bermuda shorts waistband area is the HERO content
+  "background_and_environment": {
+    "setting": "Same STUDIO setting as other prompts, but blurred/out-of-focus (Bokeh) to keep attention on the product details.",
+    "lighting_note": "Soft, professional lighting to highlight fabric texture and stitching."
+  },
 
-BACKGROUND & ENVIRONMENT:
-- Same STUDIO setting as other prompts, but blurred/out-of-focus (Bokeh) to keep attention on the product details
-- Soft, professional lighting to highlight fabric texture and stitching
+  "lighting": {
+    "type": "Soft, even, DIFFUSED STUDIO LIGHTING.",
+    "texture_enhancement": "Enhance the texture of the cotton fabric.",
+    "restrictions": "No harsh shadows or highlights on the waistband area."
+  },
 
-LIGHTING:
-- Soft, even, DIFFUSED STUDIO LIGHTING
-- Enhance the texture of the cotton fabric
-- No harsh shadows or highlights on the waistband button
+  "framing": {
+    "shot_type": "EXTREME CLOSE-UP / MACRO SHOT.",
+    "crop": "Frame from just below the chest to upper thigh.",
+    "primary_focus": "Fully elasticated waistband construction, elastic gathering texture, and pocket opening.",
+    "sharpness": "The waistband details should be sharp and clear.",
+    "aspect_ratio": "1:1 (square format) or similar high-detail crop."
+  },
 
-FRAMING:
-- EXTREME CLOSE-UP / MACRO SHOT
-- Frame from just below the chest to upper thigh
-- PRIMARY FOCUS: Center front button, half-elastic waistband construction, and pocket opening
-- The waistband details should be sharp and clear
-- Maintain a 1:1 aspect ratio (square format) or similar high-detail crop
-
-NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT include the full body or face. Do NOT show feet. Do NOT add belt loops if not present in reference. Do NOT generate a flat lay image.
+  "negative_constraints": [
+    "Do NOT include any text, logos, watermarks, or typography overlays in the image.",
+    "Do NOT include the full body or face.",
+    "Do NOT show feet.",
+    "Do NOT add a button, zipper, belt loops, or any waistband closure — this is a PURE ELASTIC pull-on waistband with NO loops.",
+    "Do NOT generate a flat lay image."
+  ]
+}

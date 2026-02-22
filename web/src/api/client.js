@@ -68,11 +68,11 @@ export async function startFrontGeneration(params) {
 }
 
 export async function saveFrontImage(product, sku, imageBase64) {
-  const formData = new FormData();
-  formData.append('product', product);
-  formData.append('sku', sku);
-  formData.append('image_data', imageBase64);
-  const res = await fetch(`${BASE}/api/generate/save-front`, { method: 'POST', body: formData });
+  const res = await fetch(`${BASE}/api/generate/save-front`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ product, sku, image_data: imageBase64 }),
+  });
   if (!res.ok) throw new Error('Failed to save front image');
   return await res.json();
 }

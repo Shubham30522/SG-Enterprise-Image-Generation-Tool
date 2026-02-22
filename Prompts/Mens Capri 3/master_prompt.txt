@@ -1,114 +1,137 @@
-Generate an image of a MALE model wearing the men's cotton bermuda shorts shown in the provided reference image.
+{
+  "objective": "Generate an image of a MALE model wearing the men's cotton cargo bermuda shorts shown in the provided reference image.",
 
-CRITICAL INSTRUCTION: The provided image is purely for TEXTURE and DESIGN reference. You must EXTRACT the clothing design from it and apply it to the model. Do NOT paste, float, or include the reference image itself in the scene. It is data, not an object.
+  "critical_instructions": {
+    "reference_image_usage": "The provided image is purely for TEXTURE and DESIGN reference. You must EXTRACT the clothing design from it and apply it to the model. Do NOT paste, float, or include the reference image itself in the scene. It is data, not an object.",
+    "color_pattern_fidelity": "The color and texture of the generated bermuda shorts MUST MATCH the reference image EXACTLY. Do not alter, brighten, filter, or shift the colors. High fidelity to the source material is paramount.",
+    "independent_generation": "Treat this request as a completely new and isolated task. Ignore any previous context. You MUST generate a fresh, unique background and lighting setup distinct from any prior outputs. Do not reuse previous settings."
+  },
 
-STRICT COLOR & PATTERN FIDELITY: The color and texture of the generated bermuda shorts MUST MATCH the reference image EXACTLY. Do not alter, brighten, filter, or shift the colors. High fidelity to the source material is paramount.
+  "garment_construction": {
+    "description": "This is a COTTON KNEE-LENGTH CARGO SHORTS / CAPRI with CARGO FLAP POCKETS ON BOTH LEGS. Follow these construction details exactly. MATCH THESE DETAILS PRECISELY — DO NOT HALLUCINATE.",
 
-INDEPENDENT GENERATION: Treat this request as a completely new and isolated task. Ignore any previous context. You MUST generate a fresh, unique background and lighting setup distinct from any prior outputs. Do not reuse previous settings.
+    "waistband": {
+      "type": "FULLY ELASTICATED — the ENTIRE waistband (front, sides, AND back) is gathered with visible elastic.",
+      "belt_loops": "NO BELT LOOPS — the waistband is PURE elastic with no loops.",
+      "closure": "PULL-ON style — NO zipper fly, NO button closure, NO belt loops.",
+      "elastic_visibility": "The elastic gathering/ruching is visible ALL AROUND.",
+      "width": "Moderate width (approximately 3-4 cm)."
+    },
 
-===== EXACT GARMENT CONSTRUCTION (MATCH THESE DETAILS PRECISELY — DO NOT HALLUCINATE) =====
+    "front_pockets": {
+      "count": 2,
+      "placement": "One on each hip (Left and Right).",
+      "style": "Standard SLANT / DIAGONAL on-seam pockets.",
+      "note": "Clean-edged pocket openings with neat topstitching."
+    },
 
-This is a PLAIN COTTON KNEE-LENGTH BERMUDA SHORTS — NOT a cargo, NOT a full-length capri. Follow these construction details exactly:
+    "cargo_pockets": {
+      "count": 2,
+      "placement": "One on the LEFT THIGH, one on the RIGHT THIGH — BOTH LEGS.",
+      "design": "Rectangular flaps secured with dark/black buttons.",
+      "position": "Positioned on the outer thighs.",
+      "stitching": "Prominent stitching details on the flaps.",
+      "symmetry": "SYMMETRICAL DESIGN: Both legs have matching cargo pockets."
+    },
 
-WAISTBAND:
-- HALF-ELASTIC waistband design
-- Elasticated/gathered sections on BOTH the left and right sides of the waistband (visible ruching/gathering from the elastic)
-- FLAT, SMOOTH center front panel (no elastic gathering in the center front — the front panel sits flat and clean)
-- Single circular button closure at top center front — COLOR MUST MATCH REFERENCE IMAGE EXACTLY (likely BLACK or DARK GREY contrast button). Do NOT generate a silver button if the reference is dark.
-- NO visible zipper fly — the front closure is ONLY the single button on a clean flat front panel
-- The waistband has a moderate width (approximately 3-4 cm)
+    "branding_label": {
+      "placement": "On the LEFT THIGH, just ABOVE the left cargo pocket.",
+      "appearance": "Small, rectangular, HORIZONTAL black woven patch.",
+      "left_side_text": "\"STREET WEAR\" at top, \"WSEEWELL.in\" below, \"#1947\" at bottom.",
+      "right_side_text": "Large bold white \"SEN\" text.",
+      "surface": "The label is stitched onto the MAIN FABRIC of the left thigh, positioned between the front slant pocket and the cargo pocket below.",
+      "reminder": "The label sits on the thigh fabric ABOVE the cargo pocket, NOT on the cargo flap itself."
+    },
 
-POCKETS:
-- EXACTLY 2 front pockets ONLY — one on each side
-- Pocket style: SLANT / DIAGONAL on-seam pockets (angled cut-in pockets that follow the hip seam)
-- The pocket openings are clean-edged with neat topstitching along the pocket mouth
-- NO cargo pockets anywhere (no thigh pockets, no flap pockets, no button-secured flaps)
-- NO back pockets visible from the front view
-- TOTAL visible pockets from front: exactly 2 (one left, one right — both slant style)
+    "back_pockets": {
+      "count": 2,
+      "placement": "One on each side (Left and Right buttock).",
+      "style": "Horizontal WELT / JETTED pockets — simple horizontal slit openings.",
+      "flap": "NO flaps on the back pockets.",
+      "buttons": "NO buttons on the back pockets.",
+      "stitching": "Neat topstitching around the slit."
+    },
 
-BRANDING / LABEL:
-- SEN brand label positioned on the LOWER LEFT THIGH (wearer's left leg), near the hem area
-- The label is a small, rectangular, HORIZONTAL black woven patch
-- LEFT SIDE of label: smaller text including "STREET WEAR" (underlined) at top, "WSEEWELL.in" below, "#1947" at bottom
-- RIGHT SIDE of label: Large bold white "SEN" text
-- The label sits FLAT against the fabric — not curling or lifting
+    "length_and_fit": {
+      "total_length": "19-20 inches (~50 cm).",
+      "hem_position": "JUST ABOVE THE KNEE or RIGHT AT THE KNEE.",
+      "fit": "Relaxed / regular fit.",
+      "leg_opening": "Straight-cut."
+    },
 
-LENGTH & FIT:
-- TOTAL GARMENT LENGTH: 19 inches (~50 cm) measured from top of waistband to bottom of hem
-- This places the hem JUST ABOVE THE KNEE or RIGHT AT THE KNEE — it is a KNEE-LENGTH BERMUDA style
-- Longer than regular casual shorts but shorter than 3/4 capri pants — the hem should NOT go below the knee
-- Relaxed / regular fit — not tight, not overly baggy
-- Straight-cut leg opening
+    "hem": {
+      "style": "Plain, straight-cut hem at the bottom of each leg.",
+      "restrictions": "NO cuffs, NO turn-ups — just a clean straight hemline.",
+      "stitching": "Neat topstitching visible along the hem edge."
+    },
 
-HEM:
-- Plain, straight-cut hem at the bottom of each leg
-- NO cuffs, NO turn-ups, NO ribbed hem — just a clean straight hemline
-- Neat topstitching visible along the hem edge
+    "stitching_and_seams": {
+      "topstitching": "Clean, visible topstitching along all construction lines (pocket mouths, cargo flaps, waistband, hem, side seams).",
+      "center_seams": "Visible center seams (front and back).",
+      "thread_color": "All stitching is tone-on-tone.",
+      "restrictions": "NO decorative contrast stitching."
+    },
 
-STITCHING & SEAMS:
-- Clean, visible topstitching along all construction lines (pocket mouths, waistband seam, hem, side seams)
-- Visible center front seam/crease line running vertically down the front of the shorts
-- All stitching is tone-on-tone (same color as the fabric)
-- NO decorative stitching, NO contrast stitching
+    "fabric": {
+      "type": "Cotton twill / chino-style woven fabric.",
+      "finish": "MATTE finish — no sheen.",
+      "texture": "Smooth, clean texture — appear WRINKLE-FREE.",
+      "weight": "Medium weight fabric."
+    }
+  },
 
-FABRIC:
-- Cotton twill / chino-style woven fabric
-- MATTE finish — no sheen, no satin, no glossy appearance
-- Smooth, clean texture — the shorts must appear WRINKLE-FREE and CREASE-FREE
-- Do NOT replicate any creases or wrinkles from the reference image
-- Medium weight fabric with slight body/structure (not flimsy, not stiff)
+  "model_and_pose": {
+    "gender": "Male",
+    "pose": "Relaxed casual standing pose — natural and effortless.",
+    "left_hand": "Thumb hooked into the LEFT side pocket opening, fingers curled and resting outside the pocket.",
+    "right_hand": "Thumb hooked into the RIGHT side pocket opening, fingers curled and resting outside the pocket.",
+    "legs": "LEFT LEG is slightly forward and relaxed (knee gently bent). RIGHT LEG is straighter, bearing most of the body weight.",
+    "weight_distribution": "Weight primarily on the RIGHT leg but body remains SQUARED to the camera — NO side angle, NO turning.",
+    "vibe": "Confident, casual summer vibe.",
+    "body_orientation": "STRICTLY facing the camera DEAD-ON (TRUE FRONT VIEW). Both shoulders must be EQUALLY visible and SQUARED to the camera. Do NOT angle or rotate the body to either side. The camera sees the FULL FRONT of the torso — NOT a three-quarter or side-angled view.",
+    "head": "May be cropped at the top of frame — focus is chest-down.",
+    "watch": "Dark-faced SPORTS/ANALOG WATCH clearly visible on LEFT WRIST."
+  },
 
-===== END OF GARMENT CONSTRUCTION =====
+  "outfit_styling": {
+    "top": "WHITE oversized t-shirt (slightly tucked or hem visible at waist).",
+    "bottom": "The cotton cargo bermuda shorts from the reference image (as described in garment_construction).",
+    "socks": "WHITE CREW-LENGTH SOCKS visible above the sneakers.",
+    "shoes": "CREAM/OFF-WHITE CHUNKY SNEAKERS (bulky sole style, not slim canvas)."
+  },
 
-===== MODEL CONSISTENCY (CRITICAL — MUST BE IDENTICAL ACROSS ALL VIEWS) =====
-The following model details MUST remain EXACTLY THE SAME in every generated image (front, back, side, etc.). Do NOT add, remove, or change ANY of these details:
-- SAME male model: same skin tone, same body build, same height
-- SAME hairstyle and hair color
-- SAME top: Olive / dark green oversized t-shirt (slightly tucked or hem visible at waist) — NOT black, NOT grey, it is OLIVE/DARK GREEN
-- SAME watch: Dark-faced SPORTS/ANALOG WATCH on the LEFT WRIST — this watch MUST appear in EVERY image, do NOT omit it
-- SAME sunglasses: BROWN/TORTOISESHELL AVIATOR SUNGLASSES held casually in the RIGHT HAND (in front view) — these must appear in every image where the right hand is visible
-- SAME shoes: CREAM/OFF-WHITE CHUNKY SNEAKERS (not low-top canvas, these are chunky/bulky sole sneakers)
-- SAME socks: WHITE CREW-LENGTH SOCKS visible above the sneakers
-- NO nail polish, NO rings, NO bracelets other than the watch
-- NO additional accessories beyond what is listed above
-===== END OF MODEL CONSISTENCY =====
+  "background_and_environment": {
+    "setting": "Modern, trendy STUDIO setting (NOT outdoor).",
+    "wall": "Clean WHITE or LIGHT GREY wall behind the model.",
+    "floor": "GREY CONCRETE / STONE TEXTURED FLOOR beneath the model's feet.",
+    "aesthetic": "Professional eCommerce studio aesthetic — clean, modern, aspirational.",
+    "feel": "The studio setup should feel trendy and fashion-forward."
+  },
 
-MODEL & POSE:
-- Male model, relaxed casual standing pose
-- LEFT hand casually placed INSIDE the left side pocket of the bermuda shorts
-- RIGHT hand hanging naturally by the right side, holding BROWN/TORTOISESHELL AVIATOR SUNGLASSES loosely at hip level
-- Weight slightly shifted to one leg, natural streetwear stance — body SLIGHTLY ANGLED (not perfectly straight-on), giving a relaxed editorial feel
-- Confident, casual summer vibe
-- Body facing mostly toward the camera (FRONT VIEW, with a slight natural angle)
-- Head may be cropped at the top of frame — focus is chest-down
-- Dark-faced SPORTS/ANALOG WATCH clearly visible on LEFT WRIST
+  "lighting": {
+    "type": "Soft, even, DIFFUSED STUDIO LIGHTING (NOT natural outdoor daylight).",
+    "source": "Professional studio strobes/softboxes creating clean, even illumination.",
+    "shadows": "Soft, subtle shadows on the floor — no harsh directional shadows.",
+    "restrictions": "NO sunlight reflections, glare, or color casts on the fabric.",
+    "color_consistency": "The bermuda shorts color must remain TRUE and CONSISTENT throughout — no washed out or overexposed areas.",
+    "color_preservation": "Preserve the EXACT fabric color as shown in the reference image without any lighting-induced color shifts."
+  },
 
-OUTFIT STYLING:
-- Olive / dark green oversized t-shirt (slightly tucked or hem visible at waist)
-- The cotton bermuda shorts from the reference image (as described in EXACT GARMENT CONSTRUCTION above)
-- WHITE CREW-LENGTH SOCKS visible above the sneakers
-- CREAM/OFF-WHITE CHUNKY SNEAKERS (bulky sole style, not slim canvas)
+  "framing": {
+    "crop": "Frame from LOWER CHEST down to the FEET (full lower body including sneakers).",
+    "focus": "The bermuda shorts should be the PRIMARY FOCUS of the frame.",
+    "visible_elements": "Ensure the slant pockets, cargo flap pockets on BOTH thighs, fully-elastic waistband (NO belt loops), and SEN label on the left thigh are clearly visible.",
+    "hands_visibility": "Left hand in pocket and right hand holding sunglasses should both be prominently visible.",
+    "aspect_ratio": "3:4"
+  },
 
-BACKGROUND & ENVIRONMENT:
-- Modern, trendy STUDIO setting (NOT outdoor)
-- Clean WHITE or LIGHT GREY wall behind the model
-- GREY CONCRETE / STONE TEXTURED FLOOR beneath the model's feet
-- Professional eCommerce studio aesthetic — clean, modern, aspirational
-- The studio setup should feel trendy and fashion-forward
-
-LIGHTING:
-- Soft, even, DIFFUSED STUDIO LIGHTING (NOT natural outdoor daylight)
-- Professional studio strobes/softboxes creating clean, even illumination
-- Soft, subtle shadows on the floor — no harsh directional shadows
-- NO sunlight reflections, glare, or color casts on the fabric
-- The bermuda shorts color must remain TRUE and CONSISTENT throughout — no washed out or overexposed areas
-- Preserve the EXACT fabric color as shown in the reference image without any lighting-induced color shifts
-
-FRAMING:
-- Frame from LOWER CHEST down to the FEET (full lower body including sneakers)
-- The bermuda shorts should be the PRIMARY FOCUS of the frame
-- Ensure the slant pockets, half-elastic waistband, and SEN label are clearly visible
-- Left hand in pocket and right hand holding sunglasses should both be prominently visible
-- Maintain a 3:4 aspect ratio
-
-NEGATIVE CONSTRAINT: Do NOT include any text, logos, watermarks, or typography overlays in the image. Do NOT add cargo pockets, flap pockets, or any pocket type other than the 2 slant side pockets described above. Do NOT extend the shorts below the knee — the hem must end AT or JUST ABOVE the knee (19-inch total garment length). Do NOT omit the watch, sunglasses, or any accessories listed in MODEL CONSISTENCY. Do NOT change the t-shirt color from olive/dark green.
+  "negative_constraints": [
+    "Do NOT include any text, logos, watermarks, or typography overlays.",
+    "Do NOT omit cargo pockets from either leg — BOTH legs must have cargo flap pockets.",
+    "Do NOT add a waistband button, zipper, or BELT LOOPS — this is a PURE ELASTIC pull-on waistband.",
+    "Do NOT extend the shorts below the knee — the hem must end AT or JUST ABOVE the knee (19-inch total garment length).",
+    "Do NOT omit the watch or sunglasses.",
+    "Do NOT change the t-shirt color from WHITE.",
+    "Do NOT place the SEN label on the cargo pocket flap — it sits on the thigh fabric ABOVE the left cargo pocket."
+  ]
+}
