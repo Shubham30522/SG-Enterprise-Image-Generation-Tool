@@ -1,0 +1,114 @@
+{
+  "objective": "Generate a RIGHT SIDE VIEW image of the SAME male model wearing the men's cotton bermuda shorts.",
+
+  "input_references": {
+    "image_1": "Generated Front — Source for MODEL CONSISTENCY, BACKGROUND, LIGHTING, STYLE, and EXACT GARMENT COLOR.",
+    "image_2": "Raw Product Image — Source STRICTLY for structural details ONLY (Cargo pocket, zipper pocket). DO NOT extract color or lighting from this image."
+  },
+
+  "critical_instruction": "This must look like the SAME model and SAME environment as the front view, but specifically captured from the RIGHT SIDE profile. DO NOT change the capri color from the generated front. Simply use Image 2 to extract the structural detail and generate the new right side angle image of the same generated front model.",
+
+  "garment_construction_right_side": {
+    "description": "EXACT RIGHT SIDE-VIEW GARMENT CONSTRUCTION — MATCH PRECISELY — DO NOT HALLUCINATE.",
+
+    "waistband": {
+      "elastication": "FULLY ELASTICATED waistband visible from the side.",
+      "belt_loops": "BELT LOOPS are visible.",
+      "gathering": "The elastic gathering/ruching is clearly visible."
+    },
+
+    "right_side_pockets": {
+      "cargo_pocket": "HERO ELEMENT: 1 Large CARGO POCKET with a FLAP on the right thigh. Must have a distinct dark/shiny circular button securing the flap.",
+      "cargo_details": "The cargo pocket has volume (gusseted or pleated style) and sits squarely on the middle of the side thigh.",
+      "slant_pocket": "Standard slant pocket opening at the hip is visible.",
+      "slant_zipper": "The slant pocket features a visible dark metallic/plastic ZIPPER closure along the diagonal opening.",
+      "back_pocket_visibility": "The edge of the right rear back pocket flap might be slightly visible towards the back."
+    },
+
+    "strict_rules": {
+      "left_leg_hidden": "The left leg details (including the brand label) should be hidden or obscured from this true right profile angle.",
+      "label": "ABSOLUTELY NO brand label on this side. The label is only on the left."
+    },
+
+    "length_and_fit": {
+      "total_length": "19-20 inches (~50 cm).",
+      "hem_position": "JUST ABOVE THE KNEE or RIGHT AT THE KNEE.",
+      "fit": "Relaxed / regular fit.",
+      "leg_opening": "Straight-cut."
+    },
+
+    "fabric": {
+      "type": "Cotton twill / chino-style woven fabric, MATTE finish.",
+      "texture": "Smooth, clean texture — WRINKLE-FREE."
+    },
+    
+    "stitching": {
+      "details": "Clean topstitching visible around the cargo pocket flap, pocket openings, side seams, and hem.",
+      "thread_color": "Tone-on-tone stitching."
+    }
+  },
+
+  "model_consistency": {
+    "description": "CRITICAL — MUST BE IDENTICAL ACROSS ALL VIEWS. Do NOT add, remove, or change ANY of these details.",
+    "model": "SAME male model: same skin tone, same body build, same height.",
+    "hairstyle": "SAME hairstyle and hair color.",
+    "top": "SAME WHITE oversized t-shirt (partially visible) — a neutral color.",
+    "watch": "SAME Dark-faced SPORTS/ANALOG WATCH on the LEFT WRIST — may not be fully visible from this angle, but MUST remain consistent if hands are shown.",
+    "sunglasses": "SAME BROWN/TORTOISESHELL AVIATOR SUNGLASSES — if the right hand is visible, the model should be holding them.",
+    "shoes": "SAME CREAM/OFF-WHITE CHUNKY SNEAKERS (not low-top canvas, chunky/bulky sole).",
+    "socks": "SAME WHITE CREW-LENGTH SOCKS visible above the sneakers.",
+    "restrictions": [
+      "NO nail polish, NO rings, NO bracelets other than the watch.",
+      "NO additional accessories beyond what is listed above."
+    ]
+  },
+
+  "model_and_pose": {
+    "model": "SAME male model as front view, relaxed standing pose viewed from the RIGHT SIDE (profile view).",
+    "hands": "Right hand MUST be raised slightly or holding the sunglasses away from the body so it DOES NOT BLOCK the pockets.",
+    "stance": "Natural, confident streetwear stance.",
+    "body_orientation": "Body facing perpendicular to the camera (RIGHT SIDE VIEW — showing the distinct cargo pocket profile).",
+    "highlight": "The pose MUST clearly display all three right-side pockets without obstruction."
+  },
+
+  "outfit_styling": {
+    "top": "Same WHITE oversized t-shirt as front view, but it MUST BE FULLY TUCKED IN to explicitly reveal the entire waistband, belt loops, and all upper pockets.",
+    "bottom": "The cotton bermuda shorts with prominent right-side pockets as described in garment_construction_right_side.",
+    "socks": "Same WHITE CREW-LENGTH SOCKS.",
+    "shoes": "Same CREAM/OFF-WHITE CHUNKY SNEAKERS as front view."
+  },
+
+  "background_and_environment": {
+    "rule": "STRICTLY MATCH the front view background — same STUDIO setting.",
+    "wall": "Same clean WHITE or LIGHT GREY wall.",
+    "floor": "Same GREY CONCRETE / STONE TEXTURED FLOOR.",
+    "aesthetic": "Same professional eCommerce studio aesthetic."
+  },
+
+  "lighting": {
+    "rule": "STRICTLY MATCH the front view lighting.",
+    "type": "Soft, even, DIFFUSED STUDIO LIGHTING (NOT outdoor daylight).",
+    "source": "Same professional studio strobes/softboxes.",
+    "restrictions": "NO sunlight reflections, glare, or color casts on the fabric.",
+    "color_consistency": "CRITICAL: The bermuda shorts color must remain EXACTLY TRUE and CONSISTENT to the Generated Front (Image 1). Do not extract color from Image 2.",
+    "shadows": "Same subtle shadow pattern on the floor and smooth shadows modeling the volume of the cargo pocket."
+  },
+
+  "framing": {
+    "crop": "Frame from LOWER CHEST down to the FEET (full lower body including sneakers) — MATCH FRONT VIEW FRAMING.",
+    "focus": "Focus on the RIGHT HIP, WAISTBAND, and ALL THREE right-side pockets.",
+    "primary_subject": "The THREE pockets on the right side must be the PRIMARY FOCUS of the frame: 1. The front diagonal zipper pocket, 2. The side cargo flap pocket, 3. The rear back flap pocket. ALL THREE MUST BE CLEARLY VISIBLE.",
+    "aspect_ratio": "3:4"
+  },
+
+  "negative_constraints": [
+    "Do NOT include any text, logos, watermarks, or typography overlays in the image.",
+    "Do NOT let the right arm or hand block the view of the pockets.",
+    "Do NOT leave the t-shirt untucked — the waistband must be fully visible.",
+    "Do NOT add the brand label to the right side (it belongs ONLY on the left leg).",
+    "Do NOT extend the shorts below the knee — the hem must end AT or JUST ABOVE the knee (19-inch total garment length).",
+    "Do NOT omit the sunglasses or watch if hands are visible.",
+    "Do NOT change the t-shirt color from WHITE.",
+    "Do NOT make the cargo pocket flat; it must have visible volume and a flap."
+  ]
+}
