@@ -1,7 +1,8 @@
-Generate a photorealistic COLLAGE-STYLE e-commerce catalog image featuring wide leg jeans.
+Generate a photorealistic image of a female model wearing wide leg jeans.
 
 Input References:
-- Image 1 (Raw Product): The ONLY source for the wide leg jeans structure, fabric details, cut, AND COLOR. There is NO Image 2.
+- Image 1 (Raw Product): The ONLY source for the wide leg jeans structure, fabric details, cut, AND COLOR.
+- Image 2 (Style Reference): The ONLY source for Layout, Background, Props, and Lighting.
 
 Instructions:
 1. Product Accuracy (From Image 1):
@@ -12,7 +13,7 @@ Encased elastic waistband (approx. 1.5 inch width) with VISIBLE HORIZONTAL TOPST
 Clean pull-on style front (no fly, no center seam bulk)
 Slanted side entry pockets at hips
 Wide straight leg cut from hip to hem
-Solid coloration (STRICTLY SOURCE FROM IMAGE 1)
+Solid dark navy coloration (STRICTLY SOURCE FROM IMAGE 1)
    - You MUST generate the wide leg jeans appearing professionally ironed and wrinkle-free, even if Image 1 has wrinkles. Remove all creases while strictly preserving the fabric texture and original color from Image 1.
    - **STRICT PROHIBITION**: CHANGING COLOR IS NOT ALLOWED. The generated jeans MUST have the EXACT SAME COLOR as the Input Image 1. Do not lighten, darken, or shift the hue. Any color deviation is a failure.
    - **STRICT PROHIBITION**: NO NEW PATTERNS. Especially on the waistband, do not generate any stitching, ribbing, or designs that are not in Image 1. The waistband must be SOLID and SMOOTH if Image 1 is solid. Do not guess patterns.
@@ -25,31 +26,17 @@ Solid coloration (STRICTLY SOURCE FROM IMAGE 1)
      * The fabric should have a MATTE finish, not shiny
    - DO NOT generate gathered elastic texture. DO NOT add any pattern not in Image 1.
 
-2. COLLAGE LAYOUT (MANDATORY — THIS IS THE MOST IMPORTANT SECTION):
-   The final output image MUST be a COLLAGE composed of TWO views stitched together:
-   
-   **VIEW A (MAIN — RIGHT SIDE, ~65% of total image width):**
-   - Full on-model shot of a female model wearing the wide leg jeans
-   - Framed from mid-chest down to feet (NO HEAD visible, cropped above shoulders)
-   - Model facing front, RIGHT hand on hip, LEFT arm relaxed
-   - Black ruched/gathered crop top, exposing a small strip of midriff
-   - White low-top canvas sneakers
-   - Background: Plain white wall
-   - Floor: Natural wooden plank floor (warm light brown wood)
-   - Lighting: Soft, highly diffused. Very faint, soft shadow on the left wall. NO harsh shadows.
-   
-   **VIEW B (INSET — BOTTOM-LEFT CORNER, overlapping onto View A):**
-   - A ZOOMED CLOSE-UP of the waistband and upper hip area of the SAME jeans
-   - Shows the waistband construction, center front seam, and the bottom edge of the black crop top
-   - This inset should be approximately 35% of the total image width and 40% of the total image height
-   - The inset should have NO visible border — it should blend seamlessly into the main image with no drawn lines or box borders around it
-   - The inset overlaps onto the model's left thigh area in the main image (picture-in-picture style)
-   - The background visible in the inset should match the main view (white wall, wooden floor)
+2. Layout & Style (From Image 2):
+   - Place the wide leg jeans exactly like Image 2: On-model standing pose
+   - STRICTLY MATCH Image 2's Background Surface: Solid off-white studio backdrop
+   - STRICTLY MATCH Image 2's Surrounding Props: White sneakers, black crop top
+   - Lighting must be soft, diffused, natural, matching Image 2's mood.
+   - **MODEL CONSISTENCY REQ**: Model's physical details (skin tone, lack of nail polish, hair) and styling (shoes, top) MUST MATCH the generated Front View.
+   - **CRITICAL: DO NOT COPY CLOTHING FROM IMAGE 2**. The reference image may show a DIFFERENT waistband style (e.g., with elastic gathering, ribbing, or wrinkles). COMPLETELY IGNORE the clothing details in Image 2. Use ONLY Image 1 for ALL product details including waistband construction, fabric texture, and patterns.
 
 3. Configuration:
    - wide leg jeans detailed configuration (waistband constructions, pocket placement) must match Image 1.
    - Do NOT add inner layers or undershirts.
-   - Do NOT add any text, watermarks, product codes, or typography anywhere on the image.
 
 Negative prompt:
-no pattern alteration, no color change from Image 1, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry], no stylization, no AI artifacts, wrinkles on waistband, creases on waistband, folds on waistband, bunched waistband fabric, wrinkled waistband sides, messy fabric, no logo, no embroidery, no added textures, no layered clothing, no elastic gathering on waistband, no puckered waistband, no ribbed waistband texture, no black borders around inset, no drawn box borders, no text overlay, no watermark
+no pattern alteration, no color change from Image 1, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry, no changed top, no changed shoes], no stylization, no AI artifacts, wrinkles on waistband, creases on waistband, folds on waistband, bunched waistband fabric, wrinkled waistband sides, messy fabric, no logo, no embroidery, no added textures, no layered clothing, no elastic gathering on waistband, no puckered waistband, no ribbed waistband texture

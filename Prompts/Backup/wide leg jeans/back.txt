@@ -1,0 +1,33 @@
+Generate a photorealistic image of the SAME female model wearing the SAME wide leg jeans, view from the BACK.
+   - **MODEL CONSISTENCY REQ**: Model's skin tone, hair, and styling (shoes, top) MUST MATCH Image 1 (Generated Front).
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS and ANGLE.
+
+Instructions:
+1. Background & Lighting: 
+   - STRICTLY MATCH Image 1. 
+   - Keep the exact same background surface, lighting mood, and shadows as Image 1.
+   - Do NOT use the background from Image 2.
+
+2. Product Appearance:
+   - **CRITICAL: ALL CLOTHING DETAILS MUST COME FROM IMAGE 1 ONLY.**
+   - Use Image 2 ONLY to understand the POSE (how the model stands from the back). Do NOT copy any clothing/fabric details from Image 2.
+   - The waistband, fabric texture, color, and all construction details MUST match Image 1 (the raw product), NOT Image 2.
+   - **WAISTBAND CONSTRUCTION DETAILS (MUST MATCH IMAGE 1):**
+     * There is a VISIBLE HORIZONTAL TOPSTITCHING LINE running across the waistband
+     * The waistband band sits FLAT - no elastic gathering, no puckering, no bunched texture
+     * **CRITICAL: The LEFT and RIGHT side portions of the waistband must be COMPLETELY SMOOTH with NO wrinkles, creases, or fabric bunching**
+     * The fabric should have a MATTE finish, not shiny
+   - **STRICT PROHIBITION**: CHANGING COLOR IS NOT ALLOWED.
+   - **STRICT PROHIBITION**: DO NOT generate gathered elastic texture.
+   - **STRICT REQUIREMENT**: THE PRODUCT MUST BE TOTALLY WRINKLE-FREE.
+   - The product must look like the SAME physical item as Image 1, but viewed from the back.
+
+3. Layout:
+   - Match the standing pose from Image 1 (Front), but rotated to show the back view. Legs shoulder width apart. Hands relaxed at sides.
+   - Standard straight hem that breaks cleanly at the shoe top (NO bunching or pooling on floor).
+
+Negative prompt:
+[no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no jewelry, no changed top, no changed shoes, no floor sweeping length, no pooling fabric at ankles, no bunching at hem], wrinkles on waistband, creases on waistband, bunched waistband fabric, wrinkled waistband sides, no elastic gathering on waistband, no puckered waistband

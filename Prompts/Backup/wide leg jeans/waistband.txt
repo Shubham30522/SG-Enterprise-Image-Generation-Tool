@@ -1,0 +1,35 @@
+Generate a high-resolution close-up Detail Shot of the WAISTBAND area.
+
+Input References:
+- Image 1 (Generated Front): Source for BACKGROUND, LIGHTING, and STYLE.
+- Image 2 (Raw Product Image): Source for REAL LIFE PRODUCT DETAILS (Close-up).
+
+Instructions:
+1. Background & Lighting:
+   - STRICTLY MATCH Image 1.
+
+2. Product Appearance:
+   - **CRITICAL: ALL WAISTBAND DETAILS MUST COME FROM IMAGE 1 (RAW PRODUCT) ONLY.**
+   - **ANTI-COPY WARNING**: Image 2 is ONLY for the FRAMING/ZOOM LEVEL. The waistband in Image 2 may look COMPLETELY DIFFERENT. YOU MUST COMPLETELY IGNORE the waistband appearance in Image 2.
+   - **WAISTBAND CONSTRUCTION DETAILS (MUST MATCH IMAGE 1):**
+     * There is a VISIBLE HORIZONTAL TOPSTITCHING LINE running across the waistband (about 1.5 inches below the top edge)
+     * There is a CENTER FRONT SEAM (vertical topstitching line) running down the middle front
+     * The waistband band sits FLAT - no elastic gathering, no puckering, no bunched texture
+     * **CRITICAL: The LEFT and RIGHT side portions of the waistband (on either side of the center seam) must be COMPLETELY SMOOTH with NO wrinkles, creases, or fabric bunching**
+     * The fabric should have a MATTE finish, not shiny
+   - **STRICT REQUIREMENT**: The generated waistband must match Image 1 (Raw Product) with 100% fidelity.
+   - **STRICT PROHIBITION**: CHANGING COLOR IS NOT ALLOWED.
+   - **STRICT PROHIBITION**: DO NOT generate gathered elastic texture. DO NOT add any pattern not in Image 1.
+   - **STRICT REQUIREMENT**: THE PRODUCT MUST BE TOTALLY WRINKLE-FREE.
+   - This product has NO button, NO visible zipper fly, NO belt loops (it's a pull-on style).
+
+3. Outfit Styling (MUST MATCH MASTER PROMPT):
+   - **TOP**: Clothing (top) and skin tone MUST MATCH Image 1 (Generated Front).
+   - **ACCESSORIES**: NO watches, NO jewelry, NO bracelets. Hands must be bare if visible.
+   - **MODEL CONSISTENCY**: Hands must have NO NAIL POLISH. Skin tone must match Image 1.
+
+4. Layout:
+   - Close-up front view of waist.
+
+Negative prompt:
+STRICT CONSTRAINTS: No full body view, no fuzzy details, no mismatched background, [no zipper fly, no buttons, no belt loops, no drawstrings, no nail polish, no watches, no jewelry, no bracelets, no accessories, no changed top], wrinkles on waistband, creases on waistband, bunched waistband fabric, wrinkled waistband sides, no elastic gathering on waistband, no puckered waistband
