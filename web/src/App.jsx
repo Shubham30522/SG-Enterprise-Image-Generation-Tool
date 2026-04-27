@@ -14,6 +14,10 @@ export default function App() {
 
   const [showCreateModal, setShowCreateModal] = useState(false)
 
+  // ─── AI Provider State ──────────────────────────────
+  const [providers, setProviders] = useState([])
+  const [selectedProvider, setSelectedProvider] = useState('gemini')
+
   // ─── Product / SKU State ────────────────────────────
   const [products, setProducts] = useState([])
   const [selectedProduct, setSelectedProduct] = useState('')
@@ -101,8 +105,17 @@ export default function App() {
   // ─── Refs ──────────────────────────────────────────
   const eventSourceRef = useRef(null)
 
-  // ─── Load Products on Mount ────────────────────────
-  const loadProducts = useCallback(() => {
+  // ─── Load Products & Providers on Mount ───────────
+  const loadInitialData = useCallback(() => {
+    // Load Providers
+    api.fetchProviders().then(data => {
+      setProviders(data.providers)
+      if (data.default) {
+        setSelectedProvider(data.default)
+      }
+    }).catch(err => console.error("Failed to load providers:", err))
+
+    // Load Products
     api.fetchProducts().then(prods => {
       setProducts(prods)
       if (prods.length > 0 && !selectedProduct) {
@@ -112,7 +125,7 @@ export default function App() {
     }).catch(err => setErrorMsg(err.message))
   }, [selectedProduct])
 
-  useEffect(() => { loadProducts() }, [])
+  useEffect(() => { loadInitialData() }, [])
 
   // ─── Product Manager Navigation ────────────────────
   const handleManageProduct = useCallback((productName) => {
@@ -125,15 +138,15 @@ export default function App() {
 
   const handleBackToGeneration = useCallback(() => {
     setCurrentPage('generation')
-    loadProducts() // refresh product list
-  }, [loadProducts])
+    loadInitialData() // refresh product list
+  }, [loadInitialData])
 
   const handleProductCreated = useCallback((productName) => {
     setShowCreateModal(false)
-    loadProducts()
+    loadInitialData()
     setSelectedProduct(productName)
     setCurrentPage('product-manager')
-  }, [loadProducts])
+  }, [loadInitialData])
 
   // ─── Load SKUs + Poses when Product Changes ────────
   useEffect(() => {
@@ -303,6 +316,7 @@ export default function App() {
           reference_image_path: refImagePath || null,
           match_pose: matchPose,
           match_bg: matchBg,
+          provider: selectedProvider,
         })
         setCurrentJobId(result.job_id)
         // Start SSE listener
@@ -363,6 +377,7 @@ export default function App() {
         selected_poses: selectedPoseList,
         front_image_path: savedFrontPath,
         variant_ref_paths: variantRefPaths,
+        provider: selectedProvider,
       })
       setCurrentJobId(result.job_id)
       if (eventSourceRef.current) eventSourceRef.current.close()
@@ -407,6 +422,7 @@ export default function App() {
         selected_poses: selectedPoseList,
         front_image_path: result.saved_path,
         variant_ref_paths: variantRefPaths,
+        provider: selectedProvider,
       })
       setCurrentJobId(varResult.job_id)
       if (eventSourceRef.current) eventSourceRef.current.close()
@@ -460,6 +476,7 @@ export default function App() {
                reference_image_path: refImagePath || null,
                match_pose: matchPose,
                match_bg: matchBg,
+               provider: selectedProvider,
              })
              setCurrentJobId(result.job_id)
              if (eventSourceRef.current) eventSourceRef.current.close()
@@ -479,6 +496,7 @@ export default function App() {
                 selected_poses: [pose],
                 front_image_path: savedFrontPath,
                 variant_ref_paths: variantRefPaths,
+                provider: selectedProvider,
             })
             setCurrentJobId(result.job_id)
             if (eventSourceRef.current) eventSourceRef.current.close()
@@ -597,8 +615,10 @@ export default function App() {
 
       {/* Main Layout */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
         <Sidebar
+          providers={providers}
+          selectedProvider={selectedProvider}
+          onProviderChange={setSelectedProvider}
           products={products}
           selectedProduct={selectedProduct}
           onProductChange={setSelectedProduct}

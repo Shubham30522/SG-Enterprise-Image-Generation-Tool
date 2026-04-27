@@ -7,6 +7,12 @@ const BASE = '';  // proxied via vite.config.js
 
 // ─── Products ──────────────────────────────────────────
 
+export async function fetchProviders() {
+  const res = await fetch(`${BASE}/api/providers`);
+  if (!res.ok) throw new Error('Failed to fetch providers');
+  return await res.json();
+}
+
 export async function fetchProducts() {
   const res = await fetch(`${BASE}/api/products`);
   if (!res.ok) throw new Error('Failed to fetch products');

@@ -8,8 +8,16 @@ load_dotenv()
 API_KEY = os.getenv("GOOGLE_API_KEY")
 
 if not API_KEY:
-    print("Error: API Key not found in .env file.")
-    # We don't exit here to avoid crashing imports, but main.py should handle this check.
+    print("Warning: GOOGLE_API_KEY not found in .env file.")
+
+# OpenAI API Key (for ChatGPT / GPT Image 2)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+if not OPENAI_API_KEY:
+    print("Info: OPENAI_API_KEY not found in .env file. ChatGPT image generation will be unavailable.")
+
+# Default AI Provider: "gemini" or "chatgpt"
+DEFAULT_AI_PROVIDER = os.getenv("DEFAULT_AI_PROVIDER", "gemini")
 
 # Global Constants (Static paths)
 # Chrome Automation Config

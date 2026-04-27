@@ -4,7 +4,7 @@ import requests
 import base64
 import io
 from PIL import Image
-from config import API_KEY
+from config import API_KEY, OPENAI_API_KEY
 
 # Try to import pillow-heif for HEIC support
 try:
@@ -252,3 +252,109 @@ def inject_prompt_overrides(base_prompt, overrides, inject_pose=False, inject_bg
                 final_prompt = f"{final_prompt}\n\n{new_env}"
     
     return final_prompt
+
+def map_to_openai_size(aspect_ratio, image_size="1K"):
+    # Simplified mapping to supported OpenAI sizes based on ratio and requested size
+    w, h = 1024, 1024
+    if aspect_ratio == "3:4":
+        w, h = 768, 1024
+    elif aspect_ratio == "4:3":
+        w, h = 1024, 768
+    elif aspect_ratio == "16:9":
+        w, h = 1024, 576
+    elif aspect_ratio == "9:16":
+        w, h = 576, 1024
+    
+    if image_size == "2K":
+        w, h = w * 2, h * 2
+    elif image_size == "4K":
+        w, h = w * 4, h * 4
+
+    # Cap to max constraint
+    if w > 3840: w = 3840
+    if h > 3840: h = 3840
+    
+    # We construct the closest matching string. 
+    # DALL-E 3 supported specific formats, but GPT-Image-2 supports flexible sizes up to 4K edges.
+    return f"{w}x{h}"
+
+def fetch_image_from_openai(prompt, image_paths, aspect_ratio="1:1", image_size="1K"):
+    """
+    Generates an image using OpenAI GPT Image 2.
+    Same interface as fetch_image_from_api().
+    Returns (PIL.Image, None) on success or (None, error_string) on failure.
+    """
+    if not OPENAI_API_KEY:
+        return None, "OPENAI_API_KEY is not configured"
+        
+    try:
+        from openai import OpenAI
+    except ImportError:
+        return None, "OpenAI Python package is not installed (pip install openai)"
+
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    
+    # Convert image_paths to base64 data URLs
+    base64_images = []
+    for img_path in image_paths:
+        if img_path and os.path.exists(img_path):
+            try:
+                is_heic = img_path.lower().endswith(('.heic', '.heif'))
+                mime_type = "image/jpeg"
+                if is_heic:
+                    if not HEIC_SUPPORTED:
+                        print(f"Skipping HEIC file (pillow-heif not installed): {img_path}")
+                        continue
+                    image_bytes, success = convert_heic_to_jpeg_bytes(img_path)
+                    if not success: continue
+                else:
+                    with open(img_path, "rb") as img_f:
+                        image_bytes = img_f.read()
+                    if img_path.lower().endswith(".png"):
+                        mime_type = "image/png"
+                    elif img_path.lower().endswith(".webp"):
+                        mime_type = "image/webp"
+
+                b64_image = base64.b64encode(image_bytes).decode("utf-8")
+                base64_images.append(f"data:{mime_type};base64,{b64_image}")
+            except Exception as e:
+                print(f"Error processing image {img_path}: {e}")
+
+    size_str = map_to_openai_size(aspect_ratio, image_size)
+    
+    try:
+        print(f"DEBUG: Sending request to OpenAI gpt-image-2 (size: {size_str})...")
+        if len(base64_images) > 0:
+            response = client.images.edit(
+                model="gpt-image-2",
+                image=base64_images[0], # Using the first reference image as base
+                prompt=prompt,
+                n=1,
+                size=size_str,
+                response_format="b64_json"
+            )
+        else:
+            response = client.images.generate(
+                model="gpt-image-2",
+                prompt=prompt,
+                n=1,
+                size=size_str,
+                response_format="b64_json"
+            )
+            
+        b64_data = response.data[0].b64_json
+        image_data = base64.b64decode(b64_data)
+        return Image.open(io.BytesIO(image_data)), None
+        
+    except Exception as e:
+        print(f"OpenAI API Exception: {e}")
+        return None, f"OpenAI API Exception: {str(e)}"
+
+def generate_image(prompt, image_paths, aspect_ratio="1:1", image_size="1K", provider="gemini"):
+    """
+    Unified entry point. Routes to the correct API based on provider.
+    """
+    if provider == "chatgpt":
+        return fetch_image_from_openai(prompt, image_paths, aspect_ratio, image_size)
+    else:
+        return fetch_image_from_api(prompt, image_paths, aspect_ratio, image_size)

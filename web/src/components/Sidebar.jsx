@@ -1,4 +1,5 @@
 export default function Sidebar({
+  providers, selectedProvider, onProviderChange,
   products, selectedProduct, onProductChange,
   poses, selectedPoses, onTogglePose, onToggleAll,
   resolution, onResolutionChange,
@@ -39,6 +40,35 @@ export default function Sidebar({
           <span>📦</span> Manage
         </button>
       </div>
+
+      {/* ─── AI Provider ─── */}
+      {providers && providers.length > 0 && (
+        <div className="space-y-2">
+          <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest">
+            AI Provider
+          </label>
+          <div className="flex bg-surface rounded-lg p-1 border border-border">
+            {providers.map(p => (
+              <button
+                key={p.id}
+                onClick={() => p.available && onProviderChange(p.id)}
+                disabled={!p.available || isProcessing}
+                title={!p.available ? "API key not configured" : ""}
+                className={`flex-1 py-1.5 text-xs font-bold rounded-md transition-all flex items-center justify-center gap-1 ${
+                  selectedProvider === p.id 
+                    ? 'bg-bg-card text-text-primary shadow-sm border border-border/50' 
+                    : p.available 
+                      ? 'text-text-muted hover:text-text-secondary' 
+                      : 'text-text-muted/30 cursor-not-allowed'
+                }`}
+              >
+                {p.id === 'gemini' ? '✨ Gemini' : '🤖 ChatGPT'}
+                {p.id === 'chatgpt' && p.available && <span className="text-[8px] bg-emerald-100 text-emerald-700 px-1 rounded-sm ml-1" title="Estimated cost per image">~$0.21</span>}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Product Selector */}
       <div className="space-y-2">
