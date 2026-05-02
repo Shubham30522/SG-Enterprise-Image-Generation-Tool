@@ -1,7 +1,7 @@
 """
-Gemini Auto Tool - FastAPI Backend Server
-Wraps existing Python logic (api_client, configure_prompts, utils, config)
-and exposes REST + SSE endpoints for the React frontend.
+Gemini Auto Tool - FastAPI Backend Server (Cloud-Ready)
+Wraps existing Python logic and exposes REST + SSE endpoints.
+All file operations route through Supabase Storage when credentials are available.
 """
 
 import os
@@ -18,16 +18,31 @@ from typing import Optional
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Query
-from fastapi.responses import StreamingResponse, FileResponse, JSONResponse
+from fastapi.responses import StreamingResponse, FileResponse, JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-# Import existing project modules (unchanged)
 from config import BASE_INPUT_FOLDER, BASE_PROMPT_FOLDER, OUTPUT_FOLDER, API_KEY
 import utils
 import api_client
 import configure_prompts
+
+# ─── Cloud Storage ───────────────────────────────────────────────────────
+try:
+    from storage_client import storage as cloud
+    CLOUD = True
+    print("[CLOUD] Cloud Mode: ENABLED (Supabase Storage)")
+except Exception:
+    cloud = None
+    CLOUD = False
+    print("[LOCAL] Local Mode: Using local filesystem")
+
+C_INPUT = "input_images"
+C_PROMPTS = "prompts"
+C_OUTPUT = "output_images"
+C_UPLOADS = "_uploads"
+IMAGE_EXTS = ('.png', '.jpg', '.jpeg', '.heic', '.heif', '.webp')
 
 
 # ─── Job State Management ───────────────────────────────────────────────
@@ -67,10 +82,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Gemini Auto Tool API", lifespan=lifespan)
 
-# CORS for React dev server
+# CORS for React dev server + Vercel production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173"],
+    allow_origins=[
+        "http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173",
+        os.getenv("FRONTEND_URL", "https://sg-enterprise.vercel.app"),
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -134,7 +152,8 @@ def list_providers():
 
 @app.get("/api/products")
 def list_products():
-    """List available products from input_images/ folder."""
+    if CLOUD:
+        return {"products": cloud.list_folders(C_INPUT)}
     if not os.path.exists(BASE_INPUT_FOLDER):
         return {"products": []}
     products = [d for d in os.listdir(BASE_INPUT_FOLDER)
@@ -144,162 +163,164 @@ def list_products():
 
 @app.post("/api/products")
 def create_product(req: CreateProductRequest):
-    """Create a new product with prompt templates and initial SKU folder."""
     product_name = req.name.strip()
     if not product_name:
         raise HTTPException(400, "Product name is required")
-    
-    prompt_dir = os.path.join(BASE_PROMPT_FOLDER, product_name)
-    input_dir = os.path.join(BASE_INPUT_FOLDER, product_name, req.initial_color.strip())
-    
-    if os.path.exists(prompt_dir):
-        raise HTTPException(409, f"Product '{product_name}' already exists")
-    
-    os.makedirs(prompt_dir, exist_ok=True)
-    os.makedirs(input_dir, exist_ok=True)
-    
-    # Generate prompt templates based on category
     templates = _get_prompt_templates(product_name, req.category.lower())
-    for filename, content in templates.items():
-        filepath = os.path.join(prompt_dir, filename)
-        with open(filepath, "w", encoding="utf-8") as f:
-            f.write(content)
-    
-    return {
-        "status": "created",
-        "product": product_name,
-        "prompt_files": list(templates.keys()),
-        "sku": req.initial_color.strip()
-    }
+    if CLOUD:
+        if cloud.path_has_content(f"{C_PROMPTS}/{product_name}"):
+            raise HTTPException(409, f"Product '{product_name}' already exists")
+        for fname, content in templates.items():
+            cloud.upload_text(content, f"{C_PROMPTS}/{product_name}/{fname}")
+        cloud.upload_file(b'', f"{C_INPUT}/{product_name}/{req.initial_color.strip()}/.keep", "text/plain")
+    else:
+        prompt_dir = os.path.join(BASE_PROMPT_FOLDER, product_name)
+        input_dir = os.path.join(BASE_INPUT_FOLDER, product_name, req.initial_color.strip())
+        if os.path.exists(prompt_dir):
+            raise HTTPException(409, f"Product '{product_name}' already exists")
+        os.makedirs(prompt_dir, exist_ok=True)
+        os.makedirs(input_dir, exist_ok=True)
+        for fname, content in templates.items():
+            with open(os.path.join(prompt_dir, fname), "w", encoding="utf-8") as f:
+                f.write(content)
+    return {"status": "created", "product": product_name, "prompt_files": list(templates.keys()), "sku": req.initial_color.strip()}
 
 
 @app.post("/api/products/{product_name}/skus")
 def create_sku(product_name: str, color: str = Form(...)):
-    """Add a new color/SKU folder for an existing product."""
     color_name = color.strip()
     if not color_name:
         raise HTTPException(400, "Color name is required")
-    
-    product_input_dir = os.path.join(BASE_INPUT_FOLDER, product_name)
-    if not os.path.exists(product_input_dir):
-        raise HTTPException(404, f"Product '{product_name}' not found")
-    
-    sku_dir = os.path.join(product_input_dir, color_name)
-    if os.path.exists(sku_dir):
-        raise HTTPException(409, f"Color '{color_name}' already exists")
-    
-    os.makedirs(sku_dir)
+    if CLOUD:
+        if not cloud.path_has_content(f"{C_INPUT}/{product_name}"):
+            raise HTTPException(404, f"Product '{product_name}' not found")
+        sku_path = f"{C_INPUT}/{product_name}/{color_name}"
+        if cloud.path_has_content(sku_path):
+            raise HTTPException(409, f"Color '{color_name}' already exists")
+        cloud.upload_file(b'', f"{sku_path}/.keep", "text/plain")
+    else:
+        product_input_dir = os.path.join(BASE_INPUT_FOLDER, product_name)
+        if not os.path.exists(product_input_dir):
+            raise HTTPException(404, f"Product '{product_name}' not found")
+        sku_dir = os.path.join(product_input_dir, color_name)
+        if os.path.exists(sku_dir):
+            raise HTTPException(409, f"Color '{color_name}' already exists")
+        os.makedirs(sku_dir)
     return {"status": "created", "sku": color_name}
 
 
 @app.post("/api/products/{product_name}/{sku_name}/upload")
 async def upload_sku_image(
-    product_name: str,
-    sku_name: str,
-    image_type: str = Form(...),  # Front, Back, Side, Detail, Neck, etc.
-    file: UploadFile = File(...)
+    product_name: str, sku_name: str,
+    image_type: str = Form(...), file: UploadFile = File(...)
 ):
-    """Upload an image for a SKU, automatically renamed by type."""
-    sku_dir = os.path.join(BASE_INPUT_FOLDER, product_name, sku_name)
-    if not os.path.exists(sku_dir):
-        raise HTTPException(404, f"SKU folder not found: {product_name}/{sku_name}")
-    
     ext = os.path.splitext(file.filename)[1] or ".jpg"
     safe_name = f"{image_type.strip()}{ext}"
-    save_path = os.path.join(sku_dir, safe_name)
-    
     content = await file.read()
-    with open(save_path, "wb") as f:
-        f.write(content)
-    
-    return {
-        "status": "uploaded",
-        "filename": safe_name,
-        "path": save_path,
-        "preview_url": f"/api/input-image/{product_name}/{sku_name}/{safe_name}"
-    }
+    if CLOUD:
+        cloud_path = f"{C_INPUT}/{product_name}/{sku_name}/{safe_name}"
+        cloud.upload_file(content, cloud_path)
+        return {"status": "uploaded", "filename": safe_name, "path": cloud_path, "preview_url": f"/api/input-image/{product_name}/{sku_name}/{safe_name}"}
+    else:
+        sku_dir = os.path.join(BASE_INPUT_FOLDER, product_name, sku_name)
+        if not os.path.exists(sku_dir):
+            raise HTTPException(404, f"SKU folder not found: {product_name}/{sku_name}")
+        save_path = os.path.join(sku_dir, safe_name)
+        with open(save_path, "wb") as f:
+            f.write(content)
+        return {"status": "uploaded", "filename": safe_name, "path": save_path, "preview_url": f"/api/input-image/{product_name}/{sku_name}/{safe_name}"}
 
 
 @app.post("/api/products/{product_name}/prompts")
 def save_prompts(product_name: str, req: SavePromptsRequest):
-    """Save edited prompt files for a product."""
-    prompt_dir = os.path.join(BASE_PROMPT_FOLDER, product_name)
-    if not os.path.exists(prompt_dir):
-        raise HTTPException(404, f"Prompts not found for '{product_name}'")
-    
     saved_files = []
-    
-    # Save master prompt
-    if req.master_prompt is not None:
-        master_path = os.path.join(prompt_dir, "master_prompt.txt")
-        with open(master_path, "w", encoding="utf-8") as f:
-            f.write(req.master_prompt)
-        saved_files.append("master_prompt.txt")
-    
-    # Save variant prompts
-    if req.variants:
-        for variant_key, content in req.variants.items():
-            # Convert key like "Back" -> "back.txt"
-            filename = f"{variant_key.lower()}.txt"
-            filepath = os.path.join(prompt_dir, filename)
-            with open(filepath, "w", encoding="utf-8") as f:
-                f.write(content)
-            saved_files.append(filename)
-    
+    if CLOUD:
+        if req.master_prompt is not None:
+            cloud.upload_text(req.master_prompt, f"{C_PROMPTS}/{product_name}/master_prompt.txt")
+            saved_files.append("master_prompt.txt")
+        if req.variants:
+            for vk, content in req.variants.items():
+                fname = f"{vk.lower()}.txt"
+                cloud.upload_text(content, f"{C_PROMPTS}/{product_name}/{fname}")
+                saved_files.append(fname)
+    else:
+        prompt_dir = os.path.join(BASE_PROMPT_FOLDER, product_name)
+        if not os.path.exists(prompt_dir):
+            raise HTTPException(404, f"Prompts not found for '{product_name}'")
+        if req.master_prompt is not None:
+            with open(os.path.join(prompt_dir, "master_prompt.txt"), "w", encoding="utf-8") as f:
+                f.write(req.master_prompt)
+            saved_files.append("master_prompt.txt")
+        if req.variants:
+            for vk, content in req.variants.items():
+                fname = f"{vk.lower()}.txt"
+                with open(os.path.join(prompt_dir, fname), "w", encoding="utf-8") as f:
+                    f.write(content)
+                saved_files.append(fname)
     return {"status": "saved", "files": saved_files}
 
 
 @app.delete("/api/products/{product_name}")
 def delete_product(product_name: str):
-    """Delete a product's prompt and input folders."""
-    prompt_dir = os.path.join(BASE_PROMPT_FOLDER, product_name)
-    input_dir = os.path.join(BASE_INPUT_FOLDER, product_name)
-    
     deleted = []
-    if os.path.exists(prompt_dir):
-        shutil.rmtree(prompt_dir)
-        deleted.append("prompts")
-    if os.path.exists(input_dir):
-        shutil.rmtree(input_dir)
-        deleted.append("input_images")
-    
+    if CLOUD:
+        if cloud.path_has_content(f"{C_PROMPTS}/{product_name}"):
+            cloud.delete_directory(f"{C_PROMPTS}/{product_name}")
+            deleted.append("prompts")
+        if cloud.path_has_content(f"{C_INPUT}/{product_name}"):
+            cloud.delete_directory(f"{C_INPUT}/{product_name}")
+            deleted.append("input_images")
+    else:
+        prompt_dir = os.path.join(BASE_PROMPT_FOLDER, product_name)
+        input_dir = os.path.join(BASE_INPUT_FOLDER, product_name)
+        if os.path.exists(prompt_dir):
+            shutil.rmtree(prompt_dir)
+            deleted.append("prompts")
+        if os.path.exists(input_dir):
+            shutil.rmtree(input_dir)
+            deleted.append("input_images")
     if not deleted:
         raise HTTPException(404, f"Product '{product_name}' not found")
-    
     return {"status": "deleted", "product": product_name, "deleted": deleted}
 
 
 @app.delete("/api/products/{product_name}/skus/{sku_name}")
 def delete_sku(product_name: str, sku_name: str):
-    """Delete a specific SKU/color folder."""
-    sku_dir = os.path.join(BASE_INPUT_FOLDER, product_name, sku_name)
-    if not os.path.exists(sku_dir):
-        raise HTTPException(404, f"SKU '{sku_name}' not found")
-    shutil.rmtree(sku_dir)
+    if CLOUD:
+        cp = f"{C_INPUT}/{product_name}/{sku_name}"
+        if not cloud.path_has_content(cp):
+            raise HTTPException(404, f"SKU '{sku_name}' not found")
+        cloud.delete_directory(cp)
+    else:
+        sku_dir = os.path.join(BASE_INPUT_FOLDER, product_name, sku_name)
+        if not os.path.exists(sku_dir):
+            raise HTTPException(404, f"SKU '{sku_name}' not found")
+        shutil.rmtree(sku_dir)
     return {"status": "deleted", "sku": sku_name}
 
 
 @app.get("/api/products/{product_name}/skus")
 def list_skus(product_name: str):
-    """List SKU folders for a product."""
+    if CLOUD:
+        skus = cloud.list_folders(f"{C_INPUT}/{product_name}")
+        return {"skus": skus, "total": len(skus)}
     product_path = os.path.join(BASE_INPUT_FOLDER, product_name)
     if not os.path.exists(product_path):
         raise HTTPException(404, f"Product '{product_name}' not found")
-    
-    skus = [d for d in os.listdir(product_path)
-            if os.path.isdir(os.path.join(product_path, d))]
+    skus = [d for d in os.listdir(product_path) if os.path.isdir(os.path.join(product_path, d))]
     return {"skus": skus, "total": len(skus)}
 
 
 @app.get("/api/products/{product_name}/poses")
 def list_poses(product_name: str):
-    """Get available poses/variants for a product (from Prompts/ folder)."""
-    prompt_path = os.path.join(BASE_PROMPT_FOLDER, product_name)
-    if not os.path.exists(prompt_path):
-        raise HTTPException(404, f"Prompts not found for '{product_name}'")
-    
-    extra_tasks = utils.get_extra_tasks(prompt_path)
-    poses = ["Front"]  # Front is always available
+    if CLOUD:
+        extra_tasks = utils.get_extra_tasks_cloud(f"{C_PROMPTS}/{product_name}")
+    else:
+        prompt_path = os.path.join(BASE_PROMPT_FOLDER, product_name)
+        if not os.path.exists(prompt_path):
+            raise HTTPException(404, f"Prompts not found for '{product_name}'")
+        extra_tasks = utils.get_extra_tasks(prompt_path)
+    poses = ["Front"]
     for task in extra_tasks:
         key = task["suffix"].replace("_", "")
         if key != "Front":
@@ -309,47 +330,50 @@ def list_poses(product_name: str):
 
 @app.get("/api/products/{product_name}/prompts")
 def get_prompts(product_name: str):
-    """Read master prompt + variant prompt contents."""
-    prompt_path = os.path.join(BASE_PROMPT_FOLDER, product_name)
-    master_path = os.path.join(prompt_path, "master_prompt.txt")
-    
-    master_prompt = utils.read_file(master_path)
-    if not master_prompt:
-        raise HTTPException(404, f"master_prompt.txt not found for '{product_name}'")
-    
-    # Read variant prompts
-    variants = {}
-    extra_tasks = utils.get_extra_tasks(prompt_path)
-    for task in extra_tasks:
-        key = task["suffix"].replace("_", "")
-        content = utils.read_file(task["file"])
-        if content:
-            variants[key] = content
-    
-    return {"master_prompt": master_prompt, "variants": variants}
+    if CLOUD:
+        master_prompt = utils.read_file_cloud(f"{C_PROMPTS}/{product_name}/master_prompt.txt")
+        if not master_prompt:
+            raise HTTPException(404, f"master_prompt.txt not found for '{product_name}'")
+        variants = {}
+        extra_tasks = utils.get_extra_tasks_cloud(f"{C_PROMPTS}/{product_name}")
+        for task in extra_tasks:
+            key = task["suffix"].replace("_", "")
+            content = utils.read_file_cloud(task["file"])
+            if content:
+                variants[key] = content
+        return {"master_prompt": master_prompt, "variants": variants}
+    else:
+        prompt_path = os.path.join(BASE_PROMPT_FOLDER, product_name)
+        master_prompt = utils.read_file(os.path.join(prompt_path, "master_prompt.txt"))
+        if not master_prompt:
+            raise HTTPException(404, f"master_prompt.txt not found for '{product_name}'")
+        variants = {}
+        for task in utils.get_extra_tasks(prompt_path):
+            key = task["suffix"].replace("_", "")
+            content = utils.read_file(task["file"])
+            if content:
+                variants[key] = content
+        return {"master_prompt": master_prompt, "variants": variants}
 
 
 @app.get("/api/products/{product_name}/sku/{sku_name}/images")
 def list_sku_images(product_name: str, sku_name: str):
-    """List images in a specific SKU folder."""
+    if CLOUD:
+        images = cloud.list_files(f"{C_INPUT}/{product_name}/{sku_name}", IMAGE_EXTS)
+        return {"images": images, "paths": [f"/api/input-image/{product_name}/{sku_name}/{f}" for f in images]}
     sku_path = os.path.join(BASE_INPUT_FOLDER, product_name, sku_name)
     if not os.path.exists(sku_path):
         raise HTTPException(404, f"SKU '{sku_name}' not found")
-    
-    valid_exts = ('.png', '.jpg', '.jpeg', '.heic', '.heif', '.webp')
-    images = [f for f in os.listdir(sku_path) if f.lower().endswith(valid_exts)]
-    
-    return {
-        "images": images,
-        "paths": [f"/api/input-image/{product_name}/{sku_name}/{f}" for f in images]
-    }
+    images = [f for f in os.listdir(sku_path) if f.lower().endswith(IMAGE_EXTS)]
+    return {"images": images, "paths": [f"/api/input-image/{product_name}/{sku_name}/{f}" for f in images]}
 
 
 # --- Image Serving ---
 
 @app.get("/api/input-image/{product_name}/{sku_name}/{filename}")
 def serve_input_image(product_name: str, sku_name: str, filename: str):
-    """Serve an input image file."""
+    if CLOUD:
+        return RedirectResponse(cloud.get_public_url(f"{C_INPUT}/{product_name}/{sku_name}/{filename}"))
     file_path = os.path.join(BASE_INPUT_FOLDER, product_name, sku_name, filename)
     if not os.path.exists(file_path):
         raise HTTPException(404, "Image not found")
@@ -358,7 +382,8 @@ def serve_input_image(product_name: str, sku_name: str, filename: str):
 
 @app.get("/api/input-image/{product_name}/{filename}")
 def serve_product_level_image(product_name: str, filename: str):
-    """Serve a product-level image (reference images etc.)."""
+    if CLOUD:
+        return RedirectResponse(cloud.get_public_url(f"{C_INPUT}/{product_name}/{filename}"))
     file_path = os.path.join(BASE_INPUT_FOLDER, product_name, filename)
     if not os.path.exists(file_path):
         raise HTTPException(404, "Image not found")
@@ -367,45 +392,45 @@ def serve_product_level_image(product_name: str, filename: str):
 
 @app.get("/api/output-image/{product_name}/{folder}/{filename}")
 def serve_output_image(product_name: str, folder: str, filename: str):
-    """Serve a generated output image."""
+    if CLOUD:
+        return RedirectResponse(cloud.get_public_url(f"{C_OUTPUT}/{product_name}/{folder}/{filename}"))
     file_path = os.path.join(OUTPUT_FOLDER, product_name, folder, filename)
     if not os.path.exists(file_path):
         raise HTTPException(404, "Image not found")
     return FileResponse(file_path)
 
 
-# --- Reference Image Upload ---
-
 @app.post("/api/upload/reference")
 async def upload_reference_image(file: UploadFile = File(...)):
-    """Upload a reference image, return the saved path."""
-    upload_dir = os.path.join(BASE_INPUT_FOLDER, "_web_uploads")
-    os.makedirs(upload_dir, exist_ok=True)
-    
-    # Save with unique name
     ext = os.path.splitext(file.filename)[1]
     saved_name = f"ref_{uuid.uuid4().hex[:8]}{ext}"
-    saved_path = os.path.join(upload_dir, saved_name)
-    
     content = await file.read()
-    with open(saved_path, "wb") as f:
-        f.write(content)
-    
-    return {"path": saved_path, "filename": saved_name}
+    if CLOUD:
+        cloud_path = f"{C_UPLOADS}/{saved_name}"
+        cloud.upload_file(content, cloud_path)
+        return {"path": cloud_path, "filename": saved_name}
+    else:
+        upload_dir = os.path.join(BASE_INPUT_FOLDER, "_web_uploads")
+        os.makedirs(upload_dir, exist_ok=True)
+        saved_path = os.path.join(upload_dir, saved_name)
+        with open(saved_path, "wb") as f:
+            f.write(content)
+        return {"path": saved_path, "filename": saved_name}
 
-
-# --- Reference Image Analysis ---
 
 @app.post("/api/analyze-reference")
 def analyze_reference(image_path: str = Form(...)):
-    """Analyze a reference image using Gemini to extract pose/background."""
-    if not os.path.exists(image_path):
-        raise HTTPException(404, "Reference image not found")
-    
-    results = api_client.analyze_reference_image(image_path)
+    if CLOUD:
+        img_data = cloud.download_image_tuple(image_path)
+        if not img_data:
+            raise HTTPException(404, "Reference image not found")
+        results = api_client.analyze_reference_image(img_data)
+    else:
+        if not os.path.exists(image_path):
+            raise HTTPException(404, "Reference image not found")
+        results = api_client.analyze_reference_image(image_path)
     if not results:
         raise HTTPException(500, "Reference analysis failed")
-    
     return {"analysis": results}
 
 
@@ -455,26 +480,24 @@ def save_and_generate_variants(req: GenerateVariantsRequest):
 
 @app.post("/api/generate/save-front")
 def save_front_only(req: SaveFrontRequest):
-    """Save the current front image to output folder. Returns the saved path."""
-    product_output = os.path.join(OUTPUT_FOLDER, req.product)
-    os.makedirs(product_output, exist_ok=True)
-    
-    sku_output = utils.get_unique_folder(product_output, req.sku)
-    
-    output_filename = f"{req.sku}_Front.jpg"
-    saved_path = os.path.join(sku_output, output_filename)
-    
-    # Decode and save
     from PIL import Image
     image_bytes = base64.b64decode(req.image_data)
     img = Image.open(io.BytesIO(image_bytes))
-    img.convert('RGB').save(saved_path, quality=100)
-    
-    return {
-        "saved_path": saved_path,
-        "output_folder": sku_output,
-        "filename": output_filename
-    }
+    output_filename = f"{req.sku}_Front.jpg"
+    if CLOUD:
+        cloud_folder = utils.get_unique_folder_cloud(f"{C_OUTPUT}/{req.product}", req.sku)
+        cloud_path = f"{cloud_folder}/{output_filename}"
+        buf = io.BytesIO()
+        img.convert('RGB').save(buf, format='JPEG', quality=100)
+        cloud.upload_file(buf.getvalue(), cloud_path)
+        return {"saved_path": cloud_path, "output_folder": cloud_folder, "filename": output_filename}
+    else:
+        product_output = os.path.join(OUTPUT_FOLDER, req.product)
+        os.makedirs(product_output, exist_ok=True)
+        sku_output = utils.get_unique_folder(product_output, req.sku)
+        saved_path = os.path.join(sku_output, output_filename)
+        img.convert('RGB').save(saved_path, quality=100)
+        return {"saved_path": saved_path, "output_folder": sku_output, "filename": output_filename}
 
 
 @app.post("/api/generate/cancel/{job_id}")
@@ -541,28 +564,31 @@ def auto_tune(req: AutoTuneRequest):
         raise HTTPException(500, f"Auto-tune failed: {result}")
 
 
-# --- Download ---
-
 @app.get("/api/download/{product_name}/{folder_name}")
 def download_as_zip(product_name: str, folder_name: str):
-    """Download all images in an output folder as a ZIP."""
-    folder_path = os.path.join(OUTPUT_FOLDER, product_name, folder_name)
-    if not os.path.exists(folder_path):
-        raise HTTPException(404, "Output folder not found")
-    
     zip_buffer = io.BytesIO()
-    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zf:
-        for filename in os.listdir(folder_path):
-            filepath = os.path.join(folder_path, filename)
-            if os.path.isfile(filepath):
-                zf.write(filepath, filename)
-    
+    if CLOUD:
+        cloud_dir = f"{C_OUTPUT}/{product_name}/{folder_name}"
+        files = cloud.list_files(cloud_dir, IMAGE_EXTS)
+        if not files:
+            raise HTTPException(404, "Output folder not found")
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zf:
+            for fname in files:
+                data = cloud.download_file(f"{cloud_dir}/{fname}")
+                if data:
+                    zf.writestr(fname, data)
+    else:
+        folder_path = os.path.join(OUTPUT_FOLDER, product_name, folder_name)
+        if not os.path.exists(folder_path):
+            raise HTTPException(404, "Output folder not found")
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zf:
+            for fname in os.listdir(folder_path):
+                fp = os.path.join(folder_path, fname)
+                if os.path.isfile(fp):
+                    zf.write(fp, fname)
     zip_buffer.seek(0)
-    return StreamingResponse(
-        zip_buffer,
-        media_type="application/zip",
-        headers={"Content-Disposition": f"attachment; filename={folder_name}.zip"}
-    )
+    return StreamingResponse(zip_buffer, media_type="application/zip",
+        headers={"Content-Disposition": f"attachment; filename={folder_name}.zip"})
 
 
 # ─── Prompt Template Factory ──────────────────────────────────────────────
@@ -793,28 +819,52 @@ Negative prompt: no mismatched background, nail polish{MANDATORY_BLOCK}""",
 # ─── Background Generation Logic ─────────────────────────────────────────
 
 def _get_sku_images(product_name: str, sku_name: str):
-    """Get all valid images in a SKU folder + product-level reference."""
-    sku_path = os.path.join(BASE_INPUT_FOLDER, product_name, sku_name)
-    valid_exts = ('.png', '.jpg', '.jpeg', '.heic', '.heif')
+    """Get all valid images in a SKU folder + product-level reference.
+    In CLOUD mode, returns lists of (bytes, mime) tuples.
+    In local mode, returns lists of file path strings.
+    """
+    if CLOUD:
+        return _get_sku_images_cloud(product_name, sku_name)
     
+    sku_path = os.path.join(BASE_INPUT_FOLDER, product_name, sku_name)
     sku_images = []
     if os.path.exists(sku_path):
         sku_images = [os.path.join(sku_path, f) for f in os.listdir(sku_path)
-                      if f.lower().endswith(valid_exts)]
-    
-    # Find product-level reference image
+                      if f.lower().endswith(IMAGE_EXTS)]
     product_path = os.path.join(BASE_INPUT_FOLDER, product_name)
     product_level_files = [
-        os.path.join(product_path, f)
-        for f in os.listdir(product_path)
-        if os.path.isfile(os.path.join(product_path, f)) and f.lower().endswith(valid_exts)
+        os.path.join(product_path, f) for f in os.listdir(product_path)
+        if os.path.isfile(os.path.join(product_path, f)) and f.lower().endswith(IMAGE_EXTS)
     ]
-    
     ref_image = None
     if product_level_files:
         ref_image = next((f for f in product_level_files if "reference" in os.path.basename(f).lower()), None)
         if not ref_image:
             ref_image = product_level_files[0]
+    return sku_images, ref_image
+
+
+def _get_sku_images_cloud(product_name, sku_name):
+    """Cloud version: returns (sku_image_tuples, ref_image_tuple)."""
+    sku_cloud = f"{C_INPUT}/{product_name}/{sku_name}"
+    sku_files = cloud.list_files(sku_cloud, IMAGE_EXTS)
+    sku_images = []
+    sku_names_list = []
+    for fname in sku_files:
+        tup = cloud.download_image_tuple(f"{sku_cloud}/{fname}")
+        if tup:
+            sku_images.append(tup)
+            sku_names_list.append(fname)
+    
+    # Product-level reference
+    prod_cloud = f"{C_INPUT}/{product_name}"
+    prod_files = cloud.list_files(prod_cloud, IMAGE_EXTS)
+    ref_image = None
+    if prod_files:
+        ref_name = next((f for f in prod_files if "reference" in f.lower()), None)
+        if not ref_name:
+            ref_name = prod_files[0]
+        ref_image = cloud.download_image_tuple(f"{prod_cloud}/{ref_name}")
     
     return sku_images, ref_image
 
@@ -823,243 +873,217 @@ def _run_front_generation(job: JobState, req: GenerateFrontRequest):
     """Generate the front image for a specific SKU. Runs in background thread."""
     try:
         job.push_event("status", {"message": f"Preparing front generation for {req.sku}..."})
-        
-        # Get images
         sku_images, product_ref = _get_sku_images(req.product, req.sku)
-        
-        # Find front image
-        front_img = next((img for img in sku_images if "front" in os.path.basename(img).lower()), None)
+
+        # In cloud mode, sku_images are (bytes, mime) tuples; locally they're paths.
+        # api_client.generate_image accepts both thanks to _load_image_bytes.
+        front_img = None
+        if not CLOUD:
+            front_img = next((img for img in sku_images if "front" in os.path.basename(img).lower()), None)
         if not front_img and sku_images:
             front_img = sku_images[0]
-        
+
         input_images = []
         if front_img:
             input_images.append(front_img)
-        # Logic to add Reference Image (Image 2)
-        if req.reference_image_path and os.path.exists(req.reference_image_path):
-             # UI Uploaded Reference takes precedence
-             input_images.append(req.reference_image_path)
-             print(f"DEBUG: Added UI Reference Image: {req.reference_image_path}")
-        elif product_ref:
-             # Fallback to file in folder
-            input_images.append(product_ref)
-            print(f"DEBUG: Added Folder Reference Image: {product_ref}")
 
-        print(f"DEBUG (Front Gen): Input Images for {req.sku}: {input_images}")
-        
+        # Reference image (UI-uploaded or from folder)
+        if req.reference_image_path:
+            if CLOUD:
+                ref_tup = cloud.download_image_tuple(req.reference_image_path)
+                if ref_tup:
+                    input_images.append(ref_tup)
+            elif os.path.exists(req.reference_image_path):
+                input_images.append(req.reference_image_path)
+        elif product_ref:
+            input_images.append(product_ref)
+
         if not input_images:
             job.push_event("error", {"message": f"No images found for SKU: {req.sku}"})
             return
-        
+
         # Load master prompt
-        master_prompt_path = os.path.join(BASE_PROMPT_FOLDER, req.product, "master_prompt.txt")
-        prompt = utils.read_file(master_prompt_path)
+        if CLOUD:
+            prompt = utils.read_file_cloud(f"{C_PROMPTS}/{req.product}/master_prompt.txt")
+        else:
+            prompt = utils.read_file(os.path.join(BASE_PROMPT_FOLDER, req.product, "master_prompt.txt"))
         if not prompt:
             job.push_event("error", {"message": f"Master prompt not found for {req.product}"})
             return
-        
-        # Handle reference image analysis
-        if req.reference_image_path and os.path.exists(req.reference_image_path):
-            if req.match_pose or req.match_bg:
-                job.push_event("status", {"message": "Analyzing reference image..."})
-                analysis = api_client.analyze_reference_image(req.reference_image_path)
-                if analysis:
-                    prompt = api_client.inject_prompt_overrides(
-                        prompt, analysis,
-                        inject_pose=req.match_pose,
-                        inject_bg=req.match_bg
-                    )
-        
-        # Generate with retry (mirrors main.py retry logic)
+
+        # Reference image analysis for pose/bg injection
+        if req.reference_image_path and (req.match_pose or req.match_bg):
+            job.push_event("status", {"message": "Analyzing reference image..."})
+            if CLOUD:
+                ref_data = cloud.download_image_tuple(req.reference_image_path)
+                analysis = api_client.analyze_reference_image(ref_data) if ref_data else None
+            else:
+                analysis = api_client.analyze_reference_image(req.reference_image_path) if os.path.exists(req.reference_image_path) else None
+            if analysis:
+                prompt = api_client.inject_prompt_overrides(prompt, analysis, inject_pose=req.match_pose, inject_bg=req.match_bg)
+
         job.push_event("status", {"message": f"Generating front view for {req.sku}..."})
-        
         attempt = 0
         while not job.cancelled:
             attempt += 1
             result_img, error_msg = api_client.generate_image(
-                prompt, input_images,
-                aspect_ratio="1:1",
-                image_size=req.resolution,
-                provider=req.provider
+                prompt, input_images, aspect_ratio="1:1", image_size=req.resolution, provider=req.provider
             )
-            
             if result_img:
-                # Convert to base64 for sending to frontend
                 buf = io.BytesIO()
                 result_img.convert('RGB').save(buf, format='JPEG', quality=100)
                 b64 = base64.b64encode(buf.getvalue()).decode('utf-8')
-                
-                # Also provide the raw input paths for variant generation
-                job.push_event("front_ready", {
-                    "image_base64": b64,
-                    "sku": req.sku,
-                    "input_images": [os.path.basename(p) for p in sku_images],
-                    "all_sku_images": sku_images,
-                })
+                job.push_event("front_ready", {"image_base64": b64, "sku": req.sku})
                 job.push_event("done", {"message": "Front generation complete"})
                 return
-            
-            job.push_event("status", {
-                "message": f"Generation failed ({error_msg}). Retrying (attempt {attempt})..."
-            })
+            job.push_event("status", {"message": f"Generation failed ({error_msg}). Retrying (attempt {attempt})..."})
             time.sleep(1)
-        
         job.push_event("cancelled", {})
-    
     except Exception as e:
         job.push_event("error", {"message": str(e)})
 
 
 def _run_variant_generation(job: JobState, req: GenerateVariantsRequest):
-    """Generate variant images (Back, Side, Neck, Detail, etc.). Runs in background thread."""
+    """Generate variant images. Runs in background thread. Cloud-aware."""
     try:
-        product_path = os.path.join(BASE_PROMPT_FOLDER, req.product)
-        extra_tasks = utils.get_extra_tasks(product_path)
-        
-        # Get SKU raw images for smart matching
-        sku_images, _ = _get_sku_images(req.product, req.sku)
-        sku_path = os.path.join(BASE_INPUT_FOLDER, req.product, req.sku)
-        
-        # Identify specific raw images by keyword (mirrors main.py logic)
-        raw_back = next((p for p in sku_images if "back" in os.path.basename(p).lower()), None)
-        raw_front = next((p for p in sku_images if "front" in os.path.basename(p).lower()), None)
-        raw_neck = next((p for p in sku_images if "neck" in os.path.basename(p).lower()), None)
-        raw_detail = next((p for p in sku_images if "detail" in os.path.basename(p).lower()), None)
-        raw_side = next((p for p in sku_images if "side" in os.path.basename(p).lower()), None)
-        fallback_raw = sku_images[0] if sku_images else None
-        
-        # Prepare output folder
-        product_output = os.path.join(OUTPUT_FOLDER, req.product)
-        os.makedirs(product_output, exist_ok=True)
-        
-        # Check if front image already saved, otherwise create output folder
-        output_folder = None
-        if req.front_image_path and os.path.exists(req.front_image_path):
-            output_folder = os.path.dirname(req.front_image_path)
+        # Get tasks
+        if CLOUD:
+            extra_tasks = utils.get_extra_tasks_cloud(f"{C_PROMPTS}/{req.product}")
         else:
-            output_folder = utils.get_unique_folder(product_output, req.sku)
-        
-        # Filter tasks to only selected poses
-        selected_tasks = []
-        for task in extra_tasks:
-            pose_key = task["suffix"].replace("_", "")
-            if pose_key in req.selected_poses:
-                selected_tasks.append(task)
-        
+            extra_tasks = utils.get_extra_tasks(os.path.join(BASE_PROMPT_FOLDER, req.product))
+
+        sku_images, _ = _get_sku_images(req.product, req.sku)
+        fallback_raw = sku_images[0] if sku_images else None
+
+        # In local mode, do smart matching by keyword
+        if not CLOUD:
+            raw_back = next((p for p in sku_images if "back" in os.path.basename(p).lower()), None)
+            raw_front = next((p for p in sku_images if "front" in os.path.basename(p).lower()), None)
+            raw_neck = next((p for p in sku_images if "neck" in os.path.basename(p).lower()), None)
+            raw_detail = next((p for p in sku_images if "detail" in os.path.basename(p).lower()), None)
+            raw_side = next((p for p in sku_images if "side" in os.path.basename(p).lower()), None)
+
+        # Prepare output folder
+        if CLOUD:
+            if req.front_image_path:
+                output_folder = '/'.join(req.front_image_path.split('/')[:-1])
+            else:
+                output_folder = utils.get_unique_folder_cloud(f"{C_OUTPUT}/{req.product}", req.sku)
+        else:
+            product_output = os.path.join(OUTPUT_FOLDER, req.product)
+            os.makedirs(product_output, exist_ok=True)
+            if req.front_image_path and os.path.exists(req.front_image_path):
+                output_folder = os.path.dirname(req.front_image_path)
+            else:
+                output_folder = utils.get_unique_folder(product_output, req.sku)
+
+        # Filter to selected poses
+        selected_tasks = [t for t in extra_tasks if t["suffix"].replace("_", "") in req.selected_poses]
         total = len(selected_tasks)
         results = []
-        
+
         for i, task in enumerate(selected_tasks):
             if job.cancelled:
                 job.push_event("cancelled", {})
                 return
-            
+
             pose_key = task["suffix"].replace("_", "")
             job.push_event("variant_progress", {
                 "message": f"Generating {pose_key.upper()} ({i+1}/{total})...",
-                "current": i + 1,
-                "total": total,
-                "pose": pose_key
+                "current": i + 1, "total": total, "pose": pose_key
             })
-            
-            prompt_text = utils.read_file(task["file"])
+
+            # Read prompt
+            if CLOUD:
+                prompt_text = utils.read_file_cloud(task["file"])
+            else:
+                prompt_text = utils.read_file(task["file"])
             if not prompt_text:
                 continue
-            
-            # --- Reference Injection Logic ---
-            # 1. Global Injection (Environment) from Main Reference (if passed via front gen or available)
-            # Need to pass main ref path? currently _run_front_generation handles it. 
-            # Ideally we should pass "environment_description" from front gen to variants, but for now let's focus on per-variant ref.
-            
-            # 2. Specific Variant Ref Injection (Pose & Style)
+
+            # Variant-specific reference injection
             if req.variant_ref_paths and pose_key in req.variant_ref_paths:
                 ref_path = req.variant_ref_paths[pose_key]
-                if os.path.exists(ref_path):
+                if CLOUD:
+                    ref_data = cloud.download_image_tuple(ref_path)
+                    if ref_data:
+                        job.push_event("status", {"message": f"Analyzing {pose_key} reference..."})
+                        analysis = api_client.analyze_reference_image(ref_data)
+                        if analysis:
+                            prompt_text = api_client.inject_prompt_overrides(prompt_text, analysis, inject_pose=True, inject_bg=True)
+                elif os.path.exists(ref_path):
                     job.push_event("status", {"message": f"Analyzing {pose_key} reference..."})
                     analysis = api_client.analyze_reference_image(ref_path)
                     if analysis:
-                        prompt_text = api_client.inject_prompt_overrides(
-                            prompt_text, analysis,
-                            inject_pose=True, # Always inject pose from specific ref
-                            inject_bg=True    # Also inject BG to match ref
-                        )
-            # ----------------------------------
+                        prompt_text = api_client.inject_prompt_overrides(prompt_text, analysis, inject_pose=True, inject_bg=True)
 
-            # Build input list: [Generated Front] + [Specific Raw Image]
+            # Build input list: [Generated Front] + [Raw Image]
             current_inputs = []
-            if req.front_image_path and os.path.exists(req.front_image_path):
-                current_inputs.append(req.front_image_path)
-            
-            # Smart raw image matching (mirrors main.py logic)
-            suffix = task["suffix"]
-            chosen_raw = None
-            if suffix == "_Back":
-                chosen_raw = raw_back or raw_front or fallback_raw
-            elif suffix == "_Neck":
-                chosen_raw = raw_neck or raw_front or fallback_raw
-            elif suffix == "_Detail":
-                chosen_raw = raw_detail or raw_front or fallback_raw
-            elif suffix == "_Side":
-                chosen_raw = raw_side or raw_front or fallback_raw
+            if req.front_image_path:
+                if CLOUD:
+                    front_tup = cloud.download_image_tuple(req.front_image_path)
+                    if front_tup:
+                        current_inputs.append(front_tup)
+                elif os.path.exists(req.front_image_path):
+                    current_inputs.append(req.front_image_path)
+
+            # Smart raw image matching
+            if CLOUD:
+                # In cloud mode, sku_images are already tuples, just use fallback
+                if fallback_raw:
+                    current_inputs.append(fallback_raw)
             else:
-                chosen_raw = raw_front or fallback_raw
-            
-            if chosen_raw:
-                current_inputs.append(chosen_raw)
-            
+                suffix = task["suffix"]
+                chosen_raw = None
+                if suffix == "_Back": chosen_raw = raw_back or raw_front or fallback_raw
+                elif suffix == "_Neck": chosen_raw = raw_neck or raw_front or fallback_raw
+                elif suffix == "_Detail": chosen_raw = raw_detail or raw_front or fallback_raw
+                elif suffix == "_Side": chosen_raw = raw_side or raw_front or fallback_raw
+                else: chosen_raw = raw_front or fallback_raw
+                if chosen_raw:
+                    current_inputs.append(chosen_raw)
+
             # Generate with retry
             attempt = 0
             while not job.cancelled:
                 attempt += 1
                 result_img, error_msg = api_client.generate_image(
-                    prompt_text, current_inputs,
-                    aspect_ratio=task["ratio"],
-                    image_size=req.resolution,
-                    provider=req.provider
+                    prompt_text, current_inputs, aspect_ratio=task["ratio"],
+                    image_size=req.resolution, provider=req.provider
                 )
-                
                 if result_img:
-                    # Save variant
                     variant_filename = f"{req.sku}{task['suffix']}.jpg"
-                    save_path = os.path.join(output_folder, variant_filename)
-                    result_img.convert('RGB').save(save_path, quality=100)
-                    
-                    # Send to frontend
                     buf = io.BytesIO()
                     result_img.convert('RGB').save(buf, format='JPEG', quality=100)
-                    b64 = base64.b64encode(buf.getvalue()).decode('utf-8')
-                    
-                    results.append({
-                        "pose": pose_key,
-                        "filename": variant_filename,
-                        "path": save_path,
-                        "image_base64": b64
-                    })
-                    
+                    img_bytes = buf.getvalue()
+                    b64 = base64.b64encode(img_bytes).decode('utf-8')
+
+                    if CLOUD:
+                        save_path = f"{output_folder}/{variant_filename}"
+                        cloud.upload_file(img_bytes, save_path)
+                    else:
+                        save_path = os.path.join(output_folder, variant_filename)
+                        result_img.convert('RGB').save(save_path, quality=100)
+
+                    results.append({"pose": pose_key, "filename": variant_filename, "path": save_path})
                     job.push_event("variant_ready", {
-                        "pose": pose_key,
-                        "filename": variant_filename,
-                        "image_base64": b64,
-                        "current": i + 1,
-                        "total": total
+                        "pose": pose_key, "filename": variant_filename,
+                        "image_base64": b64, "current": i + 1, "total": total
                     })
                     break
-                
+
                 job.push_event("variant_progress", {
                     "message": f"Retrying {pose_key.upper()} (attempt {attempt})...",
-                    "current": i + 1,
-                    "total": total,
-                    "pose": pose_key
+                    "current": i + 1, "total": total, "pose": pose_key
                 })
                 time.sleep(1)
-        
+
         if not job.cancelled:
             job.push_event("done", {
                 "message": f"All {total} variants generated",
                 "output_folder": output_folder,
-                "results": [{k: v for k, v in r.items() if k != "image_base64"} for r in results]
+                "results": results
             })
-    
     except Exception as e:
         job.push_event("error", {"message": str(e)})
 

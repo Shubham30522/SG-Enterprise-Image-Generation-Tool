@@ -15,6 +15,60 @@ except ImportError:
     HEIC_SUPPORTED = False
     print("Warning: pillow-heif not installed. HEIC files will not be supported. Install with: pip install pillow-heif")
 
+
+# ─── Image Loading Helpers ───────────────────────────────────────────────
+
+def _load_image_bytes(image_input):
+    """
+    Loads image bytes from a flexible input.
+    
+    Accepts:
+      - str (local file path)
+      - bytes (raw image data)
+      - tuple of (bytes, mime_type)  e.g. (b'...', 'image/jpeg')
+    
+    Returns: (image_bytes, mime_type) or (None, None)
+    """
+    # Case 1: tuple of (bytes, mime_type) — already processed
+    if isinstance(image_input, tuple):
+        return image_input[0], image_input[1]
+    
+    # Case 2: raw bytes
+    if isinstance(image_input, bytes):
+        return image_input, "image/jpeg"
+    
+    # Case 3: string path (original behavior)
+    if isinstance(image_input, str):
+        if not os.path.exists(image_input):
+            print(f"Warning: Image path does not exist: {image_input}")
+            return None, None
+        
+        is_heic = image_input.lower().endswith(('.heic', '.heif'))
+        
+        if is_heic:
+            if not HEIC_SUPPORTED:
+                print(f"Skipping HEIC file (pillow-heif not installed): {image_input}")
+                return None, None
+            image_bytes, success = convert_heic_to_jpeg_bytes(image_input)
+            if not success:
+                return None, None
+            return image_bytes, "image/jpeg"
+        
+        with open(image_input, "rb") as img_f:
+            image_bytes = img_f.read()
+        
+        if image_input.lower().endswith(".png"):
+            mime_type = "image/png"
+        elif image_input.lower().endswith(".webp"):
+            mime_type = "image/webp"
+        else:
+            mime_type = "image/jpeg"
+        
+        return image_bytes, mime_type
+    
+    return None, None
+
+
 def convert_heic_to_jpeg_bytes(image_path):
     """
     Converts a HEIC image to JPEG bytes for API compatibility.
@@ -35,56 +89,35 @@ def convert_heic_to_jpeg_bytes(image_path):
         print(f"Error converting HEIC: {e}")
         return None, False
 
-def fetch_image_from_api(prompt, image_paths, aspect_ratio="1:1", image_size="1K"):
+
+# ─── Gemini API ──────────────────────────────────────────────────────────
+
+def fetch_image_from_api(prompt, image_inputs, aspect_ratio="1:1", image_size="1K"):
     """
     Generates an image using Gemini Pro Vision.
-    image_paths: List of file paths. 
+    image_inputs: List of image sources (file paths, bytes, or (bytes, mime) tuples).
     """
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key={API_KEY}"
     headers = {"Content-Type": "application/json"}
     
     parts = [{"text": prompt}]
     
-    # Loop through all provided image paths
-    for img_path in image_paths:
-        if img_path and os.path.exists(img_path):
-            try:
-                # Check if HEIC file
-                is_heic = img_path.lower().endswith(('.heic', '.heif'))
-                
-                if is_heic:
-                    if not HEIC_SUPPORTED:
-                        print(f"Skipping HEIC file (pillow-heif not installed): {img_path}")
-                        continue
-                    
-                    # Convert HEIC to JPEG bytes
-                    image_bytes, success = convert_heic_to_jpeg_bytes(img_path)
-                    if not success:
-                        print(f"Failed to convert HEIC: {img_path}")
-                        continue
-                    mime_type = "image/jpeg"
-                else:
-                    # Regular image file
-                    with open(img_path, "rb") as img_f:
-                        image_bytes = img_f.read()
-                    
-                    # Determine MIME type
-                    if img_path.lower().endswith(".png"):
-                        mime_type = "image/png"
-                    elif img_path.lower().endswith(".webp"):
-                        mime_type = "image/webp"
-                    else:
-                        mime_type = "image/jpeg"
-                
-                b64_image = base64.b64encode(image_bytes).decode("utf-8")
-                parts.append({
-                    "inline_data": {
-                        "mime_type": mime_type,
-                        "data": b64_image
-                    }
-                })
-            except Exception as e:
-                print(f"Error reading image {img_path}: {e}")
+    # Loop through all provided image inputs
+    for img_input in image_inputs:
+        try:
+            image_bytes, mime_type = _load_image_bytes(img_input)
+            if image_bytes is None:
+                continue
+            
+            b64_image = base64.b64encode(image_bytes).decode("utf-8")
+            parts.append({
+                "inline_data": {
+                    "mime_type": mime_type,
+                    "data": b64_image
+                }
+            })
+        except Exception as e:
+            print(f"Error processing image input: {e}")
 
     # Config
     data = {
@@ -131,9 +164,13 @@ def fetch_image_from_api(prompt, image_paths, aspect_ratio="1:1", image_size="1K
         return None, f"Exception: {str(e)}"
     return None, "Unknown Error"
 
-def analyze_reference_image(image_path):
+
+# ─── Reference Image Analysis ────────────────────────────────────────────
+
+def analyze_reference_image(image_input):
     """
     Analyzes the reference image using gemini-3-pro-preview to extract Pose and Background.
+    Accepts: file path, bytes, or (bytes, mime_type) tuple.
     Returns a dictionary with 'Model Pose' and 'Environment Physics' texts.
     """
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent?key={API_KEY}"
@@ -148,9 +185,10 @@ Model Pose: [Description]
 Environment Physics: [Description]"""
 
     try:
-        with open(image_path, "rb") as img_f:
-            b64_image = base64.b64encode(img_f.read()).decode("utf-8")
-            mime_type = "image/png" if image_path.lower().endswith(".png") else "image/jpeg"
+        image_bytes, mime_type = _load_image_bytes(image_input)
+        if image_bytes is None:
+            return None
+        b64_image = base64.b64encode(image_bytes).decode("utf-8")
     except Exception as e:
         print(f"Error reading ref image: {e}")
         return None
@@ -197,6 +235,9 @@ Environment Physics: [Description]"""
     except Exception as e:
         print(f"Analysis Exception: {e}")
         return None
+
+
+# ─── Prompt Injection ────────────────────────────────────────────────────
 
 def inject_prompt_overrides(base_prompt, overrides, inject_pose=False, inject_bg=False):
     """
@@ -253,6 +294,9 @@ def inject_prompt_overrides(base_prompt, overrides, inject_pose=False, inject_bg
     
     return final_prompt
 
+
+# ─── OpenAI GPT Image 2 ─────────────────────────────────────────────────
+
 def map_to_openai_size(aspect_ratio, image_size="1K"):
     # Simplified mapping to supported OpenAI sizes based on ratio and requested size
     w, h = 1024, 1024
@@ -278,10 +322,12 @@ def map_to_openai_size(aspect_ratio, image_size="1K"):
     # DALL-E 3 supported specific formats, but GPT-Image-2 supports flexible sizes up to 4K edges.
     return f"{w}x{h}"
 
-def fetch_image_from_openai(prompt, image_paths, aspect_ratio="1:1", image_size="1K"):
+
+def fetch_image_from_openai(prompt, image_inputs, aspect_ratio="1:1", image_size="1K"):
     """
     Generates an image using OpenAI GPT Image 2.
     Same interface as fetch_image_from_api().
+    Accepts image_inputs as list of file paths, bytes, or (bytes, mime) tuples.
     Returns (PIL.Image, None) on success or (None, error_string) on failure.
     """
     if not OPENAI_API_KEY:
@@ -294,31 +340,17 @@ def fetch_image_from_openai(prompt, image_paths, aspect_ratio="1:1", image_size=
 
     client = OpenAI(api_key=OPENAI_API_KEY)
     
-    # Convert image_paths to base64 data URLs
+    # Convert image_inputs to base64 data URLs
     base64_images = []
-    for img_path in image_paths:
-        if img_path and os.path.exists(img_path):
-            try:
-                is_heic = img_path.lower().endswith(('.heic', '.heif'))
-                mime_type = "image/jpeg"
-                if is_heic:
-                    if not HEIC_SUPPORTED:
-                        print(f"Skipping HEIC file (pillow-heif not installed): {img_path}")
-                        continue
-                    image_bytes, success = convert_heic_to_jpeg_bytes(img_path)
-                    if not success: continue
-                else:
-                    with open(img_path, "rb") as img_f:
-                        image_bytes = img_f.read()
-                    if img_path.lower().endswith(".png"):
-                        mime_type = "image/png"
-                    elif img_path.lower().endswith(".webp"):
-                        mime_type = "image/webp"
-
-                b64_image = base64.b64encode(image_bytes).decode("utf-8")
-                base64_images.append(f"data:{mime_type};base64,{b64_image}")
-            except Exception as e:
-                print(f"Error processing image {img_path}: {e}")
+    for img_input in image_inputs:
+        try:
+            image_bytes, mime_type = _load_image_bytes(img_input)
+            if image_bytes is None:
+                continue
+            b64_image = base64.b64encode(image_bytes).decode("utf-8")
+            base64_images.append(f"data:{mime_type};base64,{b64_image}")
+        except Exception as e:
+            print(f"Error processing image input: {e}")
 
     size_str = map_to_openai_size(aspect_ratio, image_size)
     quality_val = "low" if image_size.lower() in ("1k", "low") else "high" if image_size.lower() in ("4k", "high") else "medium"
@@ -353,11 +385,15 @@ def fetch_image_from_openai(prompt, image_paths, aspect_ratio="1:1", image_size=
         print(f"OpenAI API Exception: {e}")
         return None, f"OpenAI API Exception: {str(e)}"
 
-def generate_image(prompt, image_paths, aspect_ratio="1:1", image_size="1K", provider="gemini"):
+
+# ─── Unified Entry Point ────────────────────────────────────────────────
+
+def generate_image(prompt, image_inputs, aspect_ratio="1:1", image_size="1K", provider="gemini"):
     """
     Unified entry point. Routes to the correct API based on provider.
+    image_inputs: List of file paths (str), raw bytes, or (bytes, mime_type) tuples.
     """
     if provider == "chatgpt":
-        return fetch_image_from_openai(prompt, image_paths, aspect_ratio, image_size)
+        return fetch_image_from_openai(prompt, image_inputs, aspect_ratio, image_size)
     else:
-        return fetch_image_from_api(prompt, image_paths, aspect_ratio, image_size)
+        return fetch_image_from_api(prompt, image_inputs, aspect_ratio, image_size)
