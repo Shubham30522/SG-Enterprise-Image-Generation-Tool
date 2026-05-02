@@ -656,7 +656,7 @@ export default function App() {
           <ProductManager
             product={selectedProduct}
             onBack={handleBackToGeneration}
-            onProductsChanged={loadProducts}
+            onProductsChanged={loadInitialData}
           />
         ) : (
           <main className="flex-1 flex flex-col overflow-y-auto p-4 gap-6 max-w-7xl mx-auto w-full pb-10">

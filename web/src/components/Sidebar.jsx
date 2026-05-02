@@ -213,14 +213,16 @@ export default function Sidebar({
 
             {/* Resolution Selector */}
             <div>
-              <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2 block">Resolution</label>
+              <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2 block">
+                {selectedProvider === 'chatgpt' ? 'Quality' : 'Resolution'}
+              </label>
               <div className="flex bg-surface rounded-lg p-1 border border-border">
-                {['1K', '2K', '4K'].map(res => (
+                {(selectedProvider === 'chatgpt' ? ['Low', 'Medium', 'High'] : ['1K', '2K', '4K']).map(res => (
                   <button
                     key={res}
                     onClick={() => onResolutionChange(res)}
-                    className={`flex-1 py-1.5 text-xs font-bold rounded-md transition-all ${
-                      resolution === res 
+                    className={`flex-1 py-1.5 text-xs font-bold rounded-md transition-all capitalize ${
+                      resolution === res || (resolution === '1K' && res === 'Low') || (resolution === '2K' && res === 'Medium') || (resolution === '4K' && res === 'High') || (resolution === 'Low' && res === '1K') || (resolution === 'Medium' && res === '2K') || (resolution === 'High' && res === '4K')
                         ? 'bg-bg-card text-text-primary shadow-sm border border-border/50' 
                         : 'text-text-muted hover:text-text-secondary'
                     }`}

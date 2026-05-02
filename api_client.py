@@ -321,9 +321,10 @@ def fetch_image_from_openai(prompt, image_paths, aspect_ratio="1:1", image_size=
                 print(f"Error processing image {img_path}: {e}")
 
     size_str = map_to_openai_size(aspect_ratio, image_size)
+    quality_val = "low" if image_size.lower() in ("1k", "low") else "high" if image_size.lower() in ("4k", "high") else "medium"
     
     try:
-        print(f"DEBUG: Sending request to OpenAI gpt-image-2 (size: {size_str})...")
+        print(f"DEBUG: Sending request to OpenAI gpt-image-2 (size: {size_str}, quality: {quality_val})...")
         if len(base64_images) > 0:
             response = client.images.edit(
                 model="gpt-image-2",
@@ -331,6 +332,7 @@ def fetch_image_from_openai(prompt, image_paths, aspect_ratio="1:1", image_size=
                 prompt=prompt,
                 n=1,
                 size=size_str,
+                quality=quality_val,
                 response_format="b64_json"
             )
         else:
@@ -339,6 +341,7 @@ def fetch_image_from_openai(prompt, image_paths, aspect_ratio="1:1", image_size=
                 prompt=prompt,
                 n=1,
                 size=size_str,
+                quality=quality_val,
                 response_format="b64_json"
             )
             
