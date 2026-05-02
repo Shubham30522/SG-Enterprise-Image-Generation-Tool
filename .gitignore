@@ -1,3 +1,19 @@
+# Build artifacts
 output_images/
-Backup-Random/
 input_images/
+Backup-Random/
+__pycache__/
+*.pyc
+
+# Frontend dependencies
+node_modules/
+web/node_modules/
+web/dist/
+
+# Environment secrets
+.env
+.env.local
+
+# IDEs
+.vscode/
+.idea/
