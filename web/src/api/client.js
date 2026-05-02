@@ -1,9 +1,10 @@
 /**
  * API Client — all fetch calls to FastAPI backend.
- * The Vite proxy routes /api/* to http://localhost:8000
+ * Locally: Vite proxy routes /api/* to http://localhost:8000
+ * Production: VITE_API_URL routes to Render deployed backend.
  */
 
-const BASE = '';  // proxied via vite.config.js
+const BASE = import.meta.env.VITE_API_URL || '';
 
 // ─── Products ──────────────────────────────────────────
 
