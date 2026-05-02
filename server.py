@@ -23,7 +23,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from config import BASE_INPUT_FOLDER, BASE_PROMPT_FOLDER, OUTPUT_FOLDER, API_KEY
+from config import BASE_INPUT_FOLDER, BASE_PROMPT_FOLDER, OUTPUT_FOLDER, API_KEY, ALLOWED_ORIGINS
 import utils
 import api_client
 import configure_prompts
@@ -85,10 +85,7 @@ app = FastAPI(title="Gemini Auto Tool API", lifespan=lifespan)
 # CORS for React dev server + Vercel production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173",
-        os.getenv("FRONTEND_URL", "https://sg-enterprise.vercel.app"),
-    ],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -40,3 +40,11 @@ if not SUPABASE_URL or not SUPABASE_KEY:
 BASE_INPUT_FOLDER = os.path.abspath("input_images")
 BASE_PROMPT_FOLDER = os.path.abspath("Prompts")
 OUTPUT_FOLDER = os.path.abspath("output_images")
+
+# CORS Allowed Origins
+_default_origins = "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,https://sg-enterprise-image-generation-tool-7b4r2mj0q.vercel.app"
+ALLOWED_ORIGINS = [
+    origin.strip() 
+    for origin in os.getenv("ALLOWED_ORIGINS", _default_origins).split(",") 
+    if origin.strip()
+]
