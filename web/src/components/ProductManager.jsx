@@ -82,7 +82,8 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
     setError('')
     try {
       const result = await api.uploadSkuImage(product, selectedSku, type, file)
-      setSkuImages(prev => ({ ...prev, [type]: result.preview_url + '?t=' + Date.now() }))
+      const absoluteUrl = api.getInputImageUrl(product, selectedSku, result.filename);
+      setSkuImages(prev => ({ ...prev, [type]: absoluteUrl + '?t=' + Date.now() }))
       setSuccess(`${type} image uploaded!`)
       setTimeout(() => setSuccess(''), 3000)
     } catch (err) {
