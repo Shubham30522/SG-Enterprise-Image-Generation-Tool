@@ -342,6 +342,12 @@ export default function App() {
       setSavedOutputFolder(result.output_folder)
       setHasSavedFront(true)
       setStatusText("Front Saved. Click 'Generate Variants' to proceed.")
+
+      // Auto-download front image locally
+      const link = document.createElement('a')
+      link.href = `data:image/jpeg;base64,${currentImageData}`
+      link.download = `${sku}_Front.jpg`
+      link.click()
     } catch (err) {
       setErrorMsg(err.message)
     }
@@ -398,6 +404,12 @@ export default function App() {
       setSavedOutputFolder(result.output_folder)
       setHasSavedFront(true)
       setStatusText('Front saved ✓ Starting variant generation...')
+
+      // Auto-download front image locally
+      const link = document.createElement('a')
+      link.href = `data:image/jpeg;base64,${currentImageData}`
+      link.download = `${sku}_Front.jpg`
+      link.click()
 
       // Immediately start variants
       const selectedPoseList = Object.entries(selectedPoses)

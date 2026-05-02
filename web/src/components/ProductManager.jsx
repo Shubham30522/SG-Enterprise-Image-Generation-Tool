@@ -58,7 +58,7 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
         const baseName = filename.replace(/\.[^.]+$/, '')
         const type = IMAGE_TYPES.find(t => t.toLowerCase() === baseName.toLowerCase())
         if (type) {
-          imageMap[type] = `/api/input-image/${encodeURIComponent(product)}/${encodeURIComponent(selectedSku)}/${filename}`
+          imageMap[type] = api.getInputImageUrl(product, selectedSku, filename);
         }
       })
       setSkuImages(imageMap)

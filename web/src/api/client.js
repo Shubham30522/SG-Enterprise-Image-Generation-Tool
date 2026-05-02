@@ -226,3 +226,7 @@ export async function deleteSku(product, sku) {
 export function getDownloadZipUrl(product, folder) {
   return `${BASE}/api/download/${encodeURIComponent(product)}/${encodeURIComponent(folder)}`;
 }
+
+export function getInputImageUrl(product, sku, filename) {
+  return `${BASE}/api/input-image/${encodeURIComponent(product)}/${encodeURIComponent(sku)}/${filename}`;
+}
