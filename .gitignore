@@ -1,11 +1,11 @@
 # Build artifacts
 output_images/
 input_images/
-Backup-Random/
 __pycache__/
 *.pyc
+*.pyo
 
-# Frontend dependencies
+# Frontend dependencies & build
 node_modules/
 web/node_modules/
 web/dist/
@@ -13,7 +13,26 @@ web/dist/
 # Environment secrets
 .env
 .env.local
+.env.production
 
 # IDEs
 .vscode/
 .idea/
+*.swp
+*.swo
+
+# Internal — not for public repo
+.agent/
+Backup/
+Backup-Random/
+Research/
+CLAUDE.md
+PROJECT_GUIDE.md
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Windows batch scripts (platform-specific)
+*.bat

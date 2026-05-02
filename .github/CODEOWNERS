@@ -1,0 +1,17 @@
+# Code Owners — Gemini Auto Tool
+# These owners will be automatically requested for review on PRs
+
+# Default owner for everything
+* @Shubham30522
+
+# Backend (Python)
+*.py @Shubham30522
+
+# Frontend (React)
+/web/ @Shubham30522
+
+# Prompts and AI configuration
+/Prompts/ @Shubham30522
+
+# Infrastructure and CI/CD
+/.github/ @Shubham30522
