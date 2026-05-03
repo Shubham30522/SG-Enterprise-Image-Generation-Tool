@@ -177,11 +177,3 @@ def get_extra_tasks_cloud(prompts_cloud_path):
     return tasks
 
 
-# ─── Chrome Automation (unchanged) ───────────────────────────────────────
-
-def create_desktop_and_open_chrome(profile, url, product_name=None):
-    """
-    Opens Chrome and executes Meesho catalog automation using JSON script.
-    """
-    from automation.script_executor import execute_script
-    execute_script("meesho_cataloging", profile=profile, url=url)
