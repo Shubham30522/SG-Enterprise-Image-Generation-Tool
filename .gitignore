@@ -23,6 +23,7 @@ web/dist/
 
 # Internal — not for public repo
 .agent/
+SKILL/
 Backup/
 Backup-Random/
 Research/
