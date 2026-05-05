@@ -9,12 +9,12 @@
 
 ## Reporting a Vulnerability
 
-We take security seriously at SG Enterprise. If you discover a security vulnerability in Gemini Auto Tool, please report it responsibly.
+We take security seriously at SG Enterprise. If you discover a security vulnerability in Shotloom, please report it responsibly.
 
 ### How to Report
 
 1. **Do NOT** open a public GitHub issue for security vulnerabilities
-2. Email your findings to the maintainers with the subject line: `[SECURITY] Vulnerability Report — Gemini Auto Tool`
+2. Email your findings to the maintainers with the subject line: `[SECURITY] Vulnerability Report — Shotloom`
 3. Include as much detail as possible:
    - Description of the vulnerability
    - Steps to reproduce
@@ -31,7 +31,7 @@ We take security seriously at SG Enterprise. If you discover a security vulnerab
 ### Scope
 
 The following are in scope:
-- The Gemini Auto Tool application (backend + frontend)
+- The Shotloom application (backend + frontend)
 - API endpoints exposed by `server.py`
 - Authentication and authorization mechanisms
 - Data handling and storage

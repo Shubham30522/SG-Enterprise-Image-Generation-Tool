@@ -1,10 +1,10 @@
 @echo off
-title Gemini Auto Tool - Web Interface
+title Shotloom - Web Interface
 color 0A
 
 echo.
 echo ===============================================
-echo    GEMINI AUTO TOOL - WEB INTERFACE
+echo    SHOTLOOM - WEB INTERFACE
 echo ===============================================
 echo.
 echo Starting the web server...

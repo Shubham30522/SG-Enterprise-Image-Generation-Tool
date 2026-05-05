@@ -1,6 +1,6 @@
-# Contributing to Gemini Auto Tool
+# Contributing to Shotloom
 
-Thank you for your interest in contributing to **Gemini Auto Tool**! We welcome contributions from the community and are grateful for any help.
+Thank you for your interest in contributing to **Shotloom**! We welcome contributions from the community and are grateful for any help.
 
 ## 📋 Table of Contents
 
@@ -116,4 +116,4 @@ git commit -m "docs: update API endpoint documentation"
 
 ## 🙏 Thank You
 
-Every contribution matters — whether it's fixing a typo, improving documentation, or building a major feature. Thank you for helping make Gemini Auto Tool better!
+Every contribution matters — whether it's fixing a typo, improving documentation, or building a major feature. Thank you for helping make Shotloom better!

@@ -1,5 +1,5 @@
 """
-Gemini Auto Tool - FastAPI Backend Server (Cloud-Ready)
+Shotloom - FastAPI Backend Server (Cloud-Ready)
 Wraps existing Python logic and exposes REST + SSE endpoints.
 All file operations route through Supabase Storage when credentials are available.
 """
@@ -80,7 +80,7 @@ async def lifespan(app: FastAPI):
     yield
     # Shutdown: cleanup
 
-app = FastAPI(title="Gemini Auto Tool API", lifespan=lifespan)
+app = FastAPI(title="Shotloom API", lifespan=lifespan)
 
 # CORS for React dev server + Vercel production
 app.add_middleware(

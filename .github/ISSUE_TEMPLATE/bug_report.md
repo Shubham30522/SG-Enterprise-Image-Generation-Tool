@@ -1,6 +1,6 @@
 ---
 name: 🐛 Bug Report
-about: Report a bug to help us improve Gemini Auto Tool
+about: Report a bug to help us improve Shotloom
 title: '[BUG] '
 labels: bug
 assignees: Shubham30522

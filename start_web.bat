@@ -1,7 +1,7 @@
 @echo off
-title Gemini Auto Tool - Web UI
+title Shotloom - Web UI
 echo ==========================================
-echo   Gemini Auto Tool - Web UI Launcher
+echo   Shotloom - Web UI Launcher
 echo ==========================================
 echo.
 

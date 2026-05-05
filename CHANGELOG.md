@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to Gemini Auto Tool will be documented in this file.
+All notable changes to Shotloom will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 First Stable Release
 
-The first production-ready release of Gemini Auto Tool with full multi-provider AI support and cloud deployment.
+The first production-ready release of Shotloom with full multi-provider AI support and cloud deployment.
 
 ### Added
 - **Multi-Provider AI Architecture**: Unified dispatcher supporting Google Gemini Pro Vision and OpenAI GPT Image 2

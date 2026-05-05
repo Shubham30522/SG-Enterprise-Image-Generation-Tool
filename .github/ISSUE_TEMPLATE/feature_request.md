@@ -1,6 +1,6 @@
 ---
 name: ✨ Feature Request
-about: Suggest an idea for Gemini Auto Tool
+about: Suggest an idea for Shotloom
 title: '[FEATURE] '
 labels: enhancement
 assignees: Shubham30522

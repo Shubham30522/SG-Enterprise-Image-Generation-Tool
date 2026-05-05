@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🖼️ Gemini Auto Tool
+# 🖼️ Shotloom
 
 ### AI-Powered E-Commerce Image Generation Platform
 
@@ -20,7 +20,7 @@
 
 ## 🚀 Overview
 
-Gemini Auto Tool is an AI-driven automation platform built by **SG Enterprise** that eliminates the need for expensive physical photoshoots. It takes a single raw product photo and generates consistent, multi-angle catalogue images (front, back, side, neck, detail, waistband, hem) using advanced generative AI models.
+Shotloom is an AI-driven automation platform built by **SG Enterprise** that eliminates the need for expensive physical photoshoots. It takes a single raw product photo and generates consistent, multi-angle catalogue images (front, back, side, neck, detail, waistband, hem) using advanced generative AI models.
 
 ### The Problem
 

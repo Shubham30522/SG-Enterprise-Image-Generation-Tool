@@ -619,7 +619,7 @@ export default function App() {
         <div className="flex items-center gap-3">
           <span className="text-2xl">✨</span>
           <h1 className="text-xl font-bold bg-linear-to-r from-accent to-amber bg-clip-text text-transparent">
-            Gemini Auto Tool
+            Shotloom
           </h1>
         </div>
         <span className="text-sm text-text-muted">SG Enterprise</span>

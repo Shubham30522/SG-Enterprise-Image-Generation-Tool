@@ -3,7 +3,7 @@
 > **Owner**: Shubham Gadhiya (GitHub: @Shubham30522, LinkedIn: https://www.linkedin.com/in/shubham-gadhiya/) — Founder of SG Enterprise
 > **Business Registration**: GST-registered for-profit entity under "SG Enterprise"
 > **Goal**: Secure $1,000–$150,000 in Azure credits for GPT Image 2 API usage
-> **Product**: Gemini Auto Tool — AI-Powered E-Commerce Image Generation Platform
+> **Product**: Shotloom — AI-Powered E-Commerce Image Generation Platform
 > **Status**: MVP deployed, actively used for real e-commerce operations
 > **Last Updated**: 2026-05-03
 
@@ -13,7 +13,7 @@
 
 ### Why We Need This
 
-SG Enterprise is a **GST-registered** e-commerce business selling primarily **women's wear** (trouser pants, night dresses, Mom Fit pants, wide leg jeans, etc.) on platforms like **Meesho** and **Flipkart**. The Gemini Auto Tool was built internally to eliminate the need for expensive physical photoshoots by using AI to generate professional catalogue images from raw product photos.
+SG Enterprise is a **GST-registered** e-commerce business selling primarily **women's wear** (trouser pants, night dresses, Mom Fit pants, wide leg jeans, etc.) on platforms like **Meesho** and **Flipkart**. Shotloom was built internally to eliminate the need for expensive physical photoshoots by using AI to generate professional catalogue images from raw product photos.
 
 > **CRITICAL**: SG Enterprise has a valid GST number. This is extremely valuable for the Founders Hub application — it proves the business is legally registered and operational in India. Mention this in the application.
 
@@ -34,7 +34,7 @@ To sustainably use GPT Image 2 without personal costs, we are applying to the **
 
 ---
 
-## 🏗️ The Product — Gemini Auto Tool
+## 🏗️ The Product — Shotloom
 
 ### What It Does
 
@@ -111,7 +111,7 @@ Takes a single raw product photo + a style reference image → generates consist
 | Requirement | Our Status | Notes |
 |------------|-----------|-------|
 | For-profit entity | ✅ | SG Enterprise is a **GST-registered** for-profit e-commerce business |
-| Proprietary software product | ✅ | Gemini Auto Tool is 100% proprietary |
+| Proprietary software product | ✅ | Shotloom is 100% proprietary |
 | Privately held | ✅ | Single founder, no external investors |
 | < 7 years old | ✅ | Recently founded |
 | < $10M annual revenue | ✅ | Early stage |
@@ -125,13 +125,13 @@ Takes a single raw product photo + a style reference image → generates consist
 **SG Enterprise**
 
 #### Product Name
-**Gemini Auto Tool** — AI-Powered E-Commerce Image Generation Platform
+**Shotloom** — AI-Powered E-Commerce Image Generation Platform
 
 #### One-Line Description
 > An AI-driven automation platform that transforms raw product photos into professional, e-commerce-ready catalogue images, eliminating the need for expensive physical photoshoots.
 
 #### Full Product Description
-> SG Enterprise is a GST-registered e-commerce business building an AI-powered image generation platform designed specifically for small-to-medium e-commerce sellers. Our flagship product, Gemini Auto Tool, takes a single raw product photo and automatically generates consistent, multi-angle catalogue images (front, back, side, neck detail, etc.) using advanced generative AI models.
+> SG Enterprise is a GST-registered e-commerce business building an AI-powered image generation platform designed specifically for small-to-medium e-commerce sellers. Our flagship product, Shotloom, takes a single raw product photo and automatically generates consistent, multi-angle catalogue images (front, back, side, neck detail, etc.) using advanced generative AI models.
 >
 > **The Problem**: Independent sellers on platforms like Meesho and Flipkart spend ₹2,000–₹10,000 per product on professional photoshoots. This cost barrier prevents them from scaling their catalogues, directly impacting their revenue potential.
 >
@@ -146,7 +146,7 @@ Takes a single raw product photo + a style reference image → generates consist
 > **Traction**: Live MVP deployed, processing real product images for our own e-commerce catalogue operations on Meesho and Flipkart.
 
 #### Founder's Journey
-> As the founder of SG Enterprise, a GST-registered e-commerce business, I identified a critical pain point in the Indian e-commerce ecosystem: the prohibitive cost of professional product photography for independent sellers. Coming from a technical background with expertise in Python, React, and AI systems, I built Gemini Auto Tool as an internal tool for our own product cataloguing needs. The results were immediate — we reduced our per-product imaging costs from ₹5,000 to under ₹500 while maintaining catalogue-grade quality. Now, we're scaling this into a platform that can empower thousands of independent sellers across India.
+> As the founder of SG Enterprise, a GST-registered e-commerce business, I identified a critical pain point in the Indian e-commerce ecosystem: the prohibitive cost of professional product photography for independent sellers. Coming from a technical background with expertise in Python, React, and AI systems, I built Shotloom as an internal tool for our own product cataloguing needs. The results were immediate — we reduced our per-product imaging costs from ₹5,000 to under ₹500 while maintaining catalogue-grade quality. Now, we're scaling this into a platform that can empower thousands of independent sellers across India.
 
 #### Azure Services Planned
 - **Azure OpenAI Service** — GPT Image 2 for high-fidelity image generation
