@@ -21,6 +21,7 @@ export default function App() {
   // ─── Product / SKU State ────────────────────────────
   const [products, setProducts] = useState([])
   const [selectedProduct, setSelectedProduct] = useState('')
+  const [detailsRefreshKey, setDetailsRefreshKey] = useState(0)
   const [skus, setSkus] = useState([])
   const [poses, setPoses] = useState([])
   const [selectedPoses, setSelectedPoses] = useState({})
@@ -118,16 +119,27 @@ export default function App() {
     // Load Products
     api.fetchProducts().then(prods => {
       setProducts(prods)
-      if (prods.length > 0 && !selectedProduct) {
-        const initial = prods.includes('shirt') ? 'shirt' : prods[0]
-        setSelectedProduct(initial)
+      if (prods.length > 0) {
+        setSelectedProduct(prev => {
+          if (!prev || !prods.includes(prev)) {
+            return prods.includes('shirt') ? 'shirt' : prods[0]
+          }
+          return prev
+        })
+      } else {
+        setSelectedProduct('')
       }
     }).catch(err => setErrorMsg(err.message))
-  }, [selectedProduct])
+  }, [])
 
   useEffect(() => { loadInitialData() }, [])
 
   // ─── Product Manager Navigation ────────────────────
+  const refreshProductsAndDetails = useCallback(() => {
+    loadInitialData()
+    setDetailsRefreshKey(k => k + 1)
+  }, [loadInitialData])
+
   const handleManageProduct = useCallback((productName) => {
     // If clicking Manage from Sidebar for a different product, update selection
     if (productName && productName !== selectedProduct) {
@@ -138,8 +150,8 @@ export default function App() {
 
   const handleBackToGeneration = useCallback(() => {
     setCurrentPage('generation')
-    loadInitialData() // refresh product list
-  }, [loadInitialData])
+    refreshProductsAndDetails()
+  }, [refreshProductsAndDetails])
 
   const handleProductCreated = useCallback((productName) => {
     setShowCreateModal(false)
@@ -148,34 +160,64 @@ export default function App() {
     setCurrentPage('product-manager')
   }, [loadInitialData])
 
-  // ─── Load SKUs + Poses when Product Changes ────────
-  useEffect(() => {
-    if (!selectedProduct) return
+  // ─── Load SKUs + Poses ──────────────────────────────
+  const clearProductDetails = useCallback(() => {
+    setSkus([])
+    setPoses([])
+    setSelectedPoses({})
+    setCurrentSkuIndex(0)
+    setCurrentImage(null)
+    setCurrentImageData(null)
+    setAllSkuImages([])
+    setGeneratedImages([])
+    setCarouselImages([])
+    setFocusedIndex(0)
+    setBatchComplete(false)
+    setHasSavedFront(false)
+    setSavedFrontPath(null)
+    setSavedOutputFolder(null)
+    setBatchStatus('')
+    setVariantProgress({ current: 0, total: 0 })
+  }, [])
 
+  const loadProductDetails = useCallback((productName) => {
+    if (!productName) {
+      clearProductDetails()
+      setStatusText('No products found. Create a product to begin.')
+      setErrorMsg('')
+      return
+    }
     Promise.all([
-      api.fetchSkus(selectedProduct),
-      api.fetchPoses(selectedProduct)
+      api.fetchSkus(productName),
+      api.fetchPoses(productName)
     ]).then(([skuData, poseData]) => {
       setSkus(skuData.skus)
       setPoses(poseData.poses)
-      // Initialize all poses as unchecked
       const initial = {}
       poseData.poses.forEach(p => initial[p] = false)
       setSelectedPoses(initial)
-      // Reset state
       setCurrentSkuIndex(0)
       setCurrentImage(null)
+      setCurrentImageData(null)
+      setAllSkuImages([])
       setGeneratedImages([])
       setCarouselImages([])
       setFocusedIndex(0)
       setBatchComplete(false)
       setHasSavedFront(false)
       setSavedFrontPath(null)
-      setStatusText(`Loaded ${selectedProduct}. Ready.`)
+      setSavedOutputFolder(null)
+      setStatusText(`Loaded ${productName}. Ready.`)
       setBatchStatus('')
+      setVariantProgress({ current: 0, total: 0 })
       setErrorMsg('')
-    }).catch(err => setErrorMsg(err.message))
-  }, [selectedProduct])
+    }).catch(err => {
+      clearProductDetails()
+      setErrorMsg(err.message)
+    })
+  }, [clearProductDetails])
+
+  useEffect(() => { loadProductDetails(selectedProduct) }, [selectedProduct, detailsRefreshKey, loadProductDetails])
 
   // ─── Pose Toggling ─────────────────────────────────
   const togglePose = useCallback((pose) => {
@@ -660,7 +702,7 @@ export default function App() {
           currentPage={currentPage}
           onManageProduct={handleManageProduct}
           onShowCreateModal={() => setShowCreateModal(true)}
-          onGoToGeneration={() => setCurrentPage('generation')}
+          onGoToGeneration={handleBackToGeneration}
         />
 
         {/* Main Content - Conditional */}
@@ -668,7 +710,7 @@ export default function App() {
           <ProductManager
             product={selectedProduct}
             onBack={handleBackToGeneration}
-            onProductsChanged={loadInitialData}
+            onProductsChanged={refreshProductsAndDetails}
           />
         ) : (
           <main className="flex-1 flex flex-col overflow-y-auto p-4 gap-6 max-w-7xl mx-auto w-full pb-10">

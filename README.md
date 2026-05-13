@@ -42,7 +42,6 @@ By leveraging **Google Gemini Pro Vision** and **OpenAI GPT Image 2**, we reduce
 | 🎨 **Smart Prompt Engineering** | Auto-analyzes reference images to generate optimal prompts |
 | 🔧 **Product Management** | Full CRUD operations for products, SKUs, and prompt templates |
 | 🌐 **Cloud Storage** | Supabase integration for persistent image storage |
-| 🤖 **Platform Automation** | Selenium-driven workflows for Meesho catalogue publishing |
 | 📱 **Responsive UI** | Modern React 19 interface with Tailwind CSS 4 |
 
 ---
@@ -77,12 +76,12 @@ By leveraging **Google Gemini Pro Vision** and **OpenAI GPT Image 2**, we reduce
 └───────────────────────┬──────────────────────────────────────┘
                         │
 ┌───────────────────────▼──────────────────────────────────────┐
-│                  STORAGE & AUTOMATION                         │
+│                        STORAGE LAYER                         │
 │                                                              │
-│   ┌──────────────┐  ┌────────────┐  ┌──────────────────────┐ │
-│   │  Supabase    │  │  Local FS  │  │ Selenium Automation  │ │
-│   │  (Cloud)     │  │  (Dev)     │  │ (Meesho Publishing)  │ │
-│   └──────────────┘  └────────────┘  └──────────────────────┘ │
+│          ┌──────────────┐          ┌────────────┐            │
+│          │  Supabase    │          │  Local FS  │            │
+│          │  (Cloud)     │          │  (Dev)     │            │
+│          └──────────────┘          └────────────┘            │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -96,7 +95,6 @@ By leveraging **Google Gemini Pro Vision** and **OpenAI GPT Image 2**, we reduce
 | **Backend** | Python 3.9+, FastAPI, Uvicorn | REST API + SSE streaming |
 | **AI / ML** | Google Gemini Pro Vision, OpenAI GPT Image 2 | Image generation & analysis |
 | **Storage** | Supabase (prod), Local filesystem (dev) | Generated image persistence |
-| **Automation** | Selenium WebDriver | E-commerce platform publishing |
 | **Deployment** | Vercel (frontend), Render (backend) | Production hosting |
 
 ---
@@ -159,8 +157,6 @@ The app will be available at `http://localhost:5173`
 ├── configure_prompts.py   # Auto-tune prompt generation engine
 ├── utils.py               # Shared utility functions
 ├── storage_client.py      # Supabase cloud storage integration
-├── main.py                # Desktop GUI (Tkinter) — legacy interface
-├── web_app.py             # Streamlit UI — standalone web interface
 ├── requirements.txt       # Python dependencies
 │
 ├── web/                   # React frontend
@@ -177,10 +173,6 @@ The app will be available at `http://localhost:5173`
 │       ├── back.txt            # Back view variant
 │       ├── side.txt            # Side view variant
 │       └── ...                 # Additional variants
-│
-├── automation/            # Browser automation layer
-│   ├── script_executor.py # Selenium JSON script runner
-│   └── scripts/           # Automation flow definitions
 │
 ├── .github/               # GitHub configuration
 │   ├── workflows/         # CI/CD pipelines

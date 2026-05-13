@@ -107,7 +107,7 @@ class StorageClient:
         files_to_delete = []
         for item in items:
             name = item.get("name", "")
-            if not name or name.startswith("."):
+            if not name:
                 continue
             child_path = f"{folder_path}/{name}"
             if item.get("id") is None:

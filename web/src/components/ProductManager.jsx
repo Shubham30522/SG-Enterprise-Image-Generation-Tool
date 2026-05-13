@@ -129,6 +129,7 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
       setNewColorName('')
       await loadSkus()
       setSelectedSku(newColorName.trim())
+      onProductsChanged()
       setSuccess(`Color "${newColorName.trim()}" added!`)
       setTimeout(() => setSuccess(''), 3000)
     } catch (err) {
@@ -136,7 +137,7 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
     } finally {
       setAddingColor(false)
     }
-  }, [product, newColorName, loadSkus])
+  }, [product, newColorName, loadSkus, onProductsChanged])
 
   // ─── Delete Product ────────────────────────────────
   const handleDeleteProduct = useCallback(async () => {
@@ -159,10 +160,11 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
       const remaining = skus.filter(s => s !== selectedSku)
       setSkus(remaining)
       setSelectedSku(remaining[0] || '')
+      onProductsChanged()
     } catch (err) {
       setError(err.message)
     }
-  }, [product, selectedSku, skus])
+  }, [product, selectedSku, skus, onProductsChanged])
 
   // ─── Prompt content helpers ────────────────────────
   const getPromptContent = () => {
