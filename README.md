@@ -37,7 +37,8 @@ By leveraging **Google Gemini Pro Vision** and **OpenAI GPT Image 2**, we reduce
 | Feature | Description |
 |---------|-------------|
 | 🤖 **Multi-Provider AI** | Seamless switching between Google Gemini and OpenAI GPT Image 2 |
-| 📸 **Multi-Angle Generation** | Auto-generates front, back, side, neck, detail, and custom views |
+| 🧠 **Claude Prompt Gen** | Production-grade prompt generation using the v2 skill framework via Claude 3.5 Sonnet on Vertex AI |
+| 📸 **Multi-Angle Generation** | Auto-generates front, back, side, neck, detail, waistband, hem, and custom views |
 | ⚡ **Real-Time Streaming** | Server-Sent Events (SSE) for live generation progress |
 | 🎨 **Smart Prompt Engineering** | Auto-analyzes reference images to generate optimal prompts |
 | 🔧 **Product Management** | Full CRUD operations for products, SKUs, and prompt templates |
@@ -125,9 +126,26 @@ cd web && npm install && cd ..
 Create a `.env` file in the project root:
 
 ```env
-GOOGLE_API_KEY=your_gemini_api_key
-OPENAI_API_KEY=your_openai_api_key        # Optional
+# Google Cloud Vertex AI (Gemini Image Gen & Claude Prompt Gen)
+GCP_PROJECT_ID=your_gcp_project_id
+GCP_LOCATION=global                        # Required for Gemini 3 Preview
+GCP_REGION=us-east5                        # Regional endpoint for Claude
+CLAUDE_MODEL_ID=claude-sonnet-4-6          # Default: claude-sonnet-4-6
+
+# OpenAI API Key (Optional, for ChatGPT / GPT Image 2)
+OPENAI_API_KEY=your_openai_api_key
 DEFAULT_AI_PROVIDER="gemini"               # or "chatgpt"
+
+# Supabase Storage Configuration
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_KEY=your_supabase_anon_key
+SUPABASE_BUCKET=app-storage                # Optional, default: app-storage
+```
+
+Authenticate with Google Cloud to set up Application Default Credentials (ADC) for Vertex AI access:
+
+```bash
+gcloud auth application-default login
 ```
 
 ### 3. Run
@@ -188,15 +206,29 @@ The app will be available at `http://localhost:5173`
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| `GET` | `/api/providers` | Get status of available/configured AI providers |
 | `GET` | `/api/products` | List all available products |
-| `GET` | `/api/products/{product}/skus` | List SKUs for a product |
-| `POST` | `/api/generate` | Start image generation job |
-| `GET` | `/api/jobs/{job_id}/stream` | SSE stream for job progress |
-| `GET` | `/api/jobs/{job_id}/status` | Poll job status |
 | `POST` | `/api/products` | Create a new product |
-| `DELETE` | `/api/products/{product}` | Delete a product |
-| `POST` | `/api/upload-reference` | Upload reference image |
-| `POST` | `/api/auto-tune` | Auto-generate prompts from reference |
+| `DELETE` | `/api/products/{product_name}` | Delete a product and its content |
+| `GET` | `/api/products/{product_name}/skus` | List SKUs for a product |
+| `POST` | `/api/products/{product_name}/skus` | Add a SKU to a product |
+| `DELETE` | `/api/products/{product_name}/skus/{sku_name}` | Delete a SKU from a product |
+| `GET` | `/api/products/{product_name}/poses` | List available poses (front, back, side, etc.) |
+| `GET` | `/api/products/{product_name}/prompts` | Read all prompt files for a product |
+| `POST` | `/api/products/{product_name}/prompts` | Update prompt files for a product |
+| `POST` | `/api/products/{product_name}/{sku_name}/upload` | Upload raw garment images to a SKU |
+| `GET` | `/api/products/{product_name}/sku/{sku_name}/images` | List raw SKU images |
+| `POST` | `/api/upload/reference` | Upload a style reference image |
+| `POST` | `/api/analyze-reference` | Analyze pose & style of reference image |
+| `POST` | `/api/generate/start` | Start generating front-view catalog image (tracked) |
+| `POST` | `/api/generate/save-and-variants` | Save front image and generate variants (tracked) |
+| `POST` | `/api/generate/save-front` | Save a generated front image |
+| `POST` | `/api/generate/cancel/{job_id}` | Cancel an active generation job |
+| `GET` | `/api/generate/stream/{job_id}` | SSE stream for real-time generation progress |
+| `POST` | `/api/auto-tune` | Auto-generate prompt files via Gemini reference analysis |
+| `GET` | `/api/claude-status` | Check if Claude (GCP Vertex AI) is configured and available |
+| `POST` | `/api/generate-prompts-claude` | Generate production-grade prompts via Claude Vertex AI |
+| `GET` | `/api/download/{product_name}/{folder_name}` | Download generated images batch as a ZIP file |
 
 ---
 
@@ -213,18 +245,22 @@ cd web && npm run build
 
 ### Backend (Render)
 
-The FastAPI backend runs on Render with the following environment variables:
+The FastAPI backend runs on Render or Azure App Service with the following environment variables:
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `GOOGLE_API_KEY` | Yes* | Google Gemini API key |
-| `OPENAI_API_KEY` | No | OpenAI API key |
-| `DEFAULT_AI_PROVIDER` | No | Default: `gemini` |
-| `SUPABASE_URL` | Yes | Supabase project URL |
-| `SUPABASE_KEY` | Yes | Supabase anon key |
-| `CORS_ORIGINS` | No | Comma-separated allowed origins |
+| `GCP_PROJECT_ID` | Yes* | Google Cloud project ID (for Vertex AI APIs) |
+| `GCP_LOCATION` | No | Google Cloud region for Gemini (default: `us-central1`, set to `global` for Gemini 3 Preview) |
+| `GCP_REGION` | No | Google Cloud region for Claude prompt generator (default: `us-east5`) |
+| `CLAUDE_MODEL_ID` | No | Claude model name (default: `claude-sonnet-4-6`) |
+| `OPENAI_API_KEY` | No* | OpenAI API key for GPT Image 2 provider |
+| `DEFAULT_AI_PROVIDER` | No | Default provider: `gemini` or `chatgpt` |
+| `SUPABASE_URL` | Yes | Supabase project URL for cloud image storage |
+| `SUPABASE_KEY` | Yes | Supabase anon key for cloud image storage |
+| `SUPABASE_BUCKET` | No | Supabase storage bucket name (default: `app-storage`) |
+| `ALLOWED_ORIGINS` | No | Comma-separated CORS allowed origins |
 
-*At least one AI provider key is required.
+*At least Google Cloud Vertex AI configuration or OpenAI API Key must be set for image generation. Application Default Credentials (ADC) must be configured on the host machine/service.
 
 ---
 

@@ -16,12 +16,17 @@ The first production-ready release of Shotloom with full multi-provider AI suppo
 - **React 19 Frontend**: Modern responsive UI with Tailwind CSS 4, product/SKU selection, real-time generation streaming
 - **FastAPI Backend**: REST API with Server-Sent Events (SSE) for live generation progress
 - **Product Management System**: Full CRUD operations for products, SKUs, and prompt templates
+- **Claude AI Prompt Generator**: Production-grade prompt generation using the v2 photography skill framework via Claude 3.5 Sonnet on Vertex AI
 - **Auto-Tune Engine**: AI-powered prompt generation from style reference images
 - **Cloud Storage Integration**: Supabase for persistent image storage in production
 - **Multi-Angle Generation**: Support for front, back, side, neck, detail, waistband, and hem views
-- **Selenium Automation Layer**: Browser-driven workflows for Meesho catalogue publishing
 - **Cloud Deployment**: Vercel (frontend) + Render (backend) deployment configuration
 - **Dynamic CORS**: Regex-based CORS support for Vercel preview deployments
+
+### Removed
+- **Tkinter Desktop GUI**: Removed legacy desktop interface in favor of clean web client
+- **Streamlit Web UI**: Deprecated standalone Streamlit interface (`web_app.py`, `run_web_app.bat`)
+- **Selenium Automation Layer**: Removed local Selenium automation workflows for Meesho catalogue publishing
 
 ### Infrastructure
 - CI pipeline with GitHub Actions (lint + dependency audit)

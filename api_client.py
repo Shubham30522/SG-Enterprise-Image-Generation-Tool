@@ -1,10 +1,11 @@
 
 import os
-import requests
 import base64
 import io
 from PIL import Image
-from config import API_KEY, OPENAI_API_KEY
+from config import (
+    OPENAI_API_KEY, VERTEX_IMAGE_MODEL, VERTEX_TEXT_MODEL, get_gemini_client,
+)
 
 # Try to import pillow-heif for HEIC support
 try:
@@ -90,92 +91,78 @@ def convert_heic_to_jpeg_bytes(image_path):
         return None, False
 
 
-# ─── Gemini API ──────────────────────────────────────────────────────────
+# ─── Gemini API (Vertex AI) ───────────────────────────────────────────────
 
 def fetch_image_from_api(prompt, image_inputs, aspect_ratio="1:1", image_size="1K"):
     """
-    Generates an image using Gemini Pro Vision.
+    Generates an image using Gemini via Vertex AI.
     image_inputs: List of image sources (file paths, bytes, or (bytes, mime) tuples).
     """
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key={API_KEY}"
-    headers = {"Content-Type": "application/json"}
-    
-    parts = [{"text": prompt}]
-    
-    # Loop through all provided image inputs
+    from google.genai import types
+
+    client = get_gemini_client()
+    contents = [prompt]
+
+    # Add all provided image inputs as Part objects
     for img_input in image_inputs:
         try:
             image_bytes, mime_type = _load_image_bytes(img_input)
             if image_bytes is None:
                 continue
-            
-            b64_image = base64.b64encode(image_bytes).decode("utf-8")
-            parts.append({
-                "inline_data": {
-                    "mime_type": mime_type,
-                    "data": b64_image
-                }
-            })
+            contents.append(types.Part.from_bytes(data=image_bytes, mime_type=mime_type))
         except Exception as e:
             print(f"Error processing image input: {e}")
 
-    # Config
-    data = {
-        "contents": [{"parts": parts}],
-        "generationConfig": {
-            "responseModalities": ["IMAGE"],
-            "imageConfig": {
-                "imageSize": image_size,
-                "aspectRatio": aspect_ratio 
-            }
-        }
-    }
+    config = types.GenerateContentConfig(
+        response_modalities=["IMAGE"],
+        image_config=types.ImageConfig(
+            aspect_ratio=aspect_ratio,
+            image_size=image_size,
+        ),
+    )
 
     try:
-        print("DEBUG: Sending request to Gemini Pro Vision...") 
-        response = requests.post(url, headers=headers, json=data)
-        print(f"DEBUG: API Response Status: {response.status_code}") 
-        
-        if response.status_code == 200:
-            result = response.json()
-            candidate = result.get("candidates", [])[0] if result.get("candidates") else None
-            if candidate and "content" in candidate:
-                for part in candidate["content"].get("parts", []):
-                    b64_data = part.get("inlineData", {}).get("data") or part.get("inline_data", {}).get("data")
-                    if b64_data:
-                        image_data = base64.b64decode(b64_data)
-                        return Image.open(io.BytesIO(image_data)), None
-            
+        print(f"DEBUG: Sending request to Gemini via Vertex AI (model={VERTEX_IMAGE_MODEL}, size={image_size})...")
+        response = client.models.generate_content(
+            model=VERTEX_IMAGE_MODEL,
+            contents=contents,
+            config=config,
+        )
+        print("DEBUG: Vertex AI response received.")
+
+        if response.candidates:
+            candidate = response.candidates[0]
+            if candidate.content and candidate.content.parts:
+                for part in candidate.content.parts:
+                    if part.inline_data and part.inline_data.data:
+                        return Image.open(io.BytesIO(part.inline_data.data)), None
+
             # Extract detailed error reason
-            error_msg = "Unknown API Error"
-            if result.get("candidates") and result["candidates"][0].get("finishReason"):
-                reason = result["candidates"][0]["finishReason"]
-                msg = result["candidates"][0].get("finishMessage", "No details")
-                error_msg = f"{reason} - {msg}"
-            
+            reason = getattr(candidate, 'finish_reason', 'UNKNOWN')
+            msg = getattr(candidate, 'finish_message', 'No details')
+            error_msg = f"{reason} - {msg}"
             print(f"API Warning: No image generated. {error_msg}")
             return None, error_msg
 
-        else:
-            print(f"API Error: {response.status_code} - {response.text}")
-            return None, f"HTTP {response.status_code}: {response.text}"
+        return None, "No candidates returned"
+
     except Exception as e:
         print(f"API Exception: {e}")
         return None, f"Exception: {str(e)}"
-    return None, "Unknown Error"
 
 
-# ─── Reference Image Analysis ────────────────────────────────────────────
+# ─── Reference Image Analysis (Vertex AI) ────────────────────────────────
 
 def analyze_reference_image(image_input):
     """
-    Analyzes the reference image using gemini-3-pro-preview to extract Pose and Background.
+    Analyzes the reference image using Gemini via Vertex AI to extract Pose and Background.
     Accepts: file path, bytes, or (bytes, mime_type) tuple.
     Returns a dictionary with 'Model Pose' and 'Environment Physics' texts.
     """
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent?key={API_KEY}"
-    headers = {"Content-Type": "application/json"}
-    
+    from google.genai import types
+
+    client = get_gemini_client()
+
     prompt = """Analyze this image and extract two specific details:
 1. Model Pose: Describe the model's stance, head position, arm placement, and expression.
 2. Environment Physics: Describe the background, lighting, and environment atmosphere.
@@ -188,33 +175,28 @@ Environment Physics: [Description]"""
         image_bytes, mime_type = _load_image_bytes(image_input)
         if image_bytes is None:
             return None
-        b64_image = base64.b64encode(image_bytes).decode("utf-8")
     except Exception as e:
         print(f"Error reading ref image: {e}")
         return None
 
-    data = {
-        "contents": [{
-            "parts": [
-                {"text": prompt},
-                {"inline_data": {"mime_type": mime_type, "data": b64_image}}
-            ]
-        }]
-    }
-
     try:
-        response = requests.post(url, headers=headers, json=data)
-        if response.status_code == 200:
-            result = response.json()
-            candidate = result.get("candidates", [])[0]
-            text = candidate["content"]["parts"][0]["text"]
-            
+        response = client.models.generate_content(
+            model=VERTEX_TEXT_MODEL,
+            contents=[
+                prompt,
+                types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
+            ],
+        )
+
+        if response.candidates and response.candidates[0].content.parts:
+            text = response.candidates[0].content.parts[0].text
+
             # Simple parsing
             lines = text.split('\n')
             pose_text = ""
             env_text = ""
             current_section = None
-            
+
             for line in lines:
                 if "Model Pose:" in line:
                     current_section = "pose"
@@ -226,12 +208,11 @@ Environment Physics: [Description]"""
                     pose_text += line.strip() + " "
                 elif current_section == "env":
                     env_text += line.strip() + " "
-            
+
             return {"Model Pose": pose_text.strip(), "Environment Physics": env_text.strip()}
-            
-        else:
-            print(f"Analysis Error: {response.text}")
-            return None
+
+        print("Analysis Warning: No candidates returned.")
+        return None
     except Exception as e:
         print(f"Analysis Exception: {e}")
         return None

@@ -23,10 +23,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from config import BASE_INPUT_FOLDER, BASE_PROMPT_FOLDER, OUTPUT_FOLDER, API_KEY, ALLOWED_ORIGINS
+from config import BASE_INPUT_FOLDER, BASE_PROMPT_FOLDER, OUTPUT_FOLDER, GCP_PROJECT_ID, ALLOWED_ORIGINS
 import utils
 import api_client
 import configure_prompts
+import claude_prompt_generator
 
 # ─── Cloud Storage ───────────────────────────────────────────────────────
 try:
@@ -131,16 +132,22 @@ class SavePromptsRequest(BaseModel):
     master_prompt: Optional[str] = None
     variants: Optional[dict[str, str]] = None  # {"Back": "content", ...}
 
+class ClaudePromptRequest(BaseModel):
+    product: str
+    sku: str
+    custom_instruction: str = ""
+    reference_image_path: Optional[str] = None
+
 
 # ─── API Endpoints ───────────────────────────────────────────────────────
 
 @app.get("/api/providers")
 def list_providers():
     """Return which AI providers are available (have valid API keys)."""
-    from config import API_KEY, OPENAI_API_KEY, DEFAULT_AI_PROVIDER
+    from config import GCP_PROJECT_ID, OPENAI_API_KEY, DEFAULT_AI_PROVIDER
     return {
         "providers": [
-            {"id": "gemini", "name": "Google Gemini", "available": bool(API_KEY)},
+            {"id": "gemini", "name": "Google Gemini (Vertex AI)", "available": bool(GCP_PROJECT_ID)},
             {"id": "chatgpt", "name": "ChatGPT (GPT Image 2)", "available": bool(OPENAI_API_KEY)},
         ],
         "default": DEFAULT_AI_PROVIDER
@@ -560,6 +567,86 @@ def auto_tune(req: AutoTuneRequest):
         return {"status": "success", "message": "Prompts auto-tuned and reloaded"}
     else:
         raise HTTPException(500, f"Auto-tune failed: {result}")
+
+
+# --- Claude Prompt Generation ---
+
+@app.get("/api/claude-status")
+def claude_status():
+    """Check if Claude (GCP Vertex AI) is configured and available."""
+    from config import GCP_PROJECT_ID
+    return {"available": bool(GCP_PROJECT_ID)}
+
+
+@app.post("/api/generate-prompts-claude")
+def generate_prompts_claude(req: ClaudePromptRequest):
+    """Generate prompts using Claude Sonnet 4.6 via Google Cloud Vertex AI."""
+    if CLOUD:
+        import tempfile
+        tmpdir = tempfile.mkdtemp(prefix="shotloom_claude_")
+        try:
+            tmp_input = os.path.join(tmpdir, "input")
+            tmp_prompts = os.path.join(tmpdir, "prompts")
+
+            # Download SKU images from Supabase into temp dir
+            sku_cloud = f"{C_INPUT}/{req.product}/{req.sku}"
+            sku_files = cloud.list_files(sku_cloud, IMAGE_EXTS)
+            if not sku_files:
+                raise HTTPException(404, f"No images found for {req.product}/{req.sku} in cloud storage")
+
+            sku_local = os.path.join(tmp_input, req.product, req.sku)
+            os.makedirs(sku_local, exist_ok=True)
+            for fname in sku_files:
+                img_bytes = cloud.download_file(f"{sku_cloud}/{fname}")
+                if img_bytes:
+                    with open(os.path.join(sku_local, fname), "wb") as f:
+                        f.write(img_bytes)
+
+            # Download reference image if provided
+            ref_local = None
+            if req.reference_image_path:
+                ref_bytes = cloud.download_file(req.reference_image_path)
+                if ref_bytes:
+                    ref_local = os.path.join(tmpdir, os.path.basename(req.reference_image_path))
+                    with open(ref_local, "wb") as f:
+                        f.write(ref_bytes)
+
+            result = claude_prompt_generator.generate_prompts_with_claude(
+                product_name=req.product,
+                sku_name=req.sku,
+                custom_instruction=req.custom_instruction,
+                reference_image_path=ref_local,
+                input_folder=tmp_input,
+                prompt_folder=tmp_prompts,
+            )
+            if "error" in result:
+                raise HTTPException(500, result["error"])
+
+            # Clear existing cloud prompts then upload the new ones
+            cloud_prompt_dir = f"{C_PROMPTS}/{req.product}"
+            for old in cloud.list_files(cloud_prompt_dir, ('.txt',)):
+                cloud.delete_file(f"{cloud_prompt_dir}/{old}")
+
+            local_prompt_dir = os.path.join(tmp_prompts, req.product)
+            if os.path.exists(local_prompt_dir):
+                for fname in os.listdir(local_prompt_dir):
+                    if fname.endswith('.txt'):
+                        with open(os.path.join(local_prompt_dir, fname), "r", encoding="utf-8") as f:
+                            cloud.upload_text(f.read(), f"{cloud_prompt_dir}/{fname}")
+
+            return result
+        finally:
+            shutil.rmtree(tmpdir, ignore_errors=True)
+    else:
+        result = claude_prompt_generator.generate_prompts_with_claude(
+            product_name=req.product,
+            sku_name=req.sku,
+            custom_instruction=req.custom_instruction,
+            reference_image_path=req.reference_image_path,
+        )
+        if "error" in result:
+            raise HTTPException(500, result["error"])
+        return result
 
 
 @app.get("/api/download/{product_name}/{folder_name}")

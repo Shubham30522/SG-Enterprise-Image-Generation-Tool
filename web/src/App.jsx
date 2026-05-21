@@ -711,6 +711,7 @@ export default function App() {
             product={selectedProduct}
             onBack={handleBackToGeneration}
             onProductsChanged={refreshProductsAndDetails}
+            refImagePath={refImagePath}
           />
         ) : (
           <main className="flex-1 flex flex-col overflow-y-auto p-4 gap-6 max-w-7xl mx-auto w-full pb-10">

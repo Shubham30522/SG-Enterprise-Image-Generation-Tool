@@ -1,10 +1,9 @@
 
 import os
-import requests
 import base64
 import json
 import re
-from config import API_KEY, BASE_INPUT_FOLDER, BASE_PROMPT_FOLDER
+from config import BASE_INPUT_FOLDER, BASE_PROMPT_FOLDER, VERTEX_TEXT_MODEL, get_gemini_client
 
 # ─── Cloud Storage Import ────────────────────────────────────────────────
 try:
@@ -170,48 +169,45 @@ def _load_image_for_analysis(image_input):
     return None, None
 
 
-def analyze_with_gemini(image_input, prompt, model="gemini-3-pro-preview"):
+def analyze_with_gemini(image_input, prompt, model=None):
     """
-    Generic helper to analyze image with Gemini.
+    Generic helper to analyze image with Gemini via Vertex AI.
     Accepts: file path, bytes, tuple(bytes, mime), or cloud path.
     """
+    if model is None:
+        model = VERTEX_TEXT_MODEL
     print(f"DEBUG: Analyze image with model {model}")
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={API_KEY}"
-    headers = {"Content-Type": "application/json"}
-    
+
+    client = get_gemini_client()
     b64_image, mime_type = _load_image_for_analysis(image_input)
     if b64_image is None:
         print(f"Error: Could not load image for analysis")
         return None
 
-    data = {
-        "contents": [{
-            "parts": [
-                {"text": prompt},
-                {"inline_data": {"mime_type": mime_type, "data": b64_image}}
-            ]
-        }]
-    }
-
     try:
-        response = requests.post(url, headers=headers, json=data, timeout=60)
-        if response.status_code == 200:
-            result = response.json()
-            if "candidates" in result and result["candidates"]:
-                return result["candidates"][0]["content"]["parts"][0]["text"]
-            else:
-                print(f"DEBUG: No candidates returned. Response: {result}")
+        from google.genai import types
+        image_bytes = base64.b64decode(b64_image)
+
+        response = client.models.generate_content(
+            model=model,
+            contents=[
+                prompt,
+                types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
+            ],
+        )
+
+        if response.candidates and response.candidates[0].content.parts:
+            return response.candidates[0].content.parts[0].text
         else:
-            print(f"API Error {response.status_code}: {response.text}")
-            # FALLBACK LOGIC
-            if response.status_code in [404, 400, 500]:
-                if model != "gemini-1.5-flash":
-                    print(f"DEBUG: Retrying with gemini-1.5-flash (fallback from {model})...")
-                    return analyze_with_gemini(image_input, prompt, model="gemini-1.5-flash")
-                
+            print(f"DEBUG: No candidates returned.")
+
     except Exception as e:
         print(f"API Request failed: {e}")
-    
+        # Fallback logic
+        if model != "gemini-1.5-flash":
+            print(f"DEBUG: Retrying with gemini-1.5-flash (fallback from {model})...")
+            return analyze_with_gemini(image_input, prompt, model="gemini-1.5-flash")
+
     return None
 
 def analyze_style_reference(ref_input):

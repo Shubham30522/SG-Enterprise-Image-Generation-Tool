@@ -141,6 +141,32 @@ export async function autoTunePrompts(product) {
   return await res.json();
 }
 
+// ─── Claude Prompt Generation ─────────────────────────
+
+export async function fetchClaudeStatus() {
+  const res = await fetch(`${BASE}/api/claude-status`);
+  if (!res.ok) return { available: false };
+  return await res.json();
+}
+
+export async function generatePromptsClaude(product, sku, customInstruction = '', referenceImagePath = null) {
+  const res = await fetch(`${BASE}/api/generate-prompts-claude`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      product,
+      sku,
+      custom_instruction: customInstruction,
+      reference_image_path: referenceImagePath,
+    }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || 'Claude prompt generation failed');
+  }
+  return await res.json();
+}
+
 // ─── Product Management ───────────────────────────────
 
 export async function createProduct(name, category, initialColor) {

@@ -3,7 +3,7 @@ import * as api from '../api/client'
 
 const IMAGE_TYPES = ['Front', 'Back', 'Side', 'Detail', 'Neck']
 
-export default function ProductManager({ product, onBack, onProductsChanged }) {
+export default function ProductManager({ product, onBack, onProductsChanged, refImagePath }) {
   // ─── State ─────────────────────────────────────────
   const [activeTab, setActiveTab] = useState('images') // 'images' | 'prompts'
   const [skus, setSkus] = useState([])
@@ -24,6 +24,11 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
   const [showAddColor, setShowAddColor] = useState(false)
   const [newColorName, setNewColorName] = useState('')
   const [addingColor, setAddingColor] = useState(false)
+
+  // Claude prompt generation state
+  const [claudeAvailable, setClaudeAvailable] = useState(false)
+  const [claudeInstruction, setClaudeInstruction] = useState('')
+  const [isGeneratingClaude, setIsGeneratingClaude] = useState(false)
 
   const fileInputRefs = useRef({})
 
@@ -47,6 +52,11 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
         }
     })
   }, [product, loadSkus])
+
+  // ─── Check Claude availability ─────────────────────
+  useEffect(() => {
+    api.fetchClaudeStatus().then(data => setClaudeAvailable(data.available)).catch(() => {})
+  }, [])
 
   // ─── Load SKU Images ───────────────────────────────
   useEffect(() => {
@@ -165,6 +175,38 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
       setError(err.message)
     }
   }, [product, selectedSku, skus, onProductsChanged])
+
+  // ─── Claude Prompt Generation ──────────────────────
+  const handleGenerateClaude = useCallback(async () => {
+    if (!selectedSku) {
+      setError('Please select a color/SKU first.')
+      return
+    }
+    setIsGeneratingClaude(true)
+    setError('')
+    setSuccess('')
+    try {
+      const result = await api.generatePromptsClaude(
+        product,
+        selectedSku,
+        claudeInstruction,
+        refImagePath || null
+      )
+      // Reload prompts to reflect changes
+      const promptData = await api.fetchPrompts(product)
+      setMasterPrompt(promptData.master_prompt || '')
+      setVariants(promptData.variants || {})
+      setActivePromptTab('Master')
+      setPromptDirty(false)
+      setSuccess(`✨ Claude generated ${result.angles_generated?.length || 0} prompts: ${result.angles_generated?.join(', ')}`)
+      onProductsChanged()
+      setTimeout(() => setSuccess(''), 8000)
+    } catch (err) {
+      setError(`Claude: ${err.message}`)
+    } finally {
+      setIsGeneratingClaude(false)
+    }
+  }, [product, selectedSku, claudeInstruction, refImagePath, onProductsChanged])
 
   // ─── Prompt content helpers ────────────────────────
   const getPromptContent = () => {
@@ -388,6 +430,76 @@ export default function ProductManager({ product, onBack, onProductsChanged }) {
             )}
 
             {/* Add Color Modal */}
+
+            {/* ─── Claude AI Prompt Generator ─── */}
+            {selectedSku && (
+              <div className="glass-card p-6 relative overflow-hidden group border-border hover:border-accent/20 bg-white shadow-sm animate-fade-in">
+                <div className="absolute inset-0 bg-linear-to-br from-sky-500/5 via-transparent to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+                <div className="relative z-10 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-lg bg-sky-100 flex items-center justify-center text-sky-600 ring-1 ring-sky-200">🧠</span>
+                    <div>
+                      <label className="text-sm font-bold text-text-secondary uppercase tracking-wider">
+                        AI Prompt Generator
+                      </label>
+                      <p className="text-[10px] text-text-muted mt-0.5">
+                        Powered by Claude Sonnet 4.6 • Generates Front + Back by default
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Custom Instruction Textbox */}
+                  <div>
+                    <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-1.5 block">
+                      Custom Instructions <span className="text-text-muted/50">(optional)</span>
+                    </label>
+                    <textarea
+                      value={claudeInstruction}
+                      onChange={e => setClaudeInstruction(e.target.value)}
+                      placeholder="e.g. Also generate Side angle • Use outdoor café background • Model should be a 25-year-old Indian woman with warm skin tone"
+                      rows={3}
+                      disabled={isGeneratingClaude}
+                      className="w-full bg-surface border border-border rounded-xl px-4 py-3 text-sm text-text-primary placeholder:text-text-muted/60 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/50 transition-all shadow-inner resize-none disabled:opacity-50"
+                    />
+                  </div>
+
+                  {/* Generate Button */}
+                  <button
+                    onClick={handleGenerateClaude}
+                    disabled={isGeneratingClaude || !claudeAvailable}
+                    title={!claudeAvailable ? 'GCP project not configured — add GCP_PROJECT_ID to .env' : ''}
+                    className={`w-full py-3.5 text-sm font-bold rounded-xl transition-all flex items-center justify-center gap-2.5 shadow-lg ${
+                      isGeneratingClaude
+                        ? 'bg-sky-100 text-sky-700 border border-sky-200 cursor-wait animate-pulse'
+                        : claudeAvailable
+                          ? 'bg-linear-to-r from-sky-500 to-indigo-500 text-white hover:from-sky-600 hover:to-indigo-600 shadow-sky-500/25 hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0'
+                          : 'bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed'
+                    }`}
+                  >
+                    {isGeneratingClaude ? (
+                      <>
+                        <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeDasharray="30 70" />
+                        </svg>
+                        Generating with Claude — this takes 15–30s...
+                      </>
+                    ) : claudeAvailable ? (
+                      <>🧠 Generate Prompts with Claude</>
+                    ) : (
+                      <>🔒 Claude Not Configured</>
+                    )}
+                  </button>
+
+                  {/* Info text */}
+                  <p className="text-[9px] text-text-muted italic px-1 opacity-70 leading-relaxed">
+                    Analyzes your garment images using the v2 photography framework. Generates prompts for Front + Back by default.
+                    Request additional angles (Side, Close-up, etc.) in the custom instructions above.
+                    {refImagePath ? ' ✓ Sidebar reference image will be used for background.' : ' No reference image — Claude will auto-design the background.'}
+                  </p>
+                </div>
+              </div>
+            )}
             {showAddColor && (
               <div 
                 className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in" 

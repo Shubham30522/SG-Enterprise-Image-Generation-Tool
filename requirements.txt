@@ -7,3 +7,5 @@ requests>=2.32.3
 python-dotenv>=1.0.1
 google-genai
 openai
+anthropic[vertex]>=0.40.0
+google-auth>=2.29.0
