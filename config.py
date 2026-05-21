@@ -46,6 +46,12 @@ if not SUPABASE_URL or not SUPABASE_KEY:
 GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
 GCP_LOCATION = os.getenv("GCP_LOCATION", "us-central1")
 
+if GCP_PROJECT_ID:
+    # Google Auth library (used by google-genai and anthropic-vertex) requires 
+    # GOOGLE_CLOUD_PROJECT env var to resolve the billing project when using 
+    # user credentials (authorized_user) since they don't contain a built-in project_id.
+    os.environ["GOOGLE_CLOUD_PROJECT"] = GCP_PROJECT_ID
+
 # Vertex AI Gemini model names
 VERTEX_IMAGE_MODEL = os.getenv("VERTEX_IMAGE_MODEL", "gemini-3-pro-image-preview")
 VERTEX_TEXT_MODEL = os.getenv("VERTEX_TEXT_MODEL", "gemini-3-pro-preview")
