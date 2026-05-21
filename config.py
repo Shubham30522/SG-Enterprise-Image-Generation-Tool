@@ -1,9 +1,28 @@
 
 import os
+import tempfile
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+
+# ─── GCP Credentials Bootstrap (Cloud Deployment) ────────────────────────
+# When running on Render/Azure/etc., there is no local ADC credentials file.
+# If the GCP_SERVICE_ACCOUNT_JSON env var contains the full JSON key content,
+# write it to a temp file and point GOOGLE_APPLICATION_CREDENTIALS at it.
+# This must run BEFORE any Google/Anthropic SDK imports.
+_gcp_sa_json = os.getenv("GCP_SERVICE_ACCOUNT_JSON")
+if _gcp_sa_json and not os.getenv("GOOGLE_APPLICATION_CREDENTIALS"):
+    try:
+        _tmp = tempfile.NamedTemporaryFile(
+            mode="w", suffix=".json", prefix="gcp_sa_", delete=False
+        )
+        _tmp.write(_gcp_sa_json)
+        _tmp.close()
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = _tmp.name
+        print(f"[GCP Auth] Service account credentials loaded from env var -> {_tmp.name}")
+    except Exception as _e:
+        print(f"[GCP Auth] WARNING: Failed to write service account JSON: {_e}")
 
 # OpenAI API Key (for ChatGPT / GPT Image 2)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -13,15 +32,6 @@ if not OPENAI_API_KEY:
 
 # Default AI Provider: "gemini" or "chatgpt"
 DEFAULT_AI_PROVIDER = os.getenv("DEFAULT_AI_PROVIDER", "gemini")
-
-# Global Constants (Static paths)
-# Chrome Automation Config
-CHROME_PROFILE = os.getenv("CHROME_PROFILE", "Default")
-CHROME_URL = os.getenv("CHROME_URL", "https://google.com")
-
-# Meesho Login Credentials
-MEESHO_EMAIL = os.getenv("MEESHO_EMAIL", "")
-MEESHO_PASSWORD = os.getenv("MEESHO_PASSWORD", "")
 
 # Supabase Storage Configuration
 SUPABASE_URL = os.getenv("SUPABASE_URL")
