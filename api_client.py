@@ -5,6 +5,7 @@ import io
 from PIL import Image
 from config import (
     OPENAI_API_KEY, VERTEX_IMAGE_MODEL, VERTEX_TEXT_MODEL, get_gemini_client,
+    AZURE_OPENAI_API_KEY, AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_DEPLOYMENT_NAME, AZURE_OPENAI_API_VERSION
 )
 
 # Try to import pillow-heif for HEIC support
@@ -279,69 +280,168 @@ def inject_prompt_overrides(base_prompt, overrides, inject_pose=False, inject_bg
 # ─── OpenAI GPT Image 2 ─────────────────────────────────────────────────
 
 def map_to_openai_size(aspect_ratio, image_size="1K"):
-    # Simplified mapping to supported OpenAI sizes based on ratio and requested size
-    w, h = 1024, 1024
-    if aspect_ratio == "3:4":
-        w, h = 768, 1024
-    elif aspect_ratio == "4:3":
-        w, h = 1024, 768
-    elif aspect_ratio == "16:9":
-        w, h = 1024, 576
-    elif aspect_ratio == "9:16":
-        w, h = 576, 1024
-    
-    if image_size == "2K":
-        w, h = w * 2, h * 2
-    elif image_size == "4K":
-        w, h = w * 4, h * 4
+    """
+    Map aspect ratio + quality to a valid GPT Image 2 size string.
 
-    # Cap to max constraint
-    if w > 3840: w = 3840
-    if h > 3840: h = 3840
-    
-    # We construct the closest matching string. 
-    # DALL-E 3 supported specific formats, but GPT-Image-2 supports flexible sizes up to 4K edges.
-    return f"{w}x{h}"
+    GPT Image 2 constraints (from OpenAI docs):
+      - Both dimensions must be multiples of 16
+      - Max edge < 3840 px
+      - Long/short ratio ≤ 3:1
+      - Total pixels: 655,360 – 8,294,400  (i.e. ~0.6 MP – ~8.3 MP)
+
+    Quality tiers (practical pixel budgets):
+      Low    → ~1 MP    (fast, cheap)
+      Medium → ~4 MP    (balanced)
+      High   → ~8 MP    (max fidelity)
+    """
+    size_key = image_size.lower()
+    # Normalize: 1k/low → low, 2k/medium → medium, 4k/high → high
+    if size_key in ("1k", "low"):
+        tier = "low"
+    elif size_key in ("2k", "medium"):
+        tier = "medium"
+    elif size_key in ("4k", "high"):
+        tier = "high"
+    else:
+        tier = "low"
+
+    # Safely curated presets — guaranteed to be multiples of 16, exactly matching ratio,
+    # and strictly keeping total pixels < 8,200,000 and max edge < 3800.
+    presets = {
+        # ratio:  (low,         medium,       high)
+        "1:1":   ("1024x1024", "2048x2048", "2816x2816"), # High is ~7.9MP
+        "3:4":   ("864x1152",  "1728x2304", "2448x3264"), # High is ~7.9MP
+        "4:3":   ("1152x864",  "2304x1728", "3264x2448"),
+        "9:16":  ("720x1280",  "1440x2560", "2016x3584"), # High is ~7.2MP
+        "16:9":  ("1280x720",  "2560x1440", "3584x2016"),
+    }
+
+    tier_idx = {"low": 0, "medium": 1, "high": 2}[tier]
+    ratio = aspect_ratio if aspect_ratio in presets else "1:1"
+    return presets[ratio][tier_idx]
+
+
+def _openai_quality_from_size(image_size):
+    """Map the UI quality/size label to GPT Image 2's quality parameter."""
+    key = image_size.lower()
+    if key in ("1k", "low"):
+        return "low"
+    elif key in ("4k", "high"):
+        return "high"
+    else:
+        return "medium"
 
 
 def fetch_image_from_openai(prompt, image_inputs, aspect_ratio="1:1", image_size="1K"):
     """
-    Generates an image using OpenAI GPT Image 2.
+    Generates an image using OpenAI GPT Image 2 (via standard OpenAI or Azure OpenAI Service).
     Same interface as fetch_image_from_api().
     Accepts image_inputs as list of file paths, bytes, or (bytes, mime) tuples.
     Returns (PIL.Image, None) on success or (None, error_string) on failure.
     """
-    if not OPENAI_API_KEY:
-        return None, "OPENAI_API_KEY is not configured"
-        
+    # Collect raw image bytes with MIME types
+    raw_images = []
+    for img_input in image_inputs:
+        try:
+            image_bytes, mime_type = _load_image_bytes(img_input)
+            if image_bytes is None:
+                continue
+            raw_images.append((image_bytes, mime_type))
+        except Exception as e:
+            print(f"Error processing image input: {e}")
+
+    size_str = map_to_openai_size(aspect_ratio, image_size)
+    quality_val = _openai_quality_from_size(image_size)
+
+    if AZURE_OPENAI_API_KEY and AZURE_OPENAI_ENDPOINT:
+        return _azure_openai_request(prompt, raw_images, size_str, quality_val)
+    elif OPENAI_API_KEY:
+        return _standard_openai_request(prompt, raw_images, size_str, quality_val)
+    else:
+        return None, "Neither AZURE_OPENAI_API_KEY nor OPENAI_API_KEY is configured"
+
+
+def _azure_openai_request(prompt, raw_images, size_str, quality_val):
+    """Direct REST API call to Azure OpenAI — bypasses SDK URL construction issues."""
+    import requests as http
+
+    base = AZURE_OPENAI_ENDPOINT.rstrip('/')
+    deploy = AZURE_OPENAI_DEPLOYMENT_NAME
+    api_ver = AZURE_OPENAI_API_VERSION
+    label = f"Azure OpenAI (Deployment: {deploy})"
+    headers = {"api-key": AZURE_OPENAI_API_KEY}
+
+    try:
+        if raw_images:
+            # Azure /images/edits does NOT support 'response_format' — it returns
+            # a URL by default.  Do NOT include response_format in form data.
+            url = f"{base}/openai/deployments/{deploy}/images/edits?api-version={api_ver}"
+            print(f"DEBUG: POST {url} (edit, size={size_str}, quality={quality_val})")
+
+            img_bytes, mime = raw_images[0]
+            ext = "png" if "png" in mime else "jpg"
+            files = {"image": (f"input.{ext}", img_bytes, mime)}
+            data = {
+                "prompt": prompt,
+                "size": size_str,
+                "quality": quality_val,
+                "n": "1",
+            }
+            resp = http.post(url, headers=headers, files=files, data=data, timeout=180)
+        else:
+            url = f"{base}/openai/deployments/{deploy}/images/generations?api-version={api_ver}"
+            print(f"DEBUG: POST {url} (generate, size={size_str}, quality={quality_val})")
+
+            payload = {
+                "prompt": prompt,
+                "size": size_str,
+                "quality": quality_val,
+                "n": 1,
+                "response_format": "b64_json",
+            }
+            resp = http.post(url, headers=headers, json=payload, timeout=180)
+
+        if resp.status_code != 200:
+            detail = resp.text[:500]
+            print(f"{label} HTTP {resp.status_code}: {detail}")
+            return None, f"{label} HTTP {resp.status_code}: {detail}"
+
+        result = resp.json()
+        img_entry = result["data"][0]
+
+        # Azure edits returns a URL; generations may return b64_json
+        if "b64_json" in img_entry and img_entry["b64_json"]:
+            return Image.open(io.BytesIO(base64.b64decode(img_entry["b64_json"]))), None
+        elif "url" in img_entry and img_entry["url"]:
+            print(f"DEBUG: Downloading generated image from Azure URL...")
+            img_resp = http.get(img_entry["url"], timeout=120)
+            if img_resp.status_code == 200:
+                return Image.open(io.BytesIO(img_resp.content)), None
+            return None, f"{label}: Failed to download image (HTTP {img_resp.status_code})"
+        else:
+            return None, f"{label}: Response contained neither b64_json nor url"
+
+    except Exception as e:
+        print(f"{label} Exception: {e}")
+        return None, f"{label} Exception: {str(e)}"
+
+
+def _standard_openai_request(prompt, raw_images, size_str, quality_val):
+    """Standard OpenAI SDK request for direct OpenAI API usage."""
     try:
         from openai import OpenAI
     except ImportError:
         return None, "OpenAI Python package is not installed (pip install openai)"
 
     client = OpenAI(api_key=OPENAI_API_KEY)
-    
-    # Convert image_inputs to base64 data URLs
-    base64_images = []
-    for img_input in image_inputs:
-        try:
-            image_bytes, mime_type = _load_image_bytes(img_input)
-            if image_bytes is None:
-                continue
-            b64_image = base64.b64encode(image_bytes).decode("utf-8")
-            base64_images.append(f"data:{mime_type};base64,{b64_image}")
-        except Exception as e:
-            print(f"Error processing image input: {e}")
+    label = "OpenAI (gpt-image-2)"
 
-    size_str = map_to_openai_size(aspect_ratio, image_size)
-    quality_val = "low" if image_size.lower() in ("1k", "low") else "high" if image_size.lower() in ("4k", "high") else "medium"
-    
     try:
-        print(f"DEBUG: Sending request to OpenAI gpt-image-2 (size: {size_str}, quality: {quality_val})...")
-        if len(base64_images) > 0:
+        print(f"DEBUG: Sending request to {label} (size={size_str}, quality={quality_val})...")
+        if raw_images:
             response = client.images.edit(
                 model="gpt-image-2",
-                image=base64_images[0], # Using the first reference image as base
+                image=io.BytesIO(raw_images[0][0]),
                 prompt=prompt,
                 n=1,
                 size=size_str,
@@ -357,14 +457,13 @@ def fetch_image_from_openai(prompt, image_inputs, aspect_ratio="1:1", image_size
                 quality=quality_val,
                 response_format="b64_json"
             )
-            
+
         b64_data = response.data[0].b64_json
-        image_data = base64.b64decode(b64_data)
-        return Image.open(io.BytesIO(image_data)), None
-        
+        return Image.open(io.BytesIO(base64.b64decode(b64_data))), None
+
     except Exception as e:
-        print(f"OpenAI API Exception: {e}")
-        return None, f"OpenAI API Exception: {str(e)}"
+        print(f"{label} Exception: {e}")
+        return None, f"{label} Exception: {str(e)}"
 
 
 # ─── Unified Entry Point ────────────────────────────────────────────────

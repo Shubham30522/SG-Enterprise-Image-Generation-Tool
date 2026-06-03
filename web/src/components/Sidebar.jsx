@@ -3,6 +3,7 @@ export default function Sidebar({
   products, selectedProduct, onProductChange,
   poses, selectedPoses, onTogglePose, onToggleAll,
   resolution, onResolutionChange,
+  aspectRatio, onAspectRatioChange,
   refImagePreview, onRefUpload,
   matchPose, onMatchPoseChange,
   matchBg, onMatchBgChange,
@@ -211,7 +212,7 @@ export default function Sidebar({
               </div>
             )}
 
-            {/* Resolution Selector */}
+             {/* Resolution Selector */}
             <div>
               <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2 block">
                 {selectedProvider === 'chatgpt' ? 'Quality' : 'Resolution'}
@@ -232,6 +233,33 @@ export default function Sidebar({
                 ))}
               </div>
             </div>
+
+            {/* Aspect Ratio Selector (ChatGPT only) */}
+            {selectedProvider === 'chatgpt' && (
+              <div>
+                <label className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-2 block">
+                  Aspect Ratio
+                </label>
+                <div className="flex bg-surface rounded-lg p-1 border border-border">
+                  {['1:1', '3:4', '4:3', '9:16', '16:9'].map(ratio => (
+                    <button
+                      key={ratio}
+                      onClick={() => onAspectRatioChange(ratio)}
+                      className={`flex-1 py-1.5 text-[10px] font-bold rounded-md transition-all ${
+                        aspectRatio === ratio
+                          ? 'bg-bg-card text-text-primary shadow-sm border border-border/50' 
+                          : 'text-text-muted hover:text-text-secondary'
+                      }`}
+                    >
+                      {ratio}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[9px] text-text-muted mt-1 px-1 opacity-70">
+                  Portrait: 3:4 / 9:16 · Landscape: 4:3 / 16:9
+                </p>
+              </div>
+            )}
 
              {/* Resolution & Toggles */}
              <div className="space-y-4">

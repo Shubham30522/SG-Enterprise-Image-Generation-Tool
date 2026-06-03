@@ -30,6 +30,16 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     print("Info: OPENAI_API_KEY not found in .env file. ChatGPT image generation will be unavailable.")
 
+# Azure OpenAI Service Configuration
+AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")
+AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
+AZURE_OPENAI_DEPLOYMENT_NAME = os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME", "gpt-image-2")
+AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION", "2025-04-01-preview")
+
+if not AZURE_OPENAI_API_KEY:
+    print("Info: AZURE_OPENAI_API_KEY not found in .env file. Azure OpenAI image generation will be unavailable.")
+
+
 # Default AI Provider: "gemini" or "chatgpt"
 DEFAULT_AI_PROVIDER = os.getenv("DEFAULT_AI_PROVIDER", "gemini")
 

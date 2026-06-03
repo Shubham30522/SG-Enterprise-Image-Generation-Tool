@@ -100,6 +100,7 @@ class GenerateFrontRequest(BaseModel):
     product: str
     sku: str
     resolution: str = "1K"
+    aspect_ratio: str = "1:1"
     reference_image_path: Optional[str] = None
     match_pose: bool = False
     match_bg: bool = False
@@ -109,6 +110,7 @@ class GenerateVariantsRequest(BaseModel):
     product: str
     sku: str
     resolution: str = "1K"
+    aspect_ratio: str = "1:1"
     selected_poses: list[str]  # e.g. ["Back", "Side", "Neck", "Detail"]
     front_image_path: Optional[str] = None  # path to saved front image
     variant_ref_paths: Optional[dict[str, str]] = None # Key: Pose, Value: Path to reference image
@@ -144,11 +146,12 @@ class ClaudePromptRequest(BaseModel):
 @app.get("/api/providers")
 def list_providers():
     """Return which AI providers are available (have valid API keys)."""
-    from config import GCP_PROJECT_ID, OPENAI_API_KEY, DEFAULT_AI_PROVIDER
+    from config import GCP_PROJECT_ID, OPENAI_API_KEY, DEFAULT_AI_PROVIDER, AZURE_OPENAI_API_KEY
+    openai_available = bool(OPENAI_API_KEY) or bool(AZURE_OPENAI_API_KEY)
     return {
         "providers": [
             {"id": "gemini", "name": "Google Gemini (Vertex AI)", "available": bool(GCP_PROJECT_ID)},
-            {"id": "chatgpt", "name": "ChatGPT (GPT Image 2)", "available": bool(OPENAI_API_KEY)},
+            {"id": "chatgpt", "name": "ChatGPT (GPT Image 2)", "available": openai_available},
         ],
         "default": DEFAULT_AI_PROVIDER
     }
@@ -1012,7 +1015,7 @@ def _run_front_generation(job: JobState, req: GenerateFrontRequest):
         while not job.cancelled:
             attempt += 1
             result_img, error_msg = api_client.generate_image(
-                prompt, input_images, aspect_ratio="1:1", image_size=req.resolution, provider=req.provider
+                prompt, input_images, aspect_ratio=req.aspect_ratio, image_size=req.resolution, provider=req.provider
             )
             if result_img:
                 buf = io.BytesIO()
@@ -1133,7 +1136,7 @@ def _run_variant_generation(job: JobState, req: GenerateVariantsRequest):
             while not job.cancelled:
                 attempt += 1
                 result_img, error_msg = api_client.generate_image(
-                    prompt_text, current_inputs, aspect_ratio=task["ratio"],
+                    prompt_text, current_inputs, aspect_ratio=req.aspect_ratio,
                     image_size=req.resolution, provider=req.provider
                 )
                 if result_img:

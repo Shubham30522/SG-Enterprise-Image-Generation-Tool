@@ -26,6 +26,7 @@ export default function App() {
   const [poses, setPoses] = useState([])
   const [selectedPoses, setSelectedPoses] = useState({})
   const [resolution, setResolution] = useState('1K')
+  const [aspectRatio, setAspectRatio] = useState('1:1')
 
   // ─── Reference Image ───────────────────────────────
   const [refImagePath, setRefImagePath] = useState('')
@@ -355,6 +356,7 @@ export default function App() {
           product: selectedProduct,
           sku: sku,
           resolution: resolution,
+          aspect_ratio: aspectRatio,
           reference_image_path: refImagePath || null,
           match_pose: matchPose,
           match_bg: matchBg,
@@ -373,7 +375,7 @@ export default function App() {
       setStatusText('Front View Skipped (checkbox unchecked).')
       setIsProcessing(false)
     }
-  }, [selectedProduct, skus, currentSkuIndex, selectedPoses, resolution, refImagePath, matchPose, matchBg, anyPoseSelected, handleSSEEvent])
+  }, [selectedProduct, skus, currentSkuIndex, selectedPoses, resolution, aspectRatio, refImagePath, matchPose, matchBg, anyPoseSelected, handleSSEEvent])
 
   const saveFrontOnly = useCallback(async () => {
     if (!currentImageData) return
@@ -422,6 +424,7 @@ export default function App() {
         product: selectedProduct,
         sku: skus[currentSkuIndex],
         resolution: resolution,
+        aspect_ratio: aspectRatio,
         selected_poses: selectedPoseList,
         front_image_path: savedFrontPath,
         variant_ref_paths: variantRefPaths,
@@ -434,7 +437,7 @@ export default function App() {
       setErrorMsg(err.message)
       setIsProcessing(false)
     }
-  }, [selectedProduct, skus, currentSkuIndex, resolution, selectedPoses, savedFrontPath, handleSSEEvent])
+  }, [selectedProduct, skus, currentSkuIndex, resolution, aspectRatio, selectedPoses, savedFrontPath, handleSSEEvent])
 
   const saveAndAutoGen = useCallback(async () => {
     // Save front + immediately start variants
@@ -473,6 +476,7 @@ export default function App() {
         product: selectedProduct,
         sku: sku,
         resolution: resolution,
+        aspect_ratio: aspectRatio,
         selected_poses: selectedPoseList,
         front_image_path: result.saved_path,
         variant_ref_paths: variantRefPaths,
@@ -485,7 +489,7 @@ export default function App() {
       setErrorMsg(err.message)
       setIsProcessing(false)
     }
-  }, [currentImageData, selectedProduct, skus, currentSkuIndex, resolution, selectedPoses, handleSSEEvent])
+  }, [currentImageData, selectedProduct, skus, currentSkuIndex, resolution, aspectRatio, selectedPoses, handleSSEEvent])
 
   const regenerate = useCallback(async () => {
     if (isProcessing) return
@@ -527,6 +531,7 @@ export default function App() {
                product: selectedProduct,
                sku: sku,
                resolution: resolution,
+               aspect_ratio: aspectRatio,
                reference_image_path: refImagePath || null,
                match_pose: matchPose,
                match_bg: matchBg,
@@ -547,6 +552,7 @@ export default function App() {
                 product: selectedProduct,
                 sku: skus[currentSkuIndex],
                 resolution: resolution,
+                aspect_ratio: aspectRatio,
                 selected_poses: [pose],
                 front_image_path: savedFrontPath,
                 variant_ref_paths: variantRefPaths,
@@ -560,7 +566,7 @@ export default function App() {
         setErrorMsg(err.message)
         setIsProcessing(false)
     }
-  }, [isProcessing, carouselImages, focusedIndex, currentSkuIndex, skus, selectedProduct, resolution, refImagePath, matchPose, matchBg, savedFrontPath, handleSSEEvent])
+  }, [isProcessing, carouselImages, focusedIndex, currentSkuIndex, skus, selectedProduct, resolution, aspectRatio, refImagePath, matchPose, matchBg, savedFrontPath, handleSSEEvent])
 
   const skip = useCallback(async () => {
     // Cancel current job, move to next SKU
@@ -682,6 +688,8 @@ export default function App() {
           onToggleAll={toggleAllPoses}
           resolution={resolution}
           onResolutionChange={setResolution}
+          aspectRatio={aspectRatio}
+          onAspectRatioChange={setAspectRatio}
           refImagePreview={refImagePreview}
           onRefUpload={handleRefUpload}
           matchPose={matchPose}
